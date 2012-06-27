@@ -1,0 +1,20 @@
+body {
+	font-family: Verdana, Geneva, sans-serif;
+	color: #f2f2ea;
+	font-size: 15px;
+	background: #f2f2ea;
+}
+
+a {
+	color: #73bae6;
+}
+
+#wrapper {
+	background: #212329;
+	width:450px;
+	padding: 5px 0px 20px 25px;
+
+	position:relative;
+	left:20px;
+	top:20px;
+}
