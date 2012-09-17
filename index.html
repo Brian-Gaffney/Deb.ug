@@ -2,8 +2,38 @@
 <head>
 	<title>Brian Gaffney &mdash; Deb.ug</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
-	<script type="text/javascript" src="js/raphael.min.js"></script>
-	<script type="text/javascript">
+</head>
+<body">
+	<div id="wrapper">
+
+		<div class="box">
+			<div class="padding_wrapper">
+				<h1>Brian Gaffney</h1>
+				<p>Web developer and start up entrepreneur</p>
+				<p><a href="mailto:brian@deb.ug">brian@deb.ug</a></p>
+				<p><a href="http://au.linkedin.com/pub/brian-gaffney-brian-setkick-com-brian-deb-ug/42/60a/807">LinkedIn</a></p>
+				<p><a href="http://setkick.com">Setkick.com</a> &mdash; Online pre-production for film and TV</p>
+			</div>
+		</div>
+
+		<div class="box">
+			<div class="padding_wrapper">
+				<h2>Projects</h2>
+				<p><a href="http://setkick.com">Setkick.com</a> &mdash; Online pre-production for film and TV</p>
+			</div>
+		</div>
+
+		<div class="box">
+			<div id="canvas"></div>
+		</div>
+	</div>
+
+</body>
+
+<script type="text/javascript" src="js/masonry.min.js"></script>
+
+<script type="text/javascript" src="js/raphael.min.js"></script>
+<script type="text/javascript">
 
 /*	  var _gaq = _gaq || [];
 	  _gaq.push(['_setAccount', 'UA-32936832-1']);
@@ -16,6 +46,16 @@
 	  })();
 */
 
+
+
+	window.onload = init;
+
+	function init() {
+		animate();
+
+		console.log('Masonry');
+		var wall = new Masonry( document.getElementById('wrapper'));
+	}
 
 	function animate() {
 
@@ -60,31 +100,6 @@
 	}
 
 	</script>
-</head>
-<body onload="animate();">
-	<div id="wrapper">
 
-		<div class="box">
-			<div class="padding_wrapper">
-				<h1>Brian Gaffney</h1>
-				<p>Web developer and start up entrepreneur</p>
-				<p><a href="mailto:brian@deb.ug">brian@deb.ug</a></p>
-				<p><a href="http://au.linkedin.com/pub/brian-gaffney-brian-setkick-com-brian-deb-ug/42/60a/807">LinkedIn</a></p>
-				<p><a href="http://setkick.com">Setkick.com</a> &mdash; Online pre-production for film and TV</p>
-			</div>
-		</div>
 
-		<div class="box">
-			<div class="padding_wrapper">
-				<h2>Projects</h2>
-				<p><a href="http://setkick.com">Setkick.com</a> &mdash; Online pre-production for film and TV</p>
-			</div>
-		</div>
-
-		<div class="box">
-			<div id="canvas"></div>
-		</div>
-	</div>
-
-</body>
 </html>
