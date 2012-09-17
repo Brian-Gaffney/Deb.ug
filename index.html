@@ -2,9 +2,10 @@
 <head>
 	<title>Brian Gaffney &mdash; Deb.ug</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script type="text/javascript" src="js/raphael.min.js"></script>
 	<script type="text/javascript">
 
-	  var _gaq = _gaq || [];
+/*	  var _gaq = _gaq || [];
 	  _gaq.push(['_setAccount', 'UA-32936832-1']);
 	  _gaq.push(['_trackPageview']);
 
@@ -13,16 +14,77 @@
 	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  })();
+*/
+
+
+	function animate() {
+
+		// Creates canvas 320 × 200 at 10, 50
+		var paper = Raphael("canvas", 310, 310);
+
+
+/*		M	moveto	(x y)+
+		Z	closepath	(none)
+		L	lineto	(x y)+
+		H	horizontal lineto	x+
+		V	vertical lineto	y+
+		C	curveto	(x1 y1 x2 y2 x y)+
+		S	smooth curveto	(x2 y2 x y)+
+		Q	quadratic Bézier curveto	(x1 y1 x y)+
+		T	smooth quadratic Bézier curveto	(x y)+
+		A	elliptical arc	(rx ry x-axis-rotation large-arc-flag sweep-flag x y)+
+		R	Catmull-Rom curveto*	x1 y1 (x y)+
+*/
+
+		var origin = '20,50';
+		var end = '290,50';
+
+		path_string = 'M' + origin;
+
+		p1 = '30,0';
+		p2 = '50,50';
+		p3 = '50,50';
+
+		path_string += 'c' + p1 + ',' + p2 + ',' + p3;
+		path_string += 'c' + p1 + ',' + p2 + ',' + p3;
+		path_string += 'T' + end;
+		console.log(path_string);
+
+		p = paper.path(path_string);
+		p.attr({
+			stroke: 'red',
+			'stroke-width': 2
+		});
+
+
+	}
 
 	</script>
 </head>
-<body>
+<body onload="animate();">
 	<div id="wrapper">
-		<h1>Brian Gaffney</h1>
-		<p>Web developer and start up entrepreneur</p>
-		<p><a href="mailto:brian@deb.ug">brian@deb.ug</a></p>
-		<p><a href="http://au.linkedin.com/pub/brian-gaffney-brian-setkick-com-brian-deb-ug/42/60a/807">LinkedIn</a></p>
-		<p><a href="http://setkick.com">Setkick.com</a> &mdash; Online pre-production for film and TV</p>
+
+		<div class="box">
+			<div class="padding_wrapper">
+				<h1>Brian Gaffney</h1>
+				<p>Web developer and start up entrepreneur</p>
+				<p><a href="mailto:brian@deb.ug">brian@deb.ug</a></p>
+				<p><a href="http://au.linkedin.com/pub/brian-gaffney-brian-setkick-com-brian-deb-ug/42/60a/807">LinkedIn</a></p>
+				<p><a href="http://setkick.com">Setkick.com</a> &mdash; Online pre-production for film and TV</p>
+			</div>
+		</div>
+
+		<div class="box">
+			<div class="padding_wrapper">
+				<h2>Projects</h2>
+				<p><a href="http://setkick.com">Setkick.com</a> &mdash; Online pre-production for film and TV</p>
+			</div>
+		</div>
+
+		<div class="box">
+			<div id="canvas"></div>
+		</div>
 	</div>
+
 </body>
 </html>

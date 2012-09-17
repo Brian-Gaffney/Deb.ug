@@ -10,11 +10,21 @@ a {
 }
 
 #wrapper {
-	background: #212329;
-	width:450px;
-	padding: 5px 0px 20px 25px;
+	padding:25px;
+}
 
-	position:relative;
-	left:20px;
-	top:20px;
+.box {
+	width:310px;
+	height:310px;
+
+	background-color: #212329;
+
+	margin-right:20px;
+	margin-bottom:20px;
+
+	float:left;
+}
+
+.box .padding_wrapper {
+	padding: 5px 15px 20px 25px;
 }
