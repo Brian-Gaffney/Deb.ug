@@ -64,6 +64,7 @@
 			var wall = new Masonry( document.getElementById('wrapper'));
 		}
 
+		//Random number between -10 and 10
 		function get_random_control_point() {
 			min = -10;
 			max = 10;
@@ -87,26 +88,20 @@
 			path_string = 'M' + origin;
 
 			var x = 20;
+			var x_offset = 15;
 
-			//Four curves
-			for (var i = 0; i < 4; i++) {
+			path_string += 't';
 
-				//Control point at beginging
-				control_1_y = get_random_control_point() + 20;
-				control_2_y = get_random_control_point() + 20
+			for (var i = 0; i < 7; i++) {
 
-				control_1_x = get_random_control_point() + 20;
-				control_2_x = get_random_control_point() + 20;
+				if(i !== 0) {
+					path_string += ',';
+				}
 
-				path_string += 'q' + control_1_x + ','+  control_1_y;
-				path_string += ',' + control_2_x + ','+  control_2_y;
-
-				//Curve endpoint
-				y_end = get_random_control_point();
-				x += 50;
-				curve_end = y_end + ',' + x;
-
-				path_string += ',' + curve_end;
+				//Control point 1
+				control_1_x = get_random_control_point() + x_offset;
+				control_1_y = get_random_control_point();
+				path_string += '' + control_1_x + ','+  control_1_y;
 			};
 
 			console.log('x = ' + x);
