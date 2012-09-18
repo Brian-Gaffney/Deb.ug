@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Brian Gaffney &mdash; Deb.ug</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-<body">
+<body>
 	<div id="wrapper">
 
 		<div class="box">
@@ -26,80 +27,114 @@
 		<div class="box">
 			<div id="canvas"></div>
 		</div>
+
+		<div class="box double-wide">
+			<div class="padding_wrapper">
+				<h3> Anaconda goes here </h3>
+			</div>
+		</div>
+
 	</div>
 
+
+
+
+	<script type="text/javascript" src="js/masonry.min.js"></script>
+
+	<script type="text/javascript" src="js/raphael.min.js"></script>
+	<script type="text/javascript">
+
+		window.onload = init;
+
+
+	/*	  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-32936832-1']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+	*/
+
+		function init() {
+			animate();
+
+			var wall = new Masonry( document.getElementById('wrapper'));
+		}
+
+		function get_random_control_point() {
+			min = -10;
+			max = 10;
+
+			rand = Math.floor(Math.random() * (max - min + 1)) + min;
+
+			return rand;
+		}
+
+		function animate() {
+
+			// Docs on paths
+			// http://www.w3.org/TR/SVG11/paths.html
+			// http://raphaeljs.com/reference.html
+
+			var paper = Raphael("canvas", 310, 310);
+
+			var origin = '20,50';
+			var end = '290,50';
+
+			path_string = 'M' + origin;
+
+			var x = 20;
+
+			//Four curves
+			for (var i = 0; i < 4; i++) {
+
+				//Control point at beginging
+				control_1_y = get_random_control_point() + 20;
+				control_2_y = get_random_control_point() + 20
+
+				control_1_x = get_random_control_point() + 20;
+				control_2_x = get_random_control_point() + 20;
+
+				path_string += 'q' + control_1_x + ','+  control_1_y;
+				path_string += ',' + control_2_x + ','+  control_2_y;
+
+				//Curve endpoint
+				y_end = get_random_control_point();
+				x += 50;
+				curve_end = y_end + ',' + x;
+
+				path_string += ',' + curve_end;
+			};
+
+			console.log('x = ' + x);
+
+
+			//Line to end point
+			path_string += 'T' + end;
+
+			console.log(path_string);
+
+			curve = paper.path(path_string);
+			curve.attr({
+				stroke: 'red',
+				'stroke-width': 2
+			});
+
+			// curve.animate({
+			// 	'stroke-width': 5
+			// }, 1000, 'linear', function() {
+			// 	console.log('Finished');
+			// });
+
+		}
+
+		</script>
+
+
+
+
 </body>
-
-<script type="text/javascript" src="js/masonry.min.js"></script>
-
-<script type="text/javascript" src="js/raphael.min.js"></script>
-<script type="text/javascript">
-
-/*	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-32936832-1']);
-	  _gaq.push(['_trackPageview']);
-
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-*/
-
-
-
-	window.onload = init;
-
-	function init() {
-		animate();
-
-		console.log('Masonry');
-		var wall = new Masonry( document.getElementById('wrapper'));
-	}
-
-	function animate() {
-
-		// Creates canvas 320 × 200 at 10, 50
-		var paper = Raphael("canvas", 310, 310);
-
-
-/*		M	moveto	(x y)+
-		Z	closepath	(none)
-		L	lineto	(x y)+
-		H	horizontal lineto	x+
-		V	vertical lineto	y+
-		C	curveto	(x1 y1 x2 y2 x y)+
-		S	smooth curveto	(x2 y2 x y)+
-		Q	quadratic Bézier curveto	(x1 y1 x y)+
-		T	smooth quadratic Bézier curveto	(x y)+
-		A	elliptical arc	(rx ry x-axis-rotation large-arc-flag sweep-flag x y)+
-		R	Catmull-Rom curveto*	x1 y1 (x y)+
-*/
-
-		var origin = '20,50';
-		var end = '290,50';
-
-		path_string = 'M' + origin;
-
-		p1 = '30,0';
-		p2 = '50,50';
-		p3 = '50,50';
-
-		path_string += 'c' + p1 + ',' + p2 + ',' + p3;
-		path_string += 'c' + p1 + ',' + p2 + ',' + p3;
-		path_string += 'T' + end;
-		console.log(path_string);
-
-		p = paper.path(path_string);
-		p.attr({
-			stroke: 'red',
-			'stroke-width': 2
-		});
-
-
-	}
-
-	</script>
-
-
 </html>
