@@ -66,8 +66,8 @@
 
 		//Random number between 40 and 40
 		function random_point() {
-			min = 0;
-			max = 40;
+			min = -40;
+			max = 0;
 
 			return rand_between(min, max);
 		}
@@ -110,19 +110,25 @@
 
 			var paper = Raphael("canvas", 310, 310);
 
-			var origin = [20,140];
-			var end = [290,140];
+			var origin = [20,280];
+			var end = [290,280];
+
+			var total_curves = 20;
+			var total_curves_points = 20;
+			var x_offset = 2;
+			var y_offset = 10;
 
 			//Get curve points
 			curve_points = get_curve_points();
 
 			//Draw each curve
-			for (var i = 0; i < 3; i++) {
+			for (var i = 0; i < total_curves; i++) {
 
 				console.log('Drawing curve ' + i);
 
 				path_string = 'M' + origin[0] + ',' + origin[1];
-				origin[1] -= 10;
+				origin[0] += x_offset;
+				origin[1] -= y_offset;
 
 				path_string += 't'; //t = smooth quadratic Bézier curveto
 
@@ -135,8 +141,8 @@
 						path_string += ',';
 					}
 
-					x = points[i][0];
-					y = points[i][1];
+					x = points[j][0];
+					y = points[j][1];
 
 					//End point of curve segment
 					end_point_x = points[j][0];
@@ -146,7 +152,8 @@
 
 				//Line to end point
 				path_string += 'T' + end[0] + ',' + end[1];
-				end[1] -= 10;
+				end[0] -= x_offset;
+				end[1] -= y_offset;
 
 				console.log(path_string);
 				curve = paper.path(path_string);
