@@ -64,56 +64,97 @@
 			var wall = new Masonry( document.getElementById('wrapper'));
 		}
 
-		//Random number between
-		function get_random_point() {
-			min = -40;
+		//Random number between 40 and 40
+		function random_point() {
+			min = 0;
 			max = 40;
 
-			rand = Math.floor(Math.random() * (max - min + 1)) + min;
+			return rand_between(min, max);
+		}
 
-			return rand;
+		function rand_between(min, max) {
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
+		function get_curve_points() {
+			points = [];
+			var p = [];
+			for (var i = 25; i < 50; i += 5) {
+				end_point_x = i;
+				end_point_y = random_point();
+
+				p = [end_point_x, end_point_y];
+				points.push(p);
+
+				// path_string += end_point_x + ',' + end_point_y;
+			}
+
+			return points;
+		}
+
+		function jitter_curve_points(curve_points) {
+			var tmp_curve_points = [];
+			for(var i in curve_points) {
+				tmp_curve_points[i] = [];
+				tmp_curve_points[i][0] = curve_points[i][0] + rand_between(-5,5);
+				tmp_curve_points[i][1] = curve_points[i][1] + rand_between(-5,5);
+			}
+
+			return tmp_curve_points;
 		}
 
 		function animate() {
-
 			// Docs on paths
 			// http://www.w3.org/TR/SVG11/paths.html
 			// http://raphaeljs.com/reference.html
 
 			var paper = Raphael("canvas", 310, 310);
 
-			var origin = '20,140';
-			var end = '290,140';
+			var origin = [20,140];
+			var end = [290,140];
 
-			path_string = 'M' + origin;
+			//Get curve points
+			curve_points = get_curve_points();
 
-			path_string += 't';
+			//Draw each curve
+			for (var i = 0; i < 3; i++) {
 
-			first_run = true;
-			for (var i = 25; i < 50; i += 5) {
+				console.log('Drawing curve ' + i);
 
-				if(!first_run) {
-					path_string += ',';
-				} else {
-					first_run = false;
+				path_string = 'M' + origin[0] + ',' + origin[1];
+				origin[1] -= 10;
+
+				path_string += 't'; //t = smooth quadratic Bézier curveto
+
+				points = jitter_curve_points(curve_points);
+
+				//Each curve segment
+				for(var j in points) {
+					//If first time through the loop
+					if(j) {
+						path_string += ',';
+					}
+
+					x = points[i][0];
+					y = points[i][1];
+
+					//End point of curve segment
+					end_point_x = points[j][0];
+					end_point_y = points[j][1];
+					path_string += end_point_x + ',' + end_point_y;
 				}
 
-				//End point
-				end_point_x = i;
-				end_point_y = get_random_point();
-				path_string += end_point_x + ',' + end_point_y;
-			};
+				//Line to end point
+				path_string += 'T' + end[0] + ',' + end[1];
+				end[1] -= 10;
 
-			//Line to end point
-			path_string += 'T' + end;
-
-			console.log(path_string);
-
-			curve = paper.path(path_string);
-			curve.attr({
-				stroke: 'red',
-				'stroke-width': 2
-			});
+				console.log(path_string);
+				curve = paper.path(path_string);
+				curve.attr({
+					stroke: 'red',
+					'stroke-width': 2
+				});
+			}
 
 			// curve.animate({
 			// 	'stroke-width': 5
