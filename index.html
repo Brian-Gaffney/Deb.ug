@@ -64,10 +64,10 @@
 			var wall = new Masonry( document.getElementById('wrapper'));
 		}
 
-		//Random number between -10 and 10
-		function get_random_control_point() {
-			min = -10;
-			max = 10;
+		//Random number between
+		function get_random_point() {
+			min = -40;
+			max = 40;
 
 			rand = Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -82,30 +82,27 @@
 
 			var paper = Raphael("canvas", 310, 310);
 
-			var origin = '20,50';
-			var end = '290,50';
+			var origin = '20,140';
+			var end = '290,140';
 
 			path_string = 'M' + origin;
 
-			var x = 20;
-			var x_offset = 15;
-
 			path_string += 't';
 
-			for (var i = 0; i < 7; i++) {
+			first_run = true;
+			for (var i = 25; i < 50; i += 5) {
 
-				if(i !== 0) {
+				if(!first_run) {
 					path_string += ',';
+				} else {
+					first_run = false;
 				}
 
-				//Control point 1
-				control_1_x = get_random_control_point() + x_offset;
-				control_1_y = get_random_control_point();
-				path_string += '' + control_1_x + ','+  control_1_y;
+				//End point
+				end_point_x = i;
+				end_point_y = get_random_point();
+				path_string += end_point_x + ',' + end_point_y;
 			};
-
-			console.log('x = ' + x);
-
 
 			//Line to end point
 			path_string += 'T' + end;
