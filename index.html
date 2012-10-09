@@ -64,9 +64,9 @@
 			var wall = new Masonry( document.getElementById('wrapper'));
 		}
 
-		//Random number between 40 and 40
+		//Random number between -20 and 0
 		function random_point() {
-			min = -40;
+			min = -20;
 			max = 0;
 
 			return rand_between(min, max);
@@ -79,7 +79,7 @@
 		function get_curve_points() {
 			points = [];
 			var p = [];
-			for (var i = 25; i < 50; i += 5) {
+			for (var i = 25; i < 45; i += 5) {
 				end_point_x = i;
 				end_point_y = random_point();
 
@@ -96,8 +96,8 @@
 			var tmp_curve_points = [];
 			for(var i in curve_points) {
 				tmp_curve_points[i] = [];
-				tmp_curve_points[i][0] = curve_points[i][0] + rand_between(-5,5);
-				tmp_curve_points[i][1] = curve_points[i][1] + rand_between(-5,5);
+				tmp_curve_points[i][0] = curve_points[i][0] + rand_between(-3,3);
+				tmp_curve_points[i][1] = curve_points[i][1] + rand_between(-3,3);
 			}
 
 			return tmp_curve_points;
@@ -113,10 +113,10 @@
 			var origin = [20,280];
 			var end = [290,280];
 
-			var total_curves = 20;
-			var total_curves_points = 20;
+			var total_curves = 28;
 			var x_offset = 2;
 			var y_offset = 10;
+			var curve_width = 3;
 
 			//Get curve points
 			curve_points = get_curve_points();
@@ -158,9 +158,13 @@
 				console.log(path_string);
 				curve = paper.path(path_string);
 				curve.attr({
-					stroke: 'red',
-					'stroke-width': 2
+					stroke: 'grey',
+					'stroke-width': curve_width
 				});
+
+				if(curve_width >= 0.1) {
+					curve_width -= 0.1;
+				}
 			}
 
 			// curve.animate({
