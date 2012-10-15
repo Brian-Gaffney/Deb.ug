@@ -81,7 +81,7 @@
 				var origin = [20,280];
 				var end = [290,280];
 
-				var total_curves = 22;
+				var total_curves = 1;
 				var y_offset = 10;
 				var curve_width = 1.2;
 				var scale = 1;
@@ -93,12 +93,13 @@
 				//Draw each curve
 				for (var i = 0; i < total_curves; i++) {
 
+					points = curves.jitter_curve_points(curves.curve_points, true, true);
+
 					path_string = 'M' + origin[0] + ',' + origin[1];
 					origin[1] -= y_offset;
 
 					path_string += 't'; //t = smooth quadratic Bézier curveto
 
-					points = curves.jitter_curve_points(curves.curve_points);
 
 					//Each curve segment
 					for(var j in points) {
@@ -123,7 +124,7 @@
 
 
 					curves.cs[i].attr({
-						stroke: 'grey',
+						stroke: 'orange',
 						'stroke-width': curve_width
 					});
 
@@ -140,7 +141,7 @@
 
 
 				curves.animation_timer = setInterval(function(){
-					curves.animate();
+					// curves.animate();
 				},curves.animation_duration);
 
 			},
@@ -151,7 +152,7 @@
 				for(var i in curves.cs) {
 					c = curves.cs[i];
 
-					points = curves.jitter_curve_points(curves.curve_points, false, true);
+					points = curves.jitter_curve_points(curves.curve_points, true, true);
 
 					path_string = 'M' + c['origin'][0] + ',' + c['origin'][1];
 					path_string += 't';
@@ -173,7 +174,7 @@
 
 					c.animate({
 						'path': path_string
-					}, curves.animation_duration, 'backOut', function() {
+					}, curves.animation_duration, 'linear', function() {
 						// Finished animating
 					});
 				}
@@ -196,10 +197,24 @@
 				var p = [];
 				offset = 20;
 				multiplier = 3.5;
+				rand_multiplier = 8;
+				max_y = -20;
 
 				for (var i = 0; i < 6; i++) {
-					end_point_x = (i * multiplier) + offset;
+					end_point_x = (i * multiplier) + offset + curves.rand_between(-3,3);
+
+					//Needs to start low and ramp up
 					end_point_y = curves.random_point();
+					max_rand = i * rand_multiplier;
+
+					//Ensure y isn't too high
+					while((end_point_y = curves.rand_between(0, max_rand) * -1) < max_y) {
+						console.log('Max_y exceeded');
+						end_point_y = curves.rand_between(0, max_rand) * -1;
+					}
+
+					console.log('end_point_y = ' + end_point_y);
+
 
 					p = [end_point_x, end_point_y];
 					points.push(p);
@@ -210,30 +225,18 @@
 
 			jitter_curve_points: function(curve_points, alter_x, alter_y) {
 
-				if(alter_x) {
-					console.log('alter_x');
-				}
-
-				if(alter_y) {
-					console.log('alter_y');
-				}
-
-				if(!alter_x && !alter_x) {
-					return curve_points;
-				}
-
 				var tmp_curve_points = [];
 				for(var i in curve_points) {
 					tmp_curve_points[i] = [];
 
 					if(alter_x) {
-						tmp_curve_points[i][0] = curve_points[i][0] + curves.rand_between(-3,3);
+						tmp_curve_points[i][0] = curve_points[i][0] + curves.rand_between(-6,6);
 					} else {
 						tmp_curve_points[i][0] = curve_points[i][0];
 					}
 
 					if(alter_y) {
-						tmp_curve_points[i][1] = curve_points[i][1] + curves.rand_between(-3,3);
+						tmp_curve_points[i][1] = curve_points[i][1] + curves.rand_between(-6,6);
 					} else {
 						tmp_curve_points[i][1] = curve_points[i][1];
 					}
