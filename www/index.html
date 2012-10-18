@@ -70,6 +70,9 @@
 			curve_points: [],
 			animation_timer: null,
 			animation_duration: 2000,
+			total_curves: 10,
+			total_curve_points: 9,
+
 
 			init: function() {
 				// Docs on paths
@@ -78,28 +81,27 @@
 
 				var paper = Raphael("canvas", 310, 310);
 
-				var origin = [20,280];
-				var end = [290,280];
+				var origin = [20,295];
+				var end = [290,295];
 
-				var total_curves = 1;
-				var y_offset = 10;
+				var y_offset = 25;
 				var curve_width = 1.2;
 				var scale = 1;
-				var scale_change = 0.03;
+				var scale_change = 0.06;
 
 				//Get curve points
 				curves.curve_points = curves.get_curve_points();
 
 				//Draw each curve
-				for (var i = 0; i < total_curves; i++) {
+				for (var i = 0; i < curves.total_curves; i++) {
 
-					points = curves.jitter_curve_points(curves.curve_points, true, true);
+					// points = curves.jitter_curve_points(curves.curve_points, true, true);
+					points = curves.curve_points;
 
 					path_string = 'M' + origin[0] + ',' + origin[1];
 					origin[1] -= y_offset;
 
 					path_string += 't'; //t = smooth quadratic Bézier curveto
-
 
 					//Each curve segment
 					for(var j in points) {
@@ -138,10 +140,8 @@
 					// }
 				}
 
-
-
 				curves.animation_timer = setInterval(function(){
-					// curves.animate();
+					curves.animate();
 				},curves.animation_duration);
 
 			},
@@ -195,26 +195,31 @@
 			get_curve_points: function() {
 				points = [];
 				var p = [];
-				offset = 20;
+				curve_offset = 15;
 				multiplier = 3.5;
 				rand_multiplier = 8;
 				max_y = -20;
+				curve_width = 45;
+				end_point_x = 0;
 
-				for (var i = 0; i < 6; i++) {
-					end_point_x = (i * multiplier) + offset + curves.rand_between(-3,3);
+				for (var i = 0; end_point_x < curve_width - curve_offset; i++) {
+					end_point_x = (i * multiplier) + curve_offset;
 
-					//Needs to start low and ramp up
-					end_point_y = curves.random_point();
-					max_rand = i * rand_multiplier;
+					console.log('end_point_x = ' + end_point_x);
+
+					//Curve starts low, ramps up then down once more
+					if(i > (curves.total_curve_points / 2)) {
+						end_point_y = curves.random_point();
+						max_rand = (i/curves.total_curve_points) * rand_multiplier;
+					} else {
+						end_point_y = curves.random_point();
+						max_rand = i * rand_multiplier;
+					}
 
 					//Ensure y isn't too high
 					while((end_point_y = curves.rand_between(0, max_rand) * -1) < max_y) {
-						console.log('Max_y exceeded');
 						end_point_y = curves.rand_between(0, max_rand) * -1;
 					}
-
-					console.log('end_point_y = ' + end_point_y);
-
 
 					p = [end_point_x, end_point_y];
 					points.push(p);
