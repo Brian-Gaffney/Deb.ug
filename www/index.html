@@ -13,7 +13,6 @@
 				<p>Web developer and start up entrepreneur</p>
 				<p><a href="mailto:brian@deb.ug">brian@deb.ug</a></p>
 				<p><a href="http://au.linkedin.com/pub/brian-gaffney-brian-setkick-com-brian-deb-ug/42/60a/807">LinkedIn</a></p>
-				<p><a href="http://setkick.com">Setkick.com</a> &mdash; Online pre-production for film and TV</p>
 			</div>
 		</div>
 
@@ -25,7 +24,19 @@
 		</div>
 
 		<div class="box">
-			<div id="canvas"></div>
+			<div class="padding_wrapper">
+				<h2>Freelance projects</h2>
+				<ul>
+					<li><a href="link">Something</a></li>
+					<li><a href="link">Something</a></li>
+					<li><a href="link">Something</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="box curves">
+			<div id="curves_canvas"></div>
+			<span class="paused">Paused</span>
 		</div>
 
 		<div class="box double-wide">
@@ -44,8 +55,6 @@
 	<script type="text/javascript" src="js/raphael.min.js"></script>
 	<script type="text/javascript">
 
-		window.onload = init;
-
 
 	/*	  var _gaq = _gaq || [];
 		  _gaq.push(['_setAccount', 'UA-32936832-1']);
@@ -58,12 +67,33 @@
 		  })();
 	*/
 
-
-		function init() {
+	app = {
+		window_focus: true,
+		init: function() {
 			curves.init();
 
 			var wall = new Masonry( document.getElementById('wrapper'));
+
+			//Detecing window focus/blur
+			function onBlur() {
+				app.window_focus = false;
+			};
+			function onFocus(){
+				app.window_focus = true;
+			};
+			if (/*@cc_on!@*/false) { // check for Internet Explorer
+				document.onfocusin = onFocus;
+				document.onfocusout = onBlur;
+			} else {
+				window.onfocus = onFocus;
+				window.onblur = onBlur;
+			}
+
 		}
+	}
+
+	window.onload = app.init;
+
 
 		curves = {
 			cs: [],
@@ -73,13 +103,12 @@
 			total_curves: 10,
 			total_curve_points: 9,
 
-
 			init: function() {
 				// Docs on paths
 				// http://www.w3.org/TR/SVG11/paths.html
 				// http://raphaeljs.com/reference.html
 
-				var paper = Raphael("canvas", 310, 310);
+				var paper = Raphael("curves_canvas", 310, 310);
 
 				var origin = [20,295];
 				var end = [290,295];
@@ -141,7 +170,9 @@
 				}
 
 				curves.animation_timer = setInterval(function(){
-					curves.animate();
+					if(app.window_focus) { //Only animate when the window has focus
+						curves.animate();
+					}
 				},curves.animation_duration);
 
 			},
