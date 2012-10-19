@@ -29,7 +29,6 @@ curves = {
 			points = curves.curve_points;
 
 			path_string = 'M' + origin[0] + ',' + origin[1];
-			origin[1] -= y_offset;
 
 			path_string += 't'; //t = smooth quadratic Bézier curveto
 
@@ -48,7 +47,6 @@ curves = {
 
 			//Line to end point
 			path_string += 'T' + end[0] + ',' + end[1];
-			end[1] -= y_offset;
 
 			curves.cs[i] = paper.path(path_string);
 			curves.cs[i]['origin'] = origin.slice(0);
@@ -68,6 +66,9 @@ curves = {
 			if(curve_width >= 0.1) {
 				curve_width -= 0.1;
 			}
+
+			origin[1] -= y_offset;
+			end[1] -= y_offset;
 		}
 
 		curves.animation_timer = setInterval(function(){
@@ -87,6 +88,9 @@ curves = {
 			points = curves.jitter_curve_points(curves.curve_points, true, true);
 
 			path_string = 'M' + c['origin'][0] + ',' + c['origin'][1];
+
+			// console.log(path_string);
+
 			path_string += 't';
 
 			//Each curve segment
