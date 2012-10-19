@@ -49,10 +49,8 @@
 
 
 
+	<script type="text/javascript" src="js/app.js"></script>
 
-	<script type="text/javascript" src="js/masonry.min.js"></script>
-
-	<script type="text/javascript" src="js/raphael.min.js"></script>
 	<script type="text/javascript">
 
 
@@ -100,7 +98,7 @@
 			curve_points: [],
 			animation_timer: null,
 			animation_duration: 2000,
-			total_curves: 10,
+			total_curves: 11,
 			total_curve_points: 9,
 
 			init: function() {
@@ -113,7 +111,7 @@
 				var origin = [20,295];
 				var end = [290,295];
 
-				var y_offset = 25;
+				var y_offset = 28;
 				var curve_width = 1.2;
 				var scale = 1;
 				var scale_change = 0.06;
@@ -164,9 +162,9 @@
 					curves.cs[i].transform(transform_string);
 					scale -= scale_change;
 
-					// if(curve_width >= 0.1) {
-					// 	curve_width -= 0.1;
-					// }
+					if(curve_width >= 0.1) {
+						curve_width -= 0.1;
+					}
 				}
 
 				curves.animation_timer = setInterval(function(){
@@ -235,8 +233,6 @@
 
 				for (var i = 0; end_point_x < curve_width - curve_offset; i++) {
 					end_point_x = (i * multiplier) + curve_offset;
-
-					console.log('end_point_x = ' + end_point_x);
 
 					//Curve starts low, ramps up then down once more
 					if(i > (curves.total_curve_points / 2)) {
