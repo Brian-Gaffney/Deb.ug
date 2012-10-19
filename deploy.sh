@@ -8,13 +8,13 @@ cp -r /var/www/deb.ug/www /tmp/deb.ug
 
 #JS compression and concatenation (uglifyjs2)
 echo 'Minifing and compressing JS files'
-rm /tmp/deb.ug/www/js/app.js
-uglifyjs2 /tmp/deb.ug/www/js/* > /tmp/deb.ug/www/js/app.js
+rm /tmp/deb.ug/www/js/all.js
+uglifyjs2 /tmp/deb.ug/www/js/* > /tmp/deb.ug/www/js/all.js
 
 #Remove original JS files
 echo 'Removing original JS files'
 cd /tmp/deb.ug/www/js/
-ls | grep -v 'app.js' | xargs rm
+ls | grep -v 'all.js' | xargs rm
 
 #Find each file and gzip it
 echo 'Gzipping files'

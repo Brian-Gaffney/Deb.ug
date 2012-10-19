@@ -1,4 +1,4 @@
-var scripts = ['js/masonry.min.js', 'js/raphael.min.js'];
+var scripts = ['js/masonry.min.js', 'js/raphael.min.js', 'app.js', 'curves.js'];
 var script;
 var head= document.getElementsByTagName('head')[0];
 
