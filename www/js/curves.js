@@ -7,6 +7,30 @@ curves = {
 	total_curve_points: 9,
 
 	init: function() {
+
+		//Pause/resume animations based on window focus/blur
+		$.Topic('window_focus').subscribe(function(focus){
+			console.log('window_focus event');
+			if (focus) {
+				// console.log('window focus!');
+				if(curves) {
+					$.each(curves, function(i, c){
+						c.pause();
+					});
+				}
+			} else {
+				// console.log('window blur!');
+				if(curves) {
+					$.each(curves, function(i, c){
+						// console.log(c);
+						c.cs.resume();
+					});
+				}
+			}
+		});
+
+
+
 		// Docs on paths
 		// http://www.w3.org/TR/SVG11/paths.html
 		// http://raphaeljs.com/reference.html
@@ -71,6 +95,7 @@ curves = {
 			end[1] -= y_offset;
 		}
 
+		//Animate
 		curves.animation_timer = setInterval(function(){
 			if(app.window_focus) { //Only animate when the window has focus
 				curves.animate();
