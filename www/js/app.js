@@ -30,10 +30,10 @@ app = {
 			console.log('more-info clicked');
 
 			selector = $(this).data('more-selector');
-			item = $(selector);
+			item = $(selector).not(':visible'); //:visible is to make sure it's not already showing
 
 			var parent_box = $(this).parents('.box');
-			item.detach().insertAfter(parent_box);
+			item.detach().hide().fadeIn().insertAfter(parent_box);
 
 			$('#wrapper').masonry('reload');
 		});
@@ -49,10 +49,12 @@ app = {
 			l('close more info');
 
 			var parent_box = $(this).parents('.box');
-			$('#wrapper').masonry('remove', parent_box);
 
-			// parent.detach().appendTo('#templates');
+			parent_box.detach().appendTo('#wrapper').fadeOut(null, function(){
+				$(this).appendTo('#templates');
+			});
 
+			$('#wrapper').masonry('reload');
 		});
 	}
 };
