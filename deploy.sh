@@ -9,7 +9,7 @@ cp -r /var/www/deb.ug/www /tmp/deb.ug
 #JS compression and concatenation (uglifyjs2)
 echo 'Minifing and compressing JS files'
 cd /tmp/deb.ug/www/js/
-rm all.js less.min.js
+rm all.js less.js
 uglifyjs2 /tmp/deb.ug/www/js/* > /tmp/deb.ug/www/js/all.js
 
 #Remove original JS files
