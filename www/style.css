@@ -36,13 +36,11 @@ a {
 .box.double-wide .left {
 	float:left;
 	width:48%;
-	border:2px solid blue;
 }
 
 .box.double-wide .right {
 	float:right;
 	width:48%;
-	border:2px solid blue;
 }
 
 .box .padding_wrapper {
@@ -61,8 +59,10 @@ a {
 	width: 310px;
 	position: relative;
 	right: 10px;
-	top: 56px;
+	/*top: 56px;*/
 	box-shadow: 5px 5px 5px #797979;
+
+	margin-top:60px;
 }
 
 .paused {
