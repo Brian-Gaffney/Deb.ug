@@ -20,8 +20,6 @@ ls | grep -v 'all.js' | xargs rm
 cd /tmp/deb.ug/www/
 yuicompressor style.css -o style.css
 
-exit;
-
 #Find each file and gzip it
 echo 'Gzipping files'
 files=`find /tmp/deb.ug/www/ -type f`
