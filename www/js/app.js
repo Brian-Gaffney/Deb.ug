@@ -27,8 +27,6 @@ app = {
 
 		//Bindings
 		$('.more-info-link').click(function(){
-			console.log('more-info clicked');
-
 			selector = $(this).data('more-selector');
 			item = $(selector).not(':visible'); //:visible is to make sure it's not already showing
 
@@ -38,10 +36,8 @@ app = {
 			$('#wrapper').masonry('reload');
 		});
 
-		var close_button = '<a href="javascript:;" class="close-button">X</a>';
+		var close_button = '<a href="javascript:;" class="close-button">✘</a>';
 		$('.box.more-info').each(function(i, item){
-			console.log(item);
-
 			$(item).append(close_button);
 		});
 

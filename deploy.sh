@@ -8,7 +8,8 @@ cp -r /var/www/deb.ug/www /tmp/deb.ug
 
 #JS compression and concatenation (uglifyjs2)
 echo 'Minifing and compressing JS files'
-rm /tmp/deb.ug/www/js/all.js
+cd /tmp/deb.ug/www/js/
+rm all.js less.min.js
 uglifyjs2 /tmp/deb.ug/www/js/* > /tmp/deb.ug/www/js/all.js
 
 #Remove original JS files
@@ -16,9 +17,11 @@ echo 'Removing original JS files'
 cd /tmp/deb.ug/www/js/
 ls | grep -v 'all.js' | xargs rm
 
-#CSS compression
+#LESS compliation and CSS compression
 cd /tmp/deb.ug/www/
-yuicompressor style.css -o style.css
+lessc style.css -o style.less style.less
+
+exit;
 
 #Find each file and gzip it
 echo 'Gzipping files'
