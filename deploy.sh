@@ -21,8 +21,6 @@ ls | grep -v 'all.js' | xargs rm
 cd /tmp/deb.ug/www/
 lessc style.css -o style.less style.less
 
-exit;
-
 #Find each file and gzip it
 echo 'Gzipping files'
 files=`find /tmp/deb.ug/www/ -type f`
