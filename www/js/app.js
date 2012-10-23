@@ -42,8 +42,6 @@ app = {
 		});
 
 		$('.more-info .close-button').click(function(){
-			l('close more info');
-
 			var parent_box = $(this).parents('.box');
 
 			parent_box.detach().appendTo('#wrapper').fadeOut(null, function(){
