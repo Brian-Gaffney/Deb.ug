@@ -16,6 +16,12 @@ echo 'Removing original JS files'
 cd /tmp/deb.ug/www/js/
 ls | grep -v 'all.js' | xargs rm
 
+#CSS compression
+cd /tmp/deb.ug/www/
+yuicompressor style.css -o style.css
+
+exit;
+
 #Find each file and gzip it
 echo 'Gzipping files'
 files=`find /tmp/deb.ug/www/ -type f`
