@@ -4,7 +4,10 @@ app = {
 		$('body').addClass('window_focus');
 		curves.init();
 
-		var wall = new Masonry(document.getElementById('wrapper'));
+		$('#wrapper').masonry({
+			// options
+			itemSelector : '.box'
+		});
 
 		//Detecing window focus/blur
 		function onBlur() {
@@ -23,7 +26,17 @@ app = {
 			window.onblur = onBlur;
 		}
 
+		//Bindings
+		$('.more-info').click(function(){
+			console.log('more-info clicked');
+
+			// console.log('this', this);
+
+			// var items = $(selector);
+			// var $boxes = $('<div class="box"/><div class="box"/><div class="box"/>');
+			// $('#container').append( $boxes ).masonry( 'appended', $boxes );
+		});
 	}
 };
 
-window.onload = app.init;
+$(document).ready(app.init);
