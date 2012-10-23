@@ -38,7 +38,7 @@ app = {
 			$('#wrapper').masonry('reload');
 		});
 
-		var close_button = '<a class="close-button">X</a>';
+		var close_button = '<a href="javascript:;" class="close-button">X</a>';
 		$('.box.more-info').each(function(i, item){
 			console.log(item);
 

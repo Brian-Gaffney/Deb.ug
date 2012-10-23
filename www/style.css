@@ -13,10 +13,6 @@ a {
 	padding:25px;
 }
 
-.hidden {
-	display:none;
-}
-
 .box {
 	width:310px;
 	height:310px;
@@ -37,6 +33,13 @@ a {
 	padding: 5px 15px 20px 25px;
 }
 
+.box.more-info .close-button {
+	position:absolute;
+	top:15px;
+	right:15px;
+	color:#F2F2EA;
+}
+
 .paused {
 	position:absolute;
 	top:15px;
@@ -47,11 +50,8 @@ a {
 	display:none;
 }
 
-.more-info .close-button {
-	position:absolute;
-	top:15px;
-	right:15px;
-	color:#F2F2EA;
+.hidden {
+	display:none;
 }
 
 
