@@ -5,7 +5,8 @@ app = {
 		curves.init();
 
 		$('#wrapper').masonry({
-			itemSelector : '.box'
+			itemSelector : '.box',
+			colWidth: '250px'
 		});
 
 		//Detecing window focus/blur
