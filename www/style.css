@@ -97,7 +97,7 @@ h4 {
 	margin-top:60px;
 }
 
-.paused {
+.paused, .loading {
 	position:absolute;
 	top:15px;
 	right:15px;

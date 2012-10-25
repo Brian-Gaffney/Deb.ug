@@ -2,7 +2,7 @@ app = {
 	window_focus: true,
 	init: function() {
 		$('body').addClass('window_focus');
-		curves.init();
+		// curves.init();
 
 		$('#wrapper').masonry({
 			itemSelector : '.box',
@@ -52,7 +52,8 @@ app = {
 			$('#wrapper').masonry('reload');
 		});
 
-		var img = $("<img />").attr({
+		//Load image of me
+		/*var img = $("<img />").attr({
 			'src': '/img/me.gif',
 			'alt': 'Brian Gaffney'
 		}).load(function() {
@@ -61,7 +62,7 @@ app = {
 			} else {
 				$(".brian_portrait").append(img).fadeIn();
 			}
-		});
+		});*/
 	}
 };
 
