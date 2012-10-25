@@ -50,6 +50,17 @@ app = {
 
 			$('#wrapper').masonry('reload');
 		});
+
+		var img = $("<img />").attr({
+			'src': '/img/me.gif',
+			'alt': 'Brian Gaffney'
+		}).load(function() {
+			if (!this.complete || typeof this.naturalWidth === "undefined" || this.naturalWidth === 0) {
+				//Image is broken :(
+			} else {
+				$(".brian_portrait").append(img).fadeIn();
+			}
+		});
 	}
 };
 
