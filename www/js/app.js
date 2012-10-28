@@ -2,7 +2,8 @@ app = {
 	window_focus: true,
 	init: function() {
 		$('body').addClass('window_focus');
-		// curves.init();
+		curves.init();
+		$('.curves .loading').fadeOut();
 
 		$('#wrapper').masonry({
 			itemSelector : '.box',
@@ -26,7 +27,10 @@ app = {
 			window.onblur = onBlur;
 		}
 
-		//Bindings
+		/******
+		*** Bindings
+		********/
+		//Show more
 		$('.more-info-link').click(function(){
 			selector = $(this).data('more-selector');
 			item = $(selector).not(':visible'); //:visible is to make sure it's not already showing
@@ -37,11 +41,13 @@ app = {
 			$('#wrapper').masonry('reload');
 		});
 
+		//Add Close buttons
 		var close_button = '<a href="javascript:;" class="close-button">✘</a>';
 		$('.box.more-info').each(function(i, item){
 			$(item).append(close_button);
 		});
 
+		//Close show more boxes
 		$('.more-info .close-button').click(function(){
 			var parent_box = $(this).parents('.box');
 
@@ -52,20 +58,38 @@ app = {
 			$('#wrapper').masonry('reload');
 		});
 
+		//Extendable boxes for showing more info
+		$('.box.curves').on('mouseover', function(){
+			$(this).find('.extend-box-down').fadeIn();
+		}).on('mouseout', function(){
+			$(this).find('.extend-box-down').fadeOut();
+		});
+
+		$('.extend-box-down').click(function(){
+			t = $(this);
+
+			t.text('Less information ➔');
+			t.parent().animate({
+				height: '640px'
+			}, 500, function(){
+				addClass('double-high');
+			});
+		});
+
+
+
 		//Load image of me
-		/*var img = $("<img />").attr({
+		var img = $("<img />").attr({
 			'src': '/img/me.gif',
 			'alt': 'Brian Gaffney'
 		}).load(function() {
 			if (!this.complete || typeof this.naturalWidth === "undefined" || this.naturalWidth === 0) {
 				//Image is broken :(
 			} else {
-				$(".brian_portrait").append(img).fadeIn();
+				$(".brian_portrait").append(img).delay(1500).fadeIn();
 			}
-		});*/
+		});
 	}
 };
-
-l = function() { return console.log.apply(console, arguments); };
 
 $(document).ready(app.init);

@@ -1,7 +1,7 @@
 body {
 	font-family: Verdana, Geneva, sans-serif;
-	color: #f2f2ea;
 	font-size: 15px;
+	color: #f2f2ea;
 	background: #f2f2ea;
 }
 
@@ -80,11 +80,22 @@ h4 {
 	position:absolute;
 	top:15px;
 	right:15px;
-	/*color:#F2F2EA;*/
 
 	text-decoration: none;
 
 	font-size:25px;
+}
+
+.extend-box-down{
+	display:none;
+
+	position: absolute;
+	bottom: 10px;
+	left:10px;
+
+	color: #797979;
+
+	text-decoration: none;
 }
 
 #setkick img {
