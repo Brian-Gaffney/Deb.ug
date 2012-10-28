@@ -37,6 +37,8 @@ h4 {
 	margin-bottom:20px;
 
 	float:left;
+
+	overflow:hidden;
 }
 
 .box.double-wide {
@@ -69,10 +71,6 @@ h4 {
 	padding: 5px 15px 20px 25px;
 }
 
-.toggle-box-height:after, .more-info-link:after {
-	content: " →";
-}
-
 .box.double-high .toggle-box-height:after {
 	content: " ←";
 }
@@ -87,6 +85,11 @@ h4 {
 	font-size:25px;
 }
 
+.box .more-information {
+	padding-left:10px;
+	padding-top:10px;
+}
+
 .toggle-box-height {
 	display:none;
 
@@ -97,6 +100,14 @@ h4 {
 	color: #797979;
 
 	text-decoration: none;
+}
+
+.toggle-box-height:after, .more-info-link:after {
+	content: " →";
+}
+
+#curves_canvas {
+	height:310px;
 }
 
 #setkick img {
