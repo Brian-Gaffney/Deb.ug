@@ -75,20 +75,6 @@ app = {
 				addClass('double-high');
 			});
 		});
-
-
-
-		//Load image of me
-		var img = $("<img />").attr({
-			'src': '/img/me.gif',
-			'alt': 'Brian Gaffney'
-		}).load(function() {
-			if (!this.complete || typeof this.naturalWidth === "undefined" || this.naturalWidth === 0) {
-				//Image is broken :(
-			} else {
-				$(".brian_portrait").append(img).delay(1500).fadeIn();
-			}
-		});
 	}
 };
 

@@ -5,13 +5,6 @@ body {
 	background: #f2f2ea;
 }
 
-.brian_portrait {
-	display:none;
-	float:right;
-	position:relative;
-	right:10px;
-}
-
 a {
 	color: orange;
 }
