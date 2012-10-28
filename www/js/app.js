@@ -59,21 +59,32 @@ app = {
 		});
 
 		//Extendable boxes for showing more info
-		$('.box.curves').on('mouseover', function(){
-			$(this).find('.extend-box-down').fadeIn();
-		}).on('mouseout', function(){
-			$(this).find('.extend-box-down').fadeOut();
+		$('.box.curves').hover(function(){
+			$(this).find('.toggle-box-height').fadeIn();
+		}, function() {
+			$(this).find('.toggle-box-height').fadeOut();
 		});
 
-		$('.extend-box-down').click(function(){
+		$('.toggle-box-height').click(function(){
 			t = $(this);
+			p = t.parent();
 
-			t.text('Less information ➔');
-			t.parent().animate({
-				height: '640px'
+			if( p.hasClass('double-high')) {
+				text = 'More information';
+				height = (p.height() / 2) + 'px';
+			} else {
+				text = 'Less information';
+				height = (p.height() * 2) + 'px';
+			}
+
+			p.animate({
+				height: height
 			}, 500, function(){
-				addClass('double-high');
+				p.toggleClass('double-high');
 			});
+
+			t.text(text);
+
 		});
 	}
 };
