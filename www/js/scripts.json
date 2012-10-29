@@ -4,6 +4,5 @@
 	"js/raphael.min.js",
 	"js/curves.js",
 	"js/ga.js",
-	"js/app.js",
-	"js/jScrollPane.js"
+	"js/app.js"
 ]
