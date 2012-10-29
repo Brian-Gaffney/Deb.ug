@@ -15,19 +15,18 @@ rm js/all.js
 scripts=`cat js/scripts.json | sed -e 's/\[//g' -e 's/\]//g' -e 's/\"//g' -e 's/,//g' -e '/^$/d'`
 uglifyjs2 $scripts > /tmp/deb.ug/www/js/all.js
 
-# for script in $scripts
-# do
-# 	uglifyjs2 $script >> /tmp/deb.ug/www/js/all.js
-# done;
-
-#Remove original JS files
 echo 'Removing original JS files'
 cd /tmp/deb.ug/www/js/
 ls | grep -v 'all.js' | xargs rm
 
 #CSS compression
-cd /tmp/deb.ug/www/
-yuicompressor style.css -o style.css
+echo 'Compressing CSS'
+cd /tmp/deb.ug/www/css
+rm all.css
+cat * | yuicompressor --type css -o all.css
+
+echo 'Removing original CSS files'
+ls | grep -v 'all.css' | xargs rm
 
 #Find each file and gzip it
 echo 'Gzipping files'

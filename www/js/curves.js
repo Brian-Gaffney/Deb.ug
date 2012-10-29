@@ -13,8 +13,8 @@ curves = {
 
 		var paper = Raphael("curves_canvas", 310, 310);
 
-		var origin = [20,295];
-		var end = [290,295];
+		var origin = [20,290];
+		var end = [290,290];
 
 		var y_offset = 28;
 		var curve_width = 1.2;
