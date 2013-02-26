@@ -7,23 +7,25 @@ mkdir -p /tmp/deb.ug/www
 cp -r /var/www/deb.ug/www /tmp/deb.ug
 
 #JS compression and concatenation (uglifyjs2)
-echo 'Minifing and compressing JS files'
-#Parsing simple JSON using sed
+echo 'Compiling JS files with Google Closure compiler'
+
 cd /tmp/deb.ug/www/
 rm js/all.js
-#Filthy hack because I can't get underscore-cli installed
-scripts=`cat js/scripts.json | sed -e 's/\[//g' -e 's/\]//g' -e 's/\"//g' -e 's/,//g' -e '/^$/d'`
-uglifyjs2 $scripts > /tmp/deb.ug/www/js/all.js
+
+#Reading JSON list of scripts
+scripts=`jq -r '.[]' js/scripts.json`
+
+closure-compiler $scripts > js/all.js
 
 echo 'Removing original JS files'
-cd /tmp/deb.ug/www/js/
+cd js
 ls | grep -v 'all.js' | xargs rm
 
 #CSS compression
 echo 'Compressing CSS'
 cd /tmp/deb.ug/www/css
 rm all.css
-cat * | yuicompressor --type css -o all.css
+cat *.css | yuicompressor --type css -o all.css
 
 echo 'Removing original CSS files'
 ls | grep -v 'all.css' | xargs rm

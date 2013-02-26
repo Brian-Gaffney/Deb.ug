@@ -10,3 +10,6 @@ Ideas:
 		Experience skills
 		JS demo
 		Anaconda
+
+Direct S3 path
+	http://deb.ug.s3-website-us-east-1.amazonaws.com/

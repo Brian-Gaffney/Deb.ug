@@ -1,16 +1,22 @@
 app = {
 	window_focus: true,
 	init: function() {
-		$('body').addClass('window_focus');
-		curves.init();
-		$('.curves .loading').fadeOut();
 
+		//Masonry
 		$('#wrapper').masonry({
 			itemSelector : '.box',
 			colWidth: '250px'
 		});
 
+		//Curves
+		curves.init();
+		$('.curves .loading').fadeOut();
+
+		//Availability
+		availability.init();
+
 		//Detecing window focus/blur
+		$('body').addClass('window_focus');
 		function onBlur() {
 			$('body').removeClass('window_focus');
 			app.window_focus = false;
@@ -89,4 +95,11 @@ app = {
 	}
 };
 
-$(document).ready(app.init);
+function jquery_loaded() {
+	if (window.$){
+		$(document).ready(app.init);
+	} else {
+		setTimeout(jquery_loaded, 50);
+	}
+}
+jquery_loaded();
