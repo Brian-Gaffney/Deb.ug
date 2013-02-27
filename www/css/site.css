@@ -56,11 +56,9 @@ h4 {
 
 .box.double-wide .left {
 	float:left;
-	width:48%;
+	width:250px;
 
 	height:627px;
-
-	border-right:1px solid grey;
 }
 
 .box.double-wide .left > * {
@@ -80,19 +78,51 @@ h4 {
 	content: " ←";
 }
 
-.box.more-info .close-button {
+.box.more-info {
+	width:300px;
+	height:300px;
+}
+
+.box .expand-button, .box .contract-button {
 	position:absolute;
-	top:15px;
+	bottom:15px;
 	right:15px;
 
 	text-decoration: none;
 
-	font-size:25px;
+	font-size:14px;
+}
+
+.box .contract-button {
+	display:none;
+}
+
+.box.expanded .expand-button {
+	display:none;
+}
+
+.box.expanded .contract-button {
+	display:block;
 }
 
 .box .more-information {
 	padding-left:10px;
 	padding-top:10px;
+}
+
+/* Heading boxes */
+.box.heading {
+	background:none;
+	outline:none;
+}
+
+.box.heading h1 {
+	/*color:#310DC5;*/
+	color:#3b3b3b;
+}
+
+.box.heading h1:after {
+	content: " :";
 }
 
 .toggle-box-height {
@@ -120,9 +150,8 @@ h4 {
 	width: 300px;
 	position: relative;
 	right: 10px;
-	box-shadow: 5px 5px 5px #797979;
 
-	margin-top:60px;
+	margin-top:20px;
 }
 
 .paused, .loading {
