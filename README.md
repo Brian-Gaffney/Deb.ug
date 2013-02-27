@@ -17,3 +17,9 @@ Direct S3 path
 Bugs
 	At 75% zoom the scroll bar appears and disappears as the boxes fly around
 		Make the scroll bar always there.
+
+Good SubtlePatterns
+	Low Contrast Linen
+	Brushed Alum Dark
+	Random Grey Variations
+	Grid

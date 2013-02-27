@@ -2,7 +2,10 @@ body {
 	font-family: Verdana, Geneva, sans-serif;
 	font-size: 15px;
 	color: #f2f2ea;
-	background: #f2f2ea;
+
+	background-image: url(../img/bg.png);
+	background-size: auto;
+	background-repeat: repeat repeat;
 }
 
 a {
@@ -46,35 +49,35 @@ h4 {
 	overflow-y:scroll;
 }
 
-.box.double-wide {
+.box .padding_wrapper {
+	padding: 5px 15px 20px 25px;
+}
+
+.box.expanded.double-wide {
 	width:640px;
 }
 
-.box.double-high {
+.box.expanded.double-high {
 	height:640px;
 }
 
-.box.double-wide .left {
+.box.expanded.double-wide .left {
 	float:left;
 	width:250px;
 
 	height:627px;
 }
 
-.box.double-wide .left > * {
+.box.expanded.double-wide .left > * {
 	padding-right:10px;
 }
 
-.box.double-wide .right {
+.box.expanded.double-wide .right {
 	float:right;
 	width:48%;
 }
 
-.box .padding_wrapper {
-	padding: 5px 15px 20px 25px;
-}
-
-.box.double-high .toggle-box-height:after {
+.box.expanded.double-high .toggle-box-height:after {
 	content: " ←";
 }
 
@@ -117,8 +120,12 @@ h4 {
 }
 
 .box.heading h1 {
-	/*color:#310DC5;*/
 	color:#3b3b3b;
+}
+
+.box.heading p {
+	color:#3b3b3b;
+	font-weight: bold;
 }
 
 .box.heading h1:after {
@@ -135,10 +142,6 @@ h4 {
 	color: #797979;
 
 	text-decoration: none;
-}
-
-.toggle-box-height:after, .more-info-link:after {
-	content: " →";
 }
 
 #curves_canvas {
