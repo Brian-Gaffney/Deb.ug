@@ -12,7 +12,7 @@
 <body>
 	<div id="wrapper">
 
-		<div class="box">
+		<div class="box title">
 			<div class="padding_wrapper">
 				<h1>Brian Gaffney</h1>
 				<p>Web developer, freelancer and start up guy in Melbourne.</p>
@@ -23,112 +23,163 @@
 			</div>
 		</div>
 
-		<div class="box heading">
-			<div class="padding_wrapper">
-				<h1>Projects</h1>
-			</div>
-		</div>
-
-		<div id="setkick" class="box more-info double-wide double-high">
-			<div class="padding_wrapper">
-				<div class="left">
-					<h2>Setkick</h2>
-					<strong><a href="http://setkick.com">Setkick.com</a></strong>
-					<p>Setkick is online production management for the film and TV industry.</p>
-					<p>As a co-founder I wore many hats for this project. I worked on the backend and frontend, built and maintaned the servers, scoped features, worked customer support and courted investors.</p>
-					<br>
-					<h4>Team</h4>
-					<ul>
-						<li>
-							Matt Drake &mdash;
-							<a href="http://www.imdb.com/name/nm1865616/">IMDB</a>
-							<a href="http://www.linkedin.com/in/mattdrake123">LinkedIn</a>
-						</li>
-						<li>
-							Chris Rickard &mdash;
-							<a href="http://chris.rickard.com.au/">Personal site</a>
-							<a href="http://www.linkedin.com/pub/chris-rickard/24/60a/439">LinkedIn</a>
-						</li>
-						<li>
-							Hamid Nazari &mdash;
-							<a href="http://www.linkedin.com/pub/hamid-nazari/3/649/840">LinkedIn</a>
-						</li>
-						<li>
-							Nico Alary &mdash;
-							<a href="http://nicoalary.com/">Portfolio</a> <a href="http://fr.linkedin.com/pub/nico-alary/20/645/683">LinkedIn</a>
-						</li>
-					</ul>
-
-					<h4>Stuff</h4>
-					<ul>
-						<li>
-							Accepted into <a href="http://www.startmate.com.au/">Startmate</a> 2011. Recieved investment of $25,000
-						</li>
-						<li>
-							9.3/10 <a href="http://www.microfilmmaker.com/wordpress/2012/06/setkickrev/">Microfilm maker review</a>
-						</li>
-						<li>
-							<a href="http://www.youtube.com/watch?v=phzJEzBJTss&amp;feature=plcp">2.5 minute video ad</a>
-						</li>
-					</ul>
+		<div class="masonry projects">
+			
+			<div class="box heading title">
+				<div class="padding_wrapper">
+					<h1>Projects</h1>
 				</div>
-				<div class="right">
-					<img src="img/setkick.jpg" alt="Setkick logo">
+			</div>
 
+			<div id="setkick" class="box more-info double-wide double-high">
+				<div class="padding_wrapper">
+					<div class="left">
+						<h2>Setkick</h2>
+						<strong><a href="http://setkick.com">Setkick.com</a></strong>
+						<p>Setkick is online production management for the film and TV industry.</p>
+						<p>As a co-founder I wore many hats for this project. I worked on the backend and frontend, built and maintaned the servers, scoped features, worked customer support and courted investors.</p>
+						<br>
+						<h4>Team</h4>
+						<ul>
+							<li>
+								Matt Drake &mdash;
+								<a href="http://www.imdb.com/name/nm1865616/">IMDB</a>
+								<a href="http://www.linkedin.com/in/mattdrake123">LinkedIn</a>
+							</li>
+							<li>
+								Chris Rickard &mdash;
+								<a href="http://chris.rickard.com.au/">Personal site</a>
+								<a href="http://www.linkedin.com/pub/chris-rickard/24/60a/439">LinkedIn</a>
+							</li>
+							<li>
+								Hamid Nazari &mdash;
+								<a href="http://www.linkedin.com/pub/hamid-nazari/3/649/840">LinkedIn</a>
+							</li>
+							<li>
+								Nico Alary &mdash;
+								<a href="http://nicoalary.com/">Portfolio</a> <a href="http://fr.linkedin.com/pub/nico-alary/20/645/683">LinkedIn</a>
+							</li>
+						</ul>
+
+						<h4>Stuff</h4>
+						<ul>
+							<li>
+								Accepted into <a href="http://www.startmate.com.au/">Startmate</a> 2011. Recieved investment of $25,000
+							</li>
+							<li>
+								9.3/10 <a href="http://www.microfilmmaker.com/wordpress/2012/06/setkickrev/">Microfilm maker review</a>
+							</li>
+							<li>
+								<a href="http://www.youtube.com/watch?v=phzJEzBJTss&amp;feature=plcp">2.5 minute video ad</a>
+							</li>
+						</ul>
+					</div>
+					<div class="right">
+						<img src="img/setkick.jpg" alt="Setkick logo">
+
+						<h4>Technology</h4>
+						<ul>
+							<li>CakePHP backend</li>
+							<li>Debian servers running on Amazon AWS</li>
+							<li>Heaps of Javascript/jQuery on the front end. Lots of AJAX calls and advanced UI done in JS.</li>
+						</ul>
+					</div>
+				</div>
+			</div><!-- END #setkick -->
+
+			<div id="debug" class="box more-info double-high">
+				<div class="padding_wrapper">
+					<h2>Deb.ug (this site)</h2>
+					<p>My personal playground and résumé.</p>
+					<a href="https://github.com/Brian-Gaffney/Deb.ug">Source on Github</a>
 					<h4>Technology</h4>
 					<ul>
-						<li>CakePHP backend</li>
-						<li>Debian servers running on Amazon AWS</li>
-						<li>Heaps of Javascript/jQuery on the front end. Lots of AJAX calls and advanced UI done in JS.</li>
+						<li>
+							Primarily HTML5 and jQuery
+						</li>
+						<li>
+							Hosted on Amazon S3 and using Cloudfront CDN
+						</li>
+						<li>
+							Automated deployment to S3/Cloudfront using a bash script and <a href="http://s3tools.org/s3cmd">s3cmd</a>
+						</li>
+					</ul>
+					<br />
+					<h4>JS librarys used</h4>
+					<ul>
+						<li>
+							<a href="http://jquery.com/">jQuery</a>
+						</li>
+						<li>
+							<a href="http://raphaeljs.com/">Raphaël</a>
+						</li>
+						<li>
+							<a href="http://masonry.desandro.com/">Masonry</a>
+						</li>
 					</ul>
 				</div>
+			</div><!-- END .box#debug-->
+
+		</div><!-- END .masonry .projects -->
+
+		<div class="masonry agency-projects">
+			
+			<div class="box heading">
+				<div class="padding_wrapper">
+					<h1>Agency Projects</h1>
+
+					<p>
+						Projects done on behalf of agencies
+					</p>
+
+				</div>
 			</div>
-		</div><!-- END #setkick -->
 
-		<div id="debug" class="box more-info double-high">
-			<div class="padding_wrapper">
-				<h2>Deb.ug (this site)</h2>
-				<p>My personal playground and résumé.</p>
-				<a href="https://github.com/Brian-Gaffney/Deb.ug">Source on Github</a>
-				<h4>Technology</h4>
-				<ul>
-					<li>
-						Primarily HTML5 and jQuery
-					</li>
-					<li>
-						Hosted on Amazon S3 and using Cloudfront CDN
-					</li>
-					<li>
-						Automated deployment to S3/Cloudfront using a bash script and <a href="http://s3tools.org/s3cmd">s3cmd</a>
-					</li>
-				</ul>
-				<br />
-				<h4>JS librarys used</h4>
-				<ul>
-					<li>
-						<a href="http://jquery.com/">jQuery</a>
-					</li>
-					<li>
-						<a href="http://raphaeljs.com/">Raphaël</a>
-					</li>
-					<li>
-						<a href="http://masonry.desandro.com/">Masonry</a>
-					</li>
-				</ul>
+			<div class="box">
+				<div class="padding_wrapper">
+					<h1>Blah</h1>
+
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis quis mollitia rerum accusamus nisi! Perferendis quam dignissimos consectetur nemo labore maxime quo nostrum doloremque illum sed dolore cum suscipit aspernatur.
+					</p>
+
+				</div>
 			</div>
-		</div><!-- END .box#debug-->
 
+			<div class="box">
+				<div class="padding_wrapper">
+					<h1>Blah</h1>
 
-		<div class="box heading">
-			<div class="padding_wrapper">
-				<h1>Agency Projects</h1>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis quis mollitia rerum accusamus nisi! Perferendis quam dignissimos consectetur nemo labore maxime quo nostrum doloremque illum sed dolore cum suscipit aspernatur.
+					</p>
 
-				<p>
-					Projects done on behalf of agencies
-				</p>
-
+				</div>
 			</div>
-		</div>
+
+			<div class="box">
+				<div class="padding_wrapper">
+					<h1>Blah</h1>
+
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis quis mollitia rerum accusamus nisi! Perferendis quam dignissimos consectetur nemo labore maxime quo nostrum doloremque illum sed dolore cum suscipit aspernatur.
+					</p>
+
+				</div>
+			</div>
+
+			<div class="box">
+				<div class="padding_wrapper">
+					<h1>Blah</h1>
+
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis quis mollitia rerum accusamus nisi! Perferendis quam dignissimos consectetur nemo labore maxime quo nostrum doloremque illum sed dolore cum suscipit aspernatur.
+					</p>
+
+				</div>
+			</div>
+
+		</div><!-- END .masonry .agency-projects -->
 
 
 		<div id="curves" class="box more-info double-high">

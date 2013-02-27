@@ -9,7 +9,7 @@ app = {
 		init: function() {
 
 			//Masonry
-			$('#wrapper').masonry({
+			$('.masonry').masonry({
 				itemSelector : '.box',
 				colWidth: '250px'
 			});
@@ -61,7 +61,7 @@ app = {
 					parent_box
 						.addClass('expanded')
 						.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
-							$('#wrapper').masonry('reload');	
+							$('.masonry').masonry('reload');	
 						})
 					;
 				}
