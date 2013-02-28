@@ -9,6 +9,14 @@ app = {
 	},
 
 	ui: {
+
+		bar_graph_colours: [
+			'#9D6EB4',
+			'#C4B56A',
+			'#72DC6D',
+			'#29A322'
+		],
+
 		init: function() {
 
 			//Make the site visible
@@ -32,6 +40,21 @@ app = {
 			//Curves
 			curves.init();
 			$('#curves .loading').fadeOut();
+
+			//Bar graphs
+			$('ul.bar li').each(function(i, item){
+				length = $(item).data('length');
+
+				colour = i >= app.ui.bar_graph_colours.length ? 
+					app.ui.bar_graph_colours[i % (app.ui.bar_graph_colours.length)]
+					: app.ui.bar_graph_colours[i];
+
+				$(item).css({
+					width: length + '%',
+					background: colour
+				});
+
+			});
 
 			//Add expand and contract buttons to boxes that contain more info
 			var expand_contract_buttons = '<a href="javascript:;" class="expand-button">More ↘</a><a href="javascript:;" class="contract-button">Less ↖</a>';
