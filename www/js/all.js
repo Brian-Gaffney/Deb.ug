@@ -10,13 +10,18 @@ var head= document.getElementsByTagName('head')[0];
 
 ajaxRequest.onreadystatechange = function(){
 	if(ajaxRequest.readyState == 4){
+
 		scripts = JSON.parse(ajaxRequest.responseText);
 
+		//Synchronously load each script
 		for (var i = 0; i < scripts.length; i++) {
-			script = document.createElement('script');
-			script.type = 'text/javascript';
-			script.src = scripts[i];
-			head.appendChild(script);
+			var xhrObj = new XMLHttpRequest();
+			xhrObj.open('GET', scripts[i], false);
+			xhrObj.send('');
+			var se = document.createElement('script');
+			se.type = "text/javascript";
+			se.text = xhrObj.responseText;
+			document.getElementsByTagName('head')[0].appendChild(se);
 		}
 	}
 };

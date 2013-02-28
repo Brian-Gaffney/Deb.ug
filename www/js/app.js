@@ -21,7 +21,6 @@ app = {
 			$('.box').each(function(i, box) {
 				index = (i - total_boxes) * -1;
 				$(box).css('z-index', index);
-				console.log(index);
 			});
 
 			//Masonry
