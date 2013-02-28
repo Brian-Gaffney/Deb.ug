@@ -14,10 +14,6 @@ availability = {
 				availability.data = jqXHR;
 
 				availability.display_availability();
-
-				$('#availability').detach().hide().fadeIn().appendTo('#wrapper');
-
-				$('#wrapper').masonry('reload');
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				console.log('Error retriving availability from API', jqXHR, textStatus, errorThrown);
@@ -34,12 +30,18 @@ availability = {
 			if(availability.data.end) {
 				html += ' (' + availability.data.end + ')';
 			}
-
 		}
 
 		html = '<strong>' + html + '</strong>';
 
-		$('#availability .content').html(html);
+		$(document).ready(function(){
+			$('#availability .content').html(html);
+
+			$('#availability').detach().hide().fadeIn().appendTo('#wrapper');
+
+			$('#wrapper').masonry('reload');
+		});
+
 	}
 
 };

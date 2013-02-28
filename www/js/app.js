@@ -3,13 +3,25 @@ app = {
 
 	init: function() {
 		app.ui.init();
+
+		//Availability
+		availability.init();
 	},
 
 	ui: {
 		init: function() {
 
+			//Make the site visible
 			$('body').css({
 				visibility: 'visible'
+			});
+
+			//Set z-index on boxes to make the transitions overlap more nicely
+			total_boxes = $('.box').length;
+			$('.box').each(function(i, box) {
+				index = (i - total_boxes) * -1;
+				$(box).css('z-index', index);
+				console.log(index);
 			});
 
 			//Masonry
@@ -21,9 +33,6 @@ app = {
 			//Curves
 			curves.init();
 			$('#curves .loading').fadeOut();
-
-			//Availability
-			availability.init();
 
 			//Add expand and contract buttons to boxes that contain more info
 			var expand_contract_buttons = '<a href="javascript:;" class="expand-button">More ↘</a><a href="javascript:;" class="contract-button">Less ↖</a>';
