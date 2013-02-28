@@ -36,14 +36,18 @@ ul.bar {
 }
 
 ul.bar li {
-	padding-bottom:8px;
-	padding-top:8px;
+	padding-bottom:6px;
+	padding-top:6px;
 	padding-left:8px;
 
 	margin:5px 0 5px 0;
 
 	font-weight: bold;
 	text-shadow: 1px 1px 3px grey;
+}
+
+ul.bar li span {
+	white-space:nowrap;
 }
 
 h1 {
