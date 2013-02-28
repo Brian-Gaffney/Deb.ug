@@ -12,18 +12,45 @@
 <body>
 	<div id="wrapper">
 
-		<div class="box title">
-			<div class="padding_wrapper">
-				<h1>Brian Gaffney</h1>
-				<p>Web developer, freelancer and start up guy in Melbourne.</p>
-				<p><a href="mailto:brian@deb.ug">brian@deb.ug</a></p>
-				<p><a href="http://au.linkedin.com/pub/brian-gaffney-brian-setkick-com-brian-deb-ug/42/60a/807">LinkedIn</a></p>
-				<p><a href="https://github.com/Brian-Gaffney">Github</a></p>
-				<p><a href="tel:+61407668336">+61 407 668 336</a></p>
-			</div>
-		</div>
+		<div class="section brian">
 
-		<div class="masonry projects">
+			<div class="box heading title">
+				<div class="padding_wrapper">
+					<h1>Me</h1>
+				</div>
+			</div><!-- END .box .heading .title -->
+
+			<div class="box">
+				<div class="padding_wrapper">
+					<h2>Brian Gaffney</h2>
+					<p>Web developer, freelancer and start up guy in Melbourne.</p>
+					<p><a href="mailto:brian@deb.ug">brian@deb.ug</a></p>
+					<p><a href="http://au.linkedin.com/pub/brian-gaffney-brian-setkick-com-brian-deb-ug/42/60a/807">LinkedIn</a></p>
+					<p><a href="https://github.com/Brian-Gaffney">Github</a></p>
+					<p><a href="tel:+61407668336">+61 407 668 336</a></p>
+				</div>
+			</div><!-- END .box -->
+
+			<div class="box technical-skills">
+				<div class="padding_wrapper">
+					<h2>
+						Technical skills
+					</h2>
+					<ul class="bar">
+						<li data-percentage="50">
+							CSS
+						</li>
+						<li data-percentage="70">
+							HTML
+						</li>
+					</ul>
+				</div>
+			</div><!-- END .box -->
+
+
+		</div><!-- END .section .brian-->
+
+		<div class="section projects">
 			
 			<div class="box heading title">
 				<div class="padding_wrapper">
@@ -120,9 +147,9 @@
 				</div>
 			</div><!-- END .box#debug-->
 
-		</div><!-- END .masonry .projects -->
+		</div><!-- END .section .projects -->
 
-		<div class="masonry agency-projects">
+		<div class="section agency-projects">
 			
 			<div class="box heading">
 				<div class="padding_wrapper">
@@ -137,7 +164,7 @@
 
 			<div class="box">
 				<div class="padding_wrapper">
-					<h1>Blah</h1>
+					<h2>Blah</h2>
 
 					<p>
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis quis mollitia rerum accusamus nisi! Perferendis quam dignissimos consectetur nemo labore maxime quo nostrum doloremque illum sed dolore cum suscipit aspernatur.
@@ -148,7 +175,7 @@
 
 			<div class="box">
 				<div class="padding_wrapper">
-					<h1>Blah</h1>
+					<h2>Blah</h2>
 
 					<p>
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis quis mollitia rerum accusamus nisi! Perferendis quam dignissimos consectetur nemo labore maxime quo nostrum doloremque illum sed dolore cum suscipit aspernatur.
@@ -159,7 +186,7 @@
 
 			<div class="box">
 				<div class="padding_wrapper">
-					<h1>Blah</h1>
+					<h2>Blah</h2>
 
 					<p>
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis quis mollitia rerum accusamus nisi! Perferendis quam dignissimos consectetur nemo labore maxime quo nostrum doloremque illum sed dolore cum suscipit aspernatur.
@@ -170,7 +197,7 @@
 
 			<div class="box">
 				<div class="padding_wrapper">
-					<h1>Blah</h1>
+					<h2>Blah</h2>
 
 					<p>
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis quis mollitia rerum accusamus nisi! Perferendis quam dignissimos consectetur nemo labore maxime quo nostrum doloremque illum sed dolore cum suscipit aspernatur.
@@ -179,26 +206,35 @@
 				</div>
 			</div>
 
-		</div><!-- END .masonry .agency-projects -->
+		</div><!-- END .section .agency-projects -->
+
+		<div class="section other-stuff">
+
+			<div class="box heading">
+				<div class="padding_wrapper">
+					<h1>Other/misc</h1>
+				</div>
+			</div>
 
 
-		<div id="curves" class="box more-info double-high">
-			<span class="paused">Paused</span>
-			<div id="curves_canvas">
-				<strong class="loading">Loading...</strong>
-			</div>
-			<div class="more-information">
-				<p>
-					Messing around with <a href="http://raphaeljs.com/">Raphaël JS</a>.
-					<br/>
-					<br/>
-					Took a lot longer than I'd hoped to make this little demo.
-					<br/>
-					<br/>
-					<span class="pun">Steep learning curve with these SVG curves</span>.
-				</p>
-			</div>
-		</div><!-- END .box .curves-->
+			<div id="curves" class="box more-info double-high">
+				<span class="paused">Paused</span>
+				<div id="curves_canvas">
+					<strong class="loading">Loading...</strong>
+				</div>
+				<div class="more-information">
+					<p>
+						Messing around with <a href="http://raphaeljs.com/">Raphaël JS</a>.
+						<br/>
+						<br/>
+						Took a lot longer than I'd hoped to make this little demo.
+						<br/>
+						<br/>
+						<span class="pun">Steep learning curve with these SVG curves</span>.
+					</p>
+				</div>
+			</div><!-- END .box .curves-->
+		</div><!-- END .section .other-stuff -->
 
 	</div>
 
@@ -218,6 +254,7 @@
 
 	</div>
 
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script type="text/javascript" src="js/all.js"></script>
 
 </body>

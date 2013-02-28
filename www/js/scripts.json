@@ -1,6 +1,5 @@
 [
 	"js/ga.js",
-	"js/jquery.min.js",
 	"js/jquery.masonry.min.js",
 	"js/raphael.min.js",
 	"js/curves.js",

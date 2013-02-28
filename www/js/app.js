@@ -8,8 +8,12 @@ app = {
 	ui: {
 		init: function() {
 
+			$('body').css({
+				visibility: 'visible'
+			});
+
 			//Masonry
-			$('.masonry').masonry({
+			$('.section').masonry({
 				itemSelector : '.box',
 				colWidth: '250px'
 			});
@@ -61,7 +65,7 @@ app = {
 					parent_box
 						.addClass('expanded')
 						.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
-							$('.masonry').masonry('reload');	
+							$('.section').masonry('reload');	
 						})
 					;
 				}

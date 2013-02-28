@@ -1,11 +1,17 @@
 body {
 	font-family: Verdana, Geneva, sans-serif;
-	font-size: 15px;
+	font-size: 12px;
 	color: #f2f2ea;
 
 	background-image: url(../img/bg.png);
 	background-size: auto;
 	background-repeat: repeat repeat;
+
+	visibility: hidden;
+}
+
+.section {
+	border-top:10px solid #212329;
 }
 
 a {
@@ -14,12 +20,15 @@ a {
 
 ul {
 	list-style-type: circle;
-	padding-left:30px;
-	-webkit-margin-before: 0.3em;
+	padding-left:20px;
 }
 
 li {
 	padding-bottom:4px;
+}
+
+h1 {
+	font-size:22px;
 }
 
 h4 {
@@ -31,8 +40,8 @@ h4 {
 }
 
 .box {
-	width:300px;
-	height:300px;
+	width:250px;
+	height:250px;
 
 	background-color: #212329;
 	outline: 5px solid #212329;
@@ -50,25 +59,25 @@ h4 {
 }
 
 .box .padding_wrapper {
-	padding: 5px 15px 20px 25px;
+	padding: 0 15px 20px 15px;
 }
 
 .box.expanded.double-wide {
-	width:640px;
+	width:530px;
 }
 
 .box.expanded.double-high {
-	height:640px;
+	height:530px;
 }
 
-.box.expanded.double-wide .left {
+.box.double-wide .left {
 	float:left;
-	width:250px;
+	width:220px;
 
 	height:627px;
 }
 
-.box.expanded.double-wide .left > * {
+.box.double-wide .left > * {
 	padding-right:10px;
 }
 
@@ -79,11 +88,6 @@ h4 {
 
 .box.expanded.double-high .toggle-box-height:after {
 	content: " ←";
-}
-
-.box.more-info {
-	width:300px;
-	height:300px;
 }
 
 .box .expand-button, .box .contract-button {
