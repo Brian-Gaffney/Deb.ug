@@ -31,6 +31,8 @@ ul.bar {
 	width:100%;
 	list-style-type: none;
 	padding-left:0;
+
+	border-right:1px solid grey;
 }
 
 ul.bar li {

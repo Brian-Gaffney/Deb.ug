@@ -3,7 +3,7 @@ curves = {
 	curve_points: [],
 	animation_timer: null,
 	animation_duration: 2000,
-	total_curves: 11,
+	total_curves: 9,
 	total_curve_points: 9,
 
 	init: function() {
