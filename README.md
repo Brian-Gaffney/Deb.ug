@@ -11,3 +11,12 @@ Ideas
 
 S3 path
 	http://deb.ug.s3-website-us-east-1.amazonaws.com/
+
+Freelance projects
+	Bosch Ville
+		https://www.facebook.com/BoschAustralia/app_251328581654137
+		Loud & Clear
+
+	NHSD Android app
+		
+
