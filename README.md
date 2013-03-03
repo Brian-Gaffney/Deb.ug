@@ -5,6 +5,7 @@ Personal website
 
 Todo
 	Double wide Anaconda after 'Deb.ug (this site)'
+	Nginx/Apache skillz
 
 Ideas
 	Bargraph thing done in D3
@@ -18,7 +19,3 @@ Freelance projects
 		Loud & Clear
 
 	NHSD Android app
-		
-	Elenberg Fraser web site
-
-	Big Day Out Anniversary site
