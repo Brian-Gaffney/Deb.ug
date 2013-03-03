@@ -32,7 +32,7 @@ ul.bar {
 	list-style-type: none;
 	padding-left:0;
 
-	border-right:1px solid grey;
+	border-right:2px solid grey;
 }
 
 ul.bar li {
@@ -115,8 +115,8 @@ h4 {
 
 .box .expand-button, .box .contract-button {
 	position:absolute;
-	bottom:15px;
-	right:15px;
+	bottom:3px;
+	right:3px;
 
 	text-decoration: none;
 
@@ -176,7 +176,7 @@ h4 {
 }
 
 #curves_canvas {
-	height:310px;
+	height:260px;
 }
 
 #setkick img {
