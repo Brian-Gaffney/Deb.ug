@@ -57,9 +57,14 @@ app = {
 			});
 
 			//Add expand and contract buttons to boxes that contain more info
+			//Add fadeout layer
 			var expand_contract_buttons = '<a href="javascript:;" class="expand-button">More ↘</a><a href="javascript:;" class="contract-button">Less ↖</a>';
+			var fadeout_div = '<div class="fadeout"></div>';
 			$('.box.more-info').each(function(i, item){
-				$(item).append(expand_contract_buttons);
+				$(item)
+					.append(fadeout_div)
+					.append(expand_contract_buttons)
+				;
 			});
 
 			//UI bindings

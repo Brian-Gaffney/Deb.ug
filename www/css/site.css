@@ -109,10 +109,6 @@ h4 {
 	width:48%;
 }
 
-.box.expanded.double-high .toggle-box-height:after {
-	content: " ←";
-}
-
 .box .expand-button, .box .contract-button {
 	position:absolute;
 	bottom:3px;
@@ -163,17 +159,23 @@ h4 {
 	content: " :";
 }
 
-.toggle-box-height {
-	display:none;
-
+.fadeout {
 	position: absolute;
-	bottom: 10px;
-	left:10px;
+	top: 170px;
+	height: 80px;
+	width:100%;
 
-	color: #797979;
 
-	text-decoration: none;
+	background: -webkit-linear-gradient(
+		rgba(33,35,41, 0) 0%,
+		rgba(33,35,41, 1) 80%
+	); 
+} 
+
+.expanded .fadeout {
+	display:none;
 }
+
 
 #curves_canvas {
 	height:260px;
