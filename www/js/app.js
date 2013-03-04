@@ -24,6 +24,17 @@ app = {
 				visibility: 'visible'
 			});
 
+			//Fix for webkit bug that displays the boxes overlapped on first view
+			var sections = $(".section");
+			var num_sections = sections.length;
+			var i = 0;
+			sections.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function() {
+				i++;
+				if(i == num_sections) {
+					sections.masonry('reload');	
+				}
+			});
+
 			//Set z-index on boxes to make the transitions overlap more nicely
 			total_boxes = $('.box').length;
 			$('.box').each(function(i, box) {

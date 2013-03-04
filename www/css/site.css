@@ -3,6 +3,7 @@ body {
 	font-size: 12px;
 	color: #f2f2ea;
 
+	/* Background tile from: http://subtlepatterns.com - Brushed Alum Dark */
 	background-image: url(../img/bg.png);
 	background-size: auto;
 	background-repeat: repeat repeat;
@@ -165,6 +166,11 @@ h4 {
 	height: 80px;
 	width:100%;
 
+	background-image: linear-gradient(rgba(33,36,41, 0) 0%, rgba(33,35,41, 1) 80%);
+	background-image: -o-linear-gradient(rgba(33,36,41, 0) 0%, rgba(33,35,41, 1) 80%);
+	background-image: -moz-linear-gradient(rgba(33,36,41, 0) 0%, rgba(33,35,41, 1) 80%);
+	background-image: -webkit-linear-gradient(rgba(33,36,41, 0) 0%, rgba(33,35,41, 1) 80%);
+	background-image: -ms-linear-gradient(rgba(33,36,41, 0) 0%, rgba(33,35,41, 1) 80%);
 
 	background: -webkit-linear-gradient(
 		rgba(33,35,41, 0) 0%,

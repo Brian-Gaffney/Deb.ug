@@ -2,8 +2,8 @@
 
 .box, .section {
 	-webkit-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
-		-moz-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
-			-ms-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
-				-o-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
-					transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
+	-moz-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
+	-ms-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
+	-o-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
+	transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
 }
