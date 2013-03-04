@@ -25,6 +25,7 @@ app = {
 			});
 
 			//Fix for webkit bug that displays the boxes overlapped on first view
+			//When all transitions have finished JS masonry is re-loaded
 			var sections = $(".section");
 			var num_sections = sections.length;
 			var i = 0;
