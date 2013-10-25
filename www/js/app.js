@@ -19,6 +19,13 @@ app = {
 
 		init: function() {
 
+
+			//Masonry
+			$('.section').masonry({
+				itemSelector : '.box',
+				colWidth: '250px'
+			});
+			
 			//Make the site visible
 			$('body').css({
 				visibility: 'visible'
@@ -41,12 +48,6 @@ app = {
 			$('.box').each(function(i, box) {
 				index = (i - total_boxes) * -1;
 				$(box).css('z-index', index);
-			});
-
-			//Masonry
-			$('.section').masonry({
-				itemSelector : '.box',
-				colWidth: '250px'
 			});
 
 			//Curves
