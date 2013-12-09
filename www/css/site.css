@@ -8,6 +8,8 @@ body {
 	background-size: auto;
 	background-repeat: repeat repeat;
 
+	/*background: #53597A;*/
+
 	visibility: hidden;
 }
 
@@ -76,6 +78,8 @@ h4 {
 	float:left;
 
 	overflow:hidden;
+
+	clear:both;
 }
 
 .box.scroll {
@@ -154,10 +158,6 @@ h4 {
 .box.heading p {
 	color:#3b3b3b;
 	font-weight: bold;
-}
-
-.box.heading h1:after {
-	content: " :";
 }
 
 .fadeout {
