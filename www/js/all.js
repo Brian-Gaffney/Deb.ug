@@ -25,5 +25,5 @@ ajaxRequest.onreadystatechange = function(){
 		}
 	}
 };
-ajaxRequest.open("GET", "/js/scripts.json", true);
+ajaxRequest.open("GET", "js/scripts.json", true);
 ajaxRequest.send(null);

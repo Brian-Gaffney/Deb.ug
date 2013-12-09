@@ -3,6 +3,5 @@
 	"js/jquery.masonry.min.js",
 	"js/raphael.min.js",
 	"js/curves.js",
-	"js/availability.js",
 	"js/app.js"
 ]

@@ -3,9 +3,6 @@ app = {
 
 	init: function() {
 		app.ui.init();
-
-		//Availability
-		availability.init();
 	},
 
 	ui: {
