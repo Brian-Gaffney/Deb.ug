@@ -1,0 +1,43 @@
+//Gradients
+@mixin linear-gradient($bottom, $top) {
+	background: $bottom;
+	background: -moz-linear-gradient(top, $bottom 0%, $top 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$bottom), color-stop(100%,$top));
+	background: -webkit-linear-gradient(top, $bottom 0%,$top 100%);
+	background: -o-linear-gradient(top, $bottom 0%,$top 100%);
+	background: -ms-linear-gradient(top, $bottom 0%,$top 100%);
+	background: linear-gradient(to bottom, $bottom 0%,$top 100%);
+}
+
+@mixin copyfont() {
+	font-family: 'Open Sans', Verdana, Geneva, sans-serif;
+	font-style: normal;
+}
+
+@mixin headingfont() {
+	font-family: 'Open Sans', Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-weight: 700;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	-webkit-margin-after: 0;
+
+	@include headingfont();
+}
+
+h1 {
+	font-size: 28px;
+}
+
+h2 {
+	font-size:22px;
+}
+
+h3 {
+	font-size:16px;
+}
+
+h4 {
+	-webkit-margin-after: 0;
+}

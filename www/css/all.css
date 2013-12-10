@@ -1,2 +1,169 @@
-@import url('site.css');
-@import url('transition.css');
+h1, h2, h3, h4, h5, h6 {
+  -webkit-margin-after: 0;
+  font-family: 'Open Sans', Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: 700; }
+
+h1 {
+  font-size: 28px; }
+
+h2 {
+  font-size: 22px; }
+
+h3 {
+  font-size: 16px; }
+
+h4 {
+  -webkit-margin-after: 0; }
+
+body {
+  font-family: 'Open Sans', Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-size: 12px;
+  color: #3b3b3b;
+  /* Background tile from: http://subtlepatterns.com - Brushed Alum Dark */
+  background-image: url(../img/bg.png);
+  background-size: auto;
+  background-repeat: repeat repeat;
+  visibility: hidden; }
+
+header {
+  margin-bottom: 50px;
+  padding-left: 15px;
+  width: 580px; }
+  header p {
+    font-size: 22px; }
+  header ul {
+    font-size: 20px; }
+
+.section {
+  border-top: 10px solid #212329; }
+
+a {
+  color: #0F4FA8; }
+
+ul {
+  list-style-type: circle;
+  padding-left: 20px; }
+
+li {
+  padding-bottom: 4px; }
+
+ul.bar {
+  width: 100%;
+  list-style-type: none;
+  padding-left: 0;
+  border-right: 2px solid gray; }
+  ul.bar li {
+    padding-bottom: 6px;
+    padding-top: 6px;
+    padding-left: 8px;
+    margin: 5px 0 5px 0;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px gray; }
+    ul.bar li span {
+      white-space: nowrap; }
+
+#wrapper {
+  padding: 15px 0 0 15px; }
+
+.box {
+  width: 250px;
+  height: 250px;
+  background-color: #212329;
+  outline: 5px solid #212329;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  float: left;
+  overflow: hidden;
+  clear: both;
+  color: #f2f2ea; }
+  .box a {
+    color: #FF9F00; }
+  .box.scroll {
+    overflow-y: scroll; }
+  .box .padding_wrapper {
+    padding: 0 15px 20px 15px; }
+  .box.expanded.double-wide {
+    width: 530px; }
+  .box.expanded.double-high {
+    height: 530px; }
+  .box.double-wide .left {
+    float: left;
+    width: 220px;
+    height: 627px; }
+    .box.double-wide .left > * {
+      padding-right: 10px; }
+  .box.expanded.double-wide .right {
+    float: right;
+    width: 48%; }
+  .box .expand-button {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    text-decoration: none;
+    font-size: 14px; }
+  .box .contract-button {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    text-decoration: none;
+    font-size: 14px;
+    display: none; }
+  .box.expanded .expand-button {
+    display: none; }
+  .box.expanded .contract-button {
+    display: block; }
+  .box .more-information {
+    padding-left: 10px;
+    padding-top: 10px; }
+  .box.title {
+    float: none; }
+  .box.heading {
+    background: none;
+    outline: none;
+    color: #3b3b3b; }
+    .box.heading p {
+      font-size: 15px;
+      font-weight: bold; }
+
+.box, .section {
+  -webkit-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
+  -moz-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
+  -ms-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
+  -o-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
+  transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s; }
+
+/* Heading boxes */
+.fadeout {
+  position: absolute;
+  top: 170px;
+  height: 80px;
+  width: 100%;
+  background-image: linear-gradient(rgba(33, 36, 41, 0) 0%, #212329 80%);
+  background-image: -o-linear-gradient(rgba(33, 36, 41, 0) 0%, #212329 80%);
+  background-image: -moz-linear-gradient(rgba(33, 36, 41, 0) 0%, #212329 80%);
+  background-image: -webkit-linear-gradient(rgba(33, 36, 41, 0) 0%, #212329 80%);
+  background-image: -ms-linear-gradient(rgba(33, 36, 41, 0) 0%, #212329 80%);
+  background: -webkit-linear-gradient(rgba(33, 35, 41, 0) 0%, #212329 80%); }
+
+.expanded .fadeout {
+  display: none; }
+
+#curves_canvas {
+  height: 260px; }
+
+#setkick img {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 200px; }
+
+.paused, .loading {
+  position: absolute;
+  top: 30px;
+  right: 15px; }
+
+.window_focus .paused, .hidden {
+  display: none; }
+
+/*# sourceMappingURL=all.css.map */
