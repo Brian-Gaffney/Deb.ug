@@ -4,8 +4,11 @@ Deb.ug
 Personal website
 
 Todo
+	Hover states for links
+		Transitioned colour change
+
 	Minify HTML on deploy
-	Double wide Anaconda after 'Deb.ug (this site)'
+	Double wide Anaconda after the waves thing
 	Nginx/Apache skills
 
 Ideas
@@ -25,5 +28,3 @@ Freelance projects
 	Bosch Ville
 		https://www.facebook.com/BoschAustralia/app_251328581654137
 		Loud & Clear
-
-	NHSD Android app
