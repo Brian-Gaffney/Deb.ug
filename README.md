@@ -7,13 +7,9 @@ Todo
 	Hover states for links
 		Transitioned colour change
 
-	Minify HTML on deploy
 	Double wide Anaconda after the waves thing
-	Nginx/Apache skills
 
 Ideas
-	Bargraph thing done in D3
-
 	Example sites
 		http://bellebethcooper.com/
 		http://joshsharp.com.au/
