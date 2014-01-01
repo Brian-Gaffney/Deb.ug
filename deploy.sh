@@ -4,7 +4,7 @@ echo '*** Deploying...'
 echo 'Copying files to /tmp/deb.ug'
 rm -rf /tmp/deb.ug
 mkdir -p /tmp/deb.ug/www
-cp -r /var/www/deb.ug/www /tmp/deb.ug
+cp -r ./www /tmp/deb.ug
 
 #JS compression and concatenation (uglifyjs2)
 echo 'Compiling JS files with Google Closure compiler'
@@ -24,11 +24,8 @@ ls | grep -v 'all.js' | xargs rm
 #CSS compression
 echo 'Compressing CSS'
 cd /tmp/deb.ug/www/css
-rm all.css
 cat *.css | yuicompressor --type css -o all.css
 
-echo 'Removing original CSS files'
-ls | grep -v 'all.css' | xargs rm
 
 #Find each file and gzip it
 echo 'Gzipping files'
