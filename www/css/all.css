@@ -111,6 +111,8 @@ li {
     .box.heading p {
       font-size: 15px;
       font-weight: bold; }
+  .box .bdo-vault-logo {
+    margin-top: 15px; }
 
 .box, .section {
   -webkit-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;
