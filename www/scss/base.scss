@@ -1,3 +1,12 @@
+//Colours
+$dark: #212329;
+$text: #3b3b3b;
+$highlight: #FF9F00;
+$link: #0F4FA8;
+
+
+
+
 //Gradients
 @mixin linear-gradient($bottom, $top) {
 	background: $bottom;
@@ -40,4 +49,20 @@ h3 {
 
 h4 {
 	-webkit-margin-after: 0;
+}
+
+
+a {
+	color: $link;
+
+	-webkit-transition:color 0.2 ease-in;  
+	-moz-transition:color 0.2 ease-in;  
+	-o-transition:color 0.2 ease-in;  
+	transition:color 0.2 ease-in;  
+
+	&:hover {
+		&:hover {
+			color:darken($link, 28%);
+		}
+	}
 }

@@ -2,7 +2,7 @@ body {
 	@include copyfont();
 
 	font-size: 12px;
-	color: #3b3b3b;
+	color: $text;
 
 	/* Background tile from: http://subtlepatterns.com - Brushed Alum Dark */
 	background-image: url(../img/bg.png);
@@ -28,11 +28,7 @@ header {
 }
 
 .section {
-	border-top: 10px solid #212329;
-}
-
-a {
-	color: #0F4FA8;
+	border-top: 10px solid $dark;
 }
 
 ul {
@@ -51,8 +47,8 @@ li {
 .box {
 	width: 250px;
 	height: 250px;
-	background-color: #212329;
-	outline: 5px solid #212329;
+	background-color: $dark;
+	outline: 5px solid $dark;
 	margin-right: 30px;
 	margin-bottom: 30px;
 	float: left;
@@ -62,7 +58,11 @@ li {
 	color: #f2f2ea;
 
 	a {
-		color: #FF9F00;
+		color: $highlight;
+
+		&:hover {
+			color:darken($highlight, 10%);
+		}
 	}
 
 	&.scroll {
@@ -137,7 +137,7 @@ li {
 		background: none;
 		outline: none;
 
-		color: #3b3b3b;
+		color: $text;
 
 		p {
 			font-size:15px;

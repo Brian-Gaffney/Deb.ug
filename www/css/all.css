@@ -16,6 +16,15 @@ h3 {
 h4 {
   -webkit-margin-after: 0; }
 
+a {
+  color: #0f4fa8;
+  -webkit-transition: color 0.2 ease-in;
+  -moz-transition: color 0.2 ease-in;
+  -o-transition: color 0.2 ease-in;
+  transition: color 0.2 ease-in; }
+  a:hover:hover {
+    color: #031125; }
+
 body {
   font-family: 'Open Sans', Verdana, Geneva, sans-serif;
   font-style: normal;
@@ -39,9 +48,6 @@ header {
 .section {
   border-top: 10px solid #212329; }
 
-a {
-  color: #0F4FA8; }
-
 ul {
   list-style-type: circle;
   padding-left: 20px; }
@@ -64,7 +70,9 @@ li {
   clear: both;
   color: #f2f2ea; }
   .box a {
-    color: #FF9F00; }
+    color: #ff9f00; }
+    .box a:hover {
+      color: #cc7f00; }
   .box.scroll {
     overflow-y: scroll; }
   .box .padding_wrapper {
