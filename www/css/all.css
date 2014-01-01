@@ -49,21 +49,6 @@ ul {
 li {
   padding-bottom: 4px; }
 
-ul.bar {
-  width: 100%;
-  list-style-type: none;
-  padding-left: 0;
-  border-right: 2px solid gray; }
-  ul.bar li {
-    padding-bottom: 6px;
-    padding-top: 6px;
-    padding-left: 8px;
-    margin: 5px 0 5px 0;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px gray; }
-    ul.bar li span {
-      white-space: nowrap; }
-
 #wrapper {
   padding: 15px 0 0 15px; }
 

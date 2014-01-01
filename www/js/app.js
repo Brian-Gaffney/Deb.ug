@@ -51,21 +51,6 @@ app = {
 			curves.init();
 			$('#curves .loading').fadeOut();
 
-			//Bar graphs
-			$('ul.bar li').each(function(i, item){
-				length = $(item).data('length');
-
-				colour = i >= app.ui.bar_graph_colours.length ? 
-					app.ui.bar_graph_colours[i % (app.ui.bar_graph_colours.length)]
-					: app.ui.bar_graph_colours[i];
-
-				$(item).css({
-					width: length + '%',
-					background: colour
-				});
-
-			});
-
 			//Add expand and contract buttons to boxes that contain more info
 			//Add fadeout layer
 			var expand_contract_buttons = '<a href="javascript:;" class="expand-button">More ↘</a><a href="javascript:;" class="contract-button">Less ↖</a>';
