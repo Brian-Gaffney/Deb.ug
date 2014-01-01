@@ -11,7 +11,7 @@ curves = {
 		// http://www.w3.org/TR/SVG11/paths.html
 		// http://raphaeljs.com/reference.html
 
-		var paper = Raphael("curves_canvas", 310, 310);
+		var paper = Raphael("curves_canvas", 250, 250);
 
 		var origin = [10,240];
 		var end = [240,240];
