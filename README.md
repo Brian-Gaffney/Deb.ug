@@ -4,9 +4,6 @@ Deb.ug
 Personal website
 
 Todo
-	Hover states for links
-		Transitioned colour change
-
 	Double wide Anaconda after the waves thing
 
 Ideas
