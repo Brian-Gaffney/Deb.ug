@@ -52,6 +52,9 @@ header {
 
 .section {
   border-top: 10px solid #212329; }
+  .section.continued {
+    border-top: 0;
+    margin-left: 280px; }
 
 ul {
   list-style-type: circle;

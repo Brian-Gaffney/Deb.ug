@@ -29,6 +29,11 @@ header {
 
 .section {
 	border-top: 10px solid $dark;
+
+	&.continued {
+		border-top:0;
+		margin-left:280px;
+	}
 }
 
 ul {
