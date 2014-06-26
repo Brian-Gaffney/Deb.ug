@@ -25,6 +25,11 @@ a {
   a:hover:hover {
     color: #031125; }
 
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both; }
+
 body {
   font-family: 'Open Sans', Verdana, Geneva, sans-serif;
   font-style: normal;
@@ -121,6 +126,8 @@ li {
       font-weight: bold; }
   .box .bdo-vault-logo {
     margin-top: 15px; }
+  .box .social-pulse-logo {
+    margin-top: 10px; }
 
 .box, .section {
   -webkit-transition: width 0.4s, height 0.4s, -webkit-transform 0.7s, left 0.7s, right 0.7s, top 0.7s;

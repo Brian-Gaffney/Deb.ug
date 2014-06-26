@@ -4,9 +4,6 @@ $text: #3b3b3b;
 $highlight: #FF9F00;
 $link: #0F4FA8;
 
-
-
-
 //Gradients
 @mixin linear-gradient($bottom, $top) {
 	background: $bottom;
@@ -16,6 +13,14 @@ $link: #0F4FA8;
 	background: -o-linear-gradient(top, $bottom 0%,$top 100%);
 	background: -ms-linear-gradient(top, $bottom 0%,$top 100%);
 	background: linear-gradient(to bottom, $bottom 0%,$top 100%);
+}
+
+@mixin clearfix() {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
 }
 
 @mixin copyfont() {
@@ -32,7 +37,7 @@ $link: #0F4FA8;
 h1, h2, h3, h4, h5, h6 {
 	-webkit-margin-after: 0;
 
-	@include headingfont();
+	@include headingfont;
 }
 
 h1 {
@@ -51,7 +56,6 @@ h4 {
 	-webkit-margin-after: 0;
 }
 
-
 a {
 	color: $link;
 
@@ -65,4 +69,8 @@ a {
 			color:darken($link, 28%);
 		}
 	}
+}
+
+.clearfix {
+	@include clearfix;
 }
