@@ -3,6 +3,9 @@ Deb.ug
 
 Personal website
 
+Todo
+	Base64 encode the background image
+
 Ideas
 	Example sites
 		http://bellebethcooper.com/
