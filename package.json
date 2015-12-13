@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/Brian-Gaffney/Deb.ug/issues"
   },
-  "homepage": "https://github.com/Brian-Gaffney/Deb.ug#readme",
+  "homepage": "https://deb.ug",
   "dependencies": {
     "autoprefixer-loader": "^3.1.0",
     "babel": "^6.3.13",
