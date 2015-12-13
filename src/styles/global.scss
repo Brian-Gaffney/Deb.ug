@@ -1,0 +1,57 @@
+$link: rgb(100,100,100);
+$color-primary: #FFA500;
+
+body {
+	height: 100%;
+	background: lightgrey;
+
+	color: rgb(50, 50, 50);
+	// padding: 3rem 5rem;
+	padding: 1% 4%;
+
+	/* Background tile from: http://subtlepatterns.com */
+	background-image: url(../img/bg.png);
+	background-size: auto;
+	background-repeat: repeat repeat;
+}
+
+a {
+	color: $link;
+	padding: 3px 8px;
+
+	transition: background-color 0.5s ease;
+	border-radius: 2px;
+
+	&:hover {
+		background: $color-primary;
+	}
+}
+
+h1, h2 {
+	font-family: 'Open Sans',Verdana,Geneva,sans-serif;
+	font-style: normal;
+	font-weight: 700;
+}
+
+h1 {
+	font-weight: 700;
+	font-size: 3rem;
+}
+
+h2 {
+	font-weight: 500;
+	font-size: 2.2rem;
+}
+
+p {
+	font-size: 1.5rem;
+}
+
+ul {
+	list-style-type: circle;
+	font-size: 1.4rem;
+
+	li {
+		margin-bottom: 0.4em;
+	}
+}

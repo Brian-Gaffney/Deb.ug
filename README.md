@@ -1,18 +1,10 @@
 Deb.ug
 ======
 
-Personal website
+Personal website for Brian Gaffney
 
-Todo
-	Base64 encode the background image
+Webpack, React, SASS
 
-Ideas
-	Example sites
-		http://bellebethcooper.com/
-		http://joshsharp.com.au/
+Site - https://deb.ug
 
-Commands
-	sass --sourcemap --watch all.scss:../css/all.css
-
-S3 path
-	http://deb.ug.s3-website-us-east-1.amazonaws.com/
+S3 bucket - http://deb.ug.s3-website-us-east-1.amazonaws.com

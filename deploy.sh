@@ -1,35 +1,19 @@
 #!/bin/sh
 echo '*** Deploying...'
 
-echo 'Copying files to /tmp/deb.ug'
-rm -rf /tmp/deb.ug
-mkdir -p /tmp/deb.ug/www
-cp -r ./www /tmp/deb.ug
+TMP_DIRECTORY=/tmp/deb.ug
 
-#JS compression and concatenation (uglifyjs2)
-echo 'Compiling JS files with Google Closure compiler'
+echo "Copying files to $TMP_DIRECTORY"
+rm -rf $TMP_DIRECTORY
+mkdir -p $TMP_DIRECTORY
+cp -r ./build/* $TMP_DIRECTORY
 
-cd /tmp/deb.ug/www/
-rm js/all.js
 
-#Reading JSON list of scripts
-scripts=`jq -r '.[]' js/scripts.json`
-
-closure-compiler $scripts > js/all.js
-
-echo 'Removing original JS files'
-cd js
-ls | grep -v 'all.js' | xargs rm
-
-#CSS compression
-echo 'Compressing CSS'
-cd /tmp/deb.ug/www/css
-cat *.css | yuicompressor --type css -o all.css
-
+cd $TMP_DIRECTORY/
 
 #Find each file and gzip it
 echo 'Gzipping files'
-files=`find /tmp/deb.ug/www/ -type f`
+files=`find $TMP_DIRECTORY/ -type f`
 for file in $files
 do
 	#Gzip em then rename them to their normal names
@@ -40,8 +24,8 @@ done;
 
 echo 'Uploading to S3...'
 # Public turns on S3 website serving. CF-invalidate for Cloudfront cache, GZIP header for gzip data
-s3cmd  --acl-public --cf-invalidate --delete-removed --add-header=Content-Encoding:gzip sync /tmp/deb.ug/www/ s3://deb.ug
+s3cmd  --acl-public --cf-invalidate --delete-removed --add-header=Content-Encoding:gzip sync $TMP_DIRECTORY/ s3://deb.ug
 
-echo 'Removing /tmp/deb.ug'
-rm -rf /tmp/deb.ug
+echo 'Removing $TMP_DIRECTORY'
+rm -rf $TMP_DIRECTORY
 echo '*** Done ***'
