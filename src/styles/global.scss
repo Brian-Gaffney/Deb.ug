@@ -16,18 +16,19 @@ body {
 
 a {
 	color: $link;
-	padding: 3px 8px;
+	padding: 5px 8px;
 
-	transition: background-color 0.5s ease;
+	transition: color 0.5s ease-in, background-color 0.5s ease-out;
 	border-radius: 2px;
 
 	&:hover {
-		background: $color-primary;
+		color: #0166FF;
+		background-color: rgba($color-primary, 0.8);
 	}
 }
 
 h1, h2 {
-	font-family: 'Open Sans',Verdana,Geneva,sans-serif;
+	font-family: 'Open Sans', Verdana, Geneva, sans-serif;
 	font-style: normal;
 	font-weight: 700;
 }
