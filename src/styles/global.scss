@@ -5,7 +5,7 @@ body {
 	height: 100%;
 	background: lightgrey;
 
-	color: rgb(50, 50, 50);
+	color: rgb(60, 60, 70);
 	padding: 1% 4%;
 
 	/* Background tile from: http://subtlepatterns.com */
@@ -50,6 +50,7 @@ p {
 ul {
 	list-style-type: circle;
 	font-size: 1.4rem;
+	padding-left: 3em;
 
 	li {
 		margin-bottom: 0.4em;

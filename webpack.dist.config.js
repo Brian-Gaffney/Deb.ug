@@ -12,33 +12,27 @@ config.devtool = 'none';
 
 
 // =================================
-// Remove hot module replacement code
+// Modifications to loaders
 // =================================
 config.module.loaders = config.module.loaders
-	// Find react-hot! loaders and remove them
 	.map(function (loaderConfig) {
+		// Find react-hot! loaders and remove them
 		if (/^react\-hot\!/.test(loaderConfig.loader)) {
 			loaderConfig.loader = loaderConfig.loader.replace(/^react\hot\!/, '');
 		}
+
+		// Disable 'friendly' CSS class names
+		if (loaderConfig.name === 'scssModuleLoader') {
+			loaderConfig.loader = loaderConfig.loader.replace('localIdentName=[local]__[hash:base64]!', '[hash:base64]');
+
+		}
+
 		return loaderConfig;
 	});
 
 config.plugins = config.plugins.filter(function (plugin) {
 	return plugin instanceof webpack.HotModuleReplacementPlugin === false;
 });
-
-
-// =================================
-// Disable 'friendly' CSS class names
-// =================================
-config.module.loaders = config.module.loaders
-	// Find css style! loaders and replace with extract-text-plugin config
-	.map(function (loaderConfig) {
-		loaderConfig.loader = loaderConfig.loader.replace('localIdentName=[local]__[hash:base64]!', '[hash:base64]');
-		return loaderConfig;
-	});
-
-
 
 
 // =================================

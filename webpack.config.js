@@ -34,8 +34,7 @@ module.exports = {
 
 		loaders: [
 			{
-				// test: /\.js$/,
-				test: /\.(js|jsx)$/,
+				test: /\.(js|jsx|svg)$/,
 				loader: 'babel',
 				include: [
 					path.resolve(__dirname, "src"),
@@ -53,7 +52,8 @@ module.exports = {
 				],
 				loader: 'style!css?modules&localIdentName=[local]__[hash:base64]!resolve-url!autoprefixer!sass?' +
 				'includePaths[]=' + encodeURIComponent(path.resolve(__dirname, './src')) +
-				'&includePaths[]=' + encodeURIComponent(path.resolve(__dirname, './node_modules'))
+				'&includePaths[]=' + encodeURIComponent(path.resolve(__dirname, './node_modules')),
+				name: 'scssModuleLoader'
 			},
 
 			{
@@ -75,6 +75,14 @@ module.exports = {
 				test: /\.(jpg|png)$/,
 				loader: 'url?limit=20000' + // inline as base64 if < 20kb
 				'&name=[name]-[hash].[ext]'
+			},
+
+			// Load SVGs as react components
+			{
+				test: /\.svg$/,
+				loaders: [
+					'svg-jsx'
+				]
 			}
 		]
 	},
