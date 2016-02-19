@@ -9,7 +9,7 @@ import {
 
 import styles from './styles.scss';
 
-var stats = new Stats();
+const stats = new Stats();
 
 const cameraRotationStep = 0.002;
 const PHANTOM_SPHERE_RADIUS = 190; // Radius of "phantom" sphere on which all points are placed
@@ -17,11 +17,17 @@ const SPHERE_COLOR = 0x6666dd;
 
 const TOTAL_SPHERES = 150;
 const TOTAL_LINES = Math.floor(TOTAL_SPHERES * 2);
-const CURVE_POINTS = 50 - 1; // Determines accuracy when converting a curve to points
-const LINE_COLOR = 0x7777ff;
+const CURVE_POINTS = 50; // Determines accuracy when converting a curve to points
+const LINE_COLOR = 0xffa500;
 const LINE_MIDPOINT_OFFSET = 25;
 
 const MOUSE_MOVE_STEP = 0.004;
+
+const LINE_MATERIAL = new THREE.LineBasicMaterial({
+	color: LINE_COLOR,
+	linewidth: 1.7
+});
+
 
 
 const ThreeDemo = React.createClass({
@@ -66,11 +72,56 @@ const ThreeDemo = React.createClass({
 	},
 
 	init () {
-		// this.centerPointSphere();
+		this.centerPointSphere();
 		this.initSpheres();
 		this.render3D();
+		this.initLineDrawing();
 
 		document.onmousemove = this.handleMouseMove;
+	},
+
+	line: {},
+	initLineDrawing () {
+		window.setInterval(() => {
+			this.drawLine();
+		}, 1000);
+	},
+
+	drawLine () {
+		let {
+			scene
+		} = this.state;
+
+		// Remove the last line
+		if (this.line) {
+			scene.remove(this.line);
+		}
+
+		// Get two random spheres
+		let s1 = this.spheres[getRandom(0, this.spheres.length)];
+		let s2 = this.spheres[getRandom(0, this.spheres.length)];
+
+		// Set a midpoint between the two spheres
+		let midPoint = new THREE.Vector3();
+		midPoint.lerpVectors(s1.position, s2.position, 0.5);
+
+		// Add some jiggle to the midpoint
+		midPoint.x += getRandom(-80, 80);
+		midPoint.y += getRandom(-80, 80);
+		midPoint.z += getRandom(-80, 80);
+
+		// Create a curve from sphere 1 to 2 via the midpoint
+		let curve = new THREE.CatmullRomCurve3([
+			s1.position,
+			midPoint,
+			s2.position
+		]);
+
+		let geometry = new THREE.Geometry();
+		geometry.vertices = curve.getPoints(CURVE_POINTS);
+
+		this.line = new THREE.Line(geometry, LINE_MATERIAL);
+		scene.add(this.line);
 	},
 
 	lastMousePosition: {},
@@ -82,12 +133,12 @@ const ThreeDemo = React.createClass({
 		} = this.state;
 
 		if (this.lastMousePosition.x) {
-			var deltaX = this.lastMousePosition.x - event.pageX;
-			var deltaY = this.lastMousePosition.y - event.pageY;
+			let deltaX = this.lastMousePosition.x - event.pageX;
+			let deltaY = this.lastMousePosition.y - event.pageY;
 
-			var x = camera.position.x;
-			var y = camera.position.y;
-			var z = camera.position.z;
+			let x = camera.position.x;
+			let y = camera.position.y;
+			let z = camera.position.z;
 
 			if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0) {
 				// Left
@@ -126,18 +177,18 @@ const ThreeDemo = React.createClass({
 		} = this.state;
 
 		// Add a bunch of spheres to scene
-		var sphereGeometry = new THREE.SphereGeometry(1.5, 20, 20);
+		let sphereGeometry = new THREE.SphereGeometry(1.5, 20, 20);
 
-		var sphereMaterial = new THREE.MeshBasicMaterial({
+		let sphereMaterial = new THREE.MeshBasicMaterial({
 			color: SPHERE_COLOR,
 			opacity: 1
 		});
 
-		for (var i = 0; i < TOTAL_SPHERES; i++) {
-			var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-			var positionOffset = 220;
+		for (let i = 0; i < TOTAL_SPHERES; i++) {
+			let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+			let positionOffset = 220;
 
-			var pos = getRandomPointOnSphere(PHANTOM_SPHERE_RADIUS);
+			let pos = getRandomPointOnSphere(PHANTOM_SPHERE_RADIUS);
 			sphere.position.set(pos.x, pos.y, pos.z);
 
 			// Origin - Used for later bounds checking
