@@ -4,7 +4,7 @@
   "description": "Personal website for Brian Gaffney",
   "main": "src/main.js",
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --port 3000 --progress",
+    "start": "NODE_ENV=development webpack-dev-server --port 3001 --progress",
     "build": "rm -rf ./build && NODE_ENV=production webpack --config webpack.dist.config.js --colors --progress --display-chunks --display-modules",
     "deploy": "npm run build && ./deploy.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -33,6 +33,7 @@
     "path": "^0.12.7",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
+    "react-google-analytics": "^0.2.0",
     "react-hot-loader": "^1.3.0",
     "resolve-url-loader": "^1.4.3",
     "sass-loader": "^3.1.2",
