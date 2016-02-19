@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import THREE from 'utils/three';
 import Stats from 'vendor/stats';
+import THREE from 'utils/three';
+import {
+	getRandom,
+	getRandomPointOnSphere
+} from 'utils/maths';
 
 import styles from './styles.scss';
 
@@ -23,39 +27,6 @@ const MOUSE_MOVE_STEP = 0.004;
 const ThreeDemo = React.createClass({
 
 	displayName: 'ThreeDemo',
-
-	getRandom (min, max) {
-		return Math.random() * (max - min) + min;
-	},
-
-	getRandomWithBias (min, max, bias, influence) {
-		let random = Math.random() * (max - min) + min;
-		let difference = random - bias;
-		let mixer = Math.pow(Math.random(), influence);
-		let toBeRemoved = difference * mixer;
-
-		return Math.floor(random - toBeRemoved);
-	},
-
-	randomPointOnSphere () {
-		var radius = PHANTOM_SPHERE_RADIUS;
-
-		// First get a random point along a sphere with set radius
-		var u = Math.random();
-		var v = Math.random();
-		var theta = 2 * Math.PI * u;
-		var phi = Math.acos(2 * v - 1);
-		var x = (radius * Math.sin(phi) * Math.cos(theta));
-		var y = (radius * Math.sin(phi) * Math.sin(theta));
-		var z = (radius * Math.cos(phi));
-
-		// Extra randomisation so as to avoid a perfect sphere
-		x += this.getRandom(-(radius / 15), (radius / 15));
-		y += this.getRandom(-(radius / 15), (radius / 15));
-		z += this.getRandom(-(radius / 15), (radius / 15));
-
-		return new THREE.Vector3(x, y, z);
-	},
 
 	componentDidMount () {
 		this.initStats();
@@ -98,14 +69,11 @@ const ThreeDemo = React.createClass({
 		// this.centerPointSphere();
 		this.initSpheres();
 		this.render3D();
-		this.initMouseDetection();
-	},
 
-	initMouseDetection () {
 		document.onmousemove = this.handleMouseMove;
 	},
 
-	lastPosition: {},
+	lastMousePosition: {},
 	handleMouseMove (event) {
 
 		let {
@@ -113,9 +81,9 @@ const ThreeDemo = React.createClass({
 			camera
 		} = this.state;
 
-		if (this.lastPosition.x) {
-			var deltaX = this.lastPosition.x - event.pageX;
-			var deltaY = this.lastPosition.y - event.pageY;
+		if (this.lastMousePosition.x) {
+			var deltaX = this.lastMousePosition.x - event.pageX;
+			var deltaY = this.lastMousePosition.y - event.pageY;
 
 			var x = camera.position.x;
 			var y = camera.position.y;
@@ -144,7 +112,7 @@ const ThreeDemo = React.createClass({
 		}
 
 		//Update last position for next time
-		this.lastPosition = {
+		this.lastMousePosition = {
 			x : event.pageX,
 			y : event.pageY
 		};
@@ -169,16 +137,16 @@ const ThreeDemo = React.createClass({
 			var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 			var positionOffset = 220;
 
-			var pos = this.randomPointOnSphere();
+			var pos = getRandomPointOnSphere(PHANTOM_SPHERE_RADIUS);
 			sphere.position.set(pos.x, pos.y, pos.z);
 
 			// Origin - Used for later bounds checking
 			sphere.userData.originalPosition = sphere.position.clone();
 
 			// Data for moving spheres - Used by updateSpheres()
-			sphere.userData.dx = this.getRandom(-100, 100);
-			sphere.userData.dy = this.getRandom(-100, 100);
-			sphere.userData.dz = this.getRandom(-100, 100);
+			sphere.userData.dx = getRandom(-100, 100);
+			sphere.userData.dy = getRandom(-100, 100);
+			sphere.userData.dz = getRandom(-100, 100);
 
 			this.spheres.push(sphere);
 			scene.add(sphere);
