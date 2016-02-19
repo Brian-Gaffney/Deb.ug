@@ -37,7 +37,7 @@ const SPHERE_SCALING_FACTOR = 1.8;
 
 const TOTAL_LINES = Math.floor(TOTAL_SPHERES * 2);
 const CURVE_POINTS = 250; // Determines accuracy when converting a curve to points
-const LINE_COLOR = ORANGE.hex; // Orange
+const LINE_COLOR = ORANGE.hex;
 const LINE_DRAW_DURATION = 1500; // How many ms it takes to animate drawing a line
 
 const LINE_MIDPOINT_JIGGLE = 50;
@@ -62,6 +62,15 @@ const ThreeDemo = React.createClass({
 
 	displayName: 'ThreeDemo',
 
+	spheres: [],
+	line: null,
+	startingSphere: null,
+	endingSphere: null,
+	lastMousePosition: {},
+	scene: null,
+	camera: null,
+	renderer: null,
+
 	componentDidMount () {
 		this.initStats();
 
@@ -77,26 +86,22 @@ const ThreeDemo = React.createClass({
 		let NEAR = 0.1;
 		let FAR = 10000;
 
-		let camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-		camera.position.set(0, 20, 500);
+		this.camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+		this.camera.position.set(0, 20, 500);
 
-		let renderer = new THREE.WebGLRenderer({
+		this.renderer = new THREE.WebGLRenderer({
 			alpha: true,
 			antialias: true,
 			precision: 'highp',
 			canvas
 		});
 
-		renderer.setClearColor(0xffffff, 0);
-		renderer.setSize(WIDTH, HEIGHT);
+		this.renderer.setClearColor(0xffffff, 0);
+		this.renderer.setSize(WIDTH, HEIGHT);
 
-		let scene = new THREE.Scene()
+		this.scene = new THREE.Scene();
 
-		this.setState({
-			scene,
-			camera,
-			renderer
-		}, this.init);
+		this.init();
 	},
 
 	init () {
@@ -118,10 +123,6 @@ const ThreeDemo = React.createClass({
 
 		return sphere;
 	},
-
-	line: null,
-	startingSphere: null,
-	endingSphere: null,
 
 	initLineDrawing () {
 
@@ -244,10 +245,6 @@ const ThreeDemo = React.createClass({
 	},
 
 	animateLineDrawing (curvePoints, backward = false) {
-		let {
-			scene
-		} = this.state;
-
 		let counter = 1;
 		if (backward) {
 			counter = curvePoints.length;
@@ -273,13 +270,13 @@ const ThreeDemo = React.createClass({
 
 				// Remove previous line
 				if (this.line) {
-					scene.remove(this.line);
+					this.scene.remove(this.line);
 				}
 
 				var geometry = new THREE.Geometry();
 				geometry.vertices = points;
 				this.line = new THREE.Line(geometry, LINE_MATERIAL);
-				scene.add(this.line);
+				this.scene.add(this.line);
 
 				// Resolve promise after we reach the end of the line
 				if ((backward && counter < 1) || counter === curvePoints.length) {
@@ -291,42 +288,35 @@ const ThreeDemo = React.createClass({
 		});
 	},
 
-	lastMousePosition: {},
 	handleMouseMove (event) {
-
-		let {
-			scene,
-			camera
-		} = this.state;
-
 		if (this.lastMousePosition.x) {
 			let deltaX = this.lastMousePosition.x - event.pageX;
 			let deltaY = this.lastMousePosition.y - event.pageY;
 
-			let x = camera.position.x;
-			let y = camera.position.y;
-			let z = camera.position.z;
+			let x = this.camera.position.x;
+			let y = this.camera.position.y;
+			let z = this.camera.position.z;
 
 			if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0) {
 				// Left
-				camera.position.x = x * Math.cos(MOUSE_MOVE_STEP) + z * Math.sin(MOUSE_MOVE_STEP);
-				camera.position.y = y * Math.cos(MOUSE_MOVE_STEP / 4) + z * Math.sin(MOUSE_MOVE_STEP / 4);
+				this.camera.position.x = x * Math.cos(MOUSE_MOVE_STEP) + z * Math.sin(MOUSE_MOVE_STEP);
+				this.camera.position.y = y * Math.cos(MOUSE_MOVE_STEP / 4) + z * Math.sin(MOUSE_MOVE_STEP / 4);
 
 			} else if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0) {
 				// Right
-				camera.position.x = x * Math.cos(-MOUSE_MOVE_STEP) + z * Math.sin(-MOUSE_MOVE_STEP);
-				camera.position.y = y * Math.cos(-MOUSE_MOVE_STEP / 4) + z * Math.sin(-MOUSE_MOVE_STEP / 4);
+				this.camera.position.x = x * Math.cos(-MOUSE_MOVE_STEP) + z * Math.sin(-MOUSE_MOVE_STEP);
+				this.camera.position.y = y * Math.cos(-MOUSE_MOVE_STEP / 4) + z * Math.sin(-MOUSE_MOVE_STEP / 4);
 
 			} else if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0) {
 				// Up
-				camera.position.z = z * Math.cos(MOUSE_MOVE_STEP) - x * Math.sin(MOUSE_MOVE_STEP);
+				this.camera.position.z = z * Math.cos(MOUSE_MOVE_STEP) - x * Math.sin(MOUSE_MOVE_STEP);
 
 			} else if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY < 0) {
 				// Down
-				camera.position.z = z * Math.cos(-MOUSE_MOVE_STEP) - x * Math.sin(-MOUSE_MOVE_STEP);
+				this.camera.position.z = z * Math.cos(-MOUSE_MOVE_STEP) - x * Math.sin(-MOUSE_MOVE_STEP);
 			}
 
-			camera.lookAt(scene.position);
+			this.camera.lookAt(this.scene.position);
 		}
 
 		//Update last position for next time
@@ -336,16 +326,9 @@ const ThreeDemo = React.createClass({
 		};
 	},
 
-	spheres: [], // Contains all spheres to be rendered
 	initSpheres () {
-
-		let {
-			scene
-		} = this.state;
-
 		// Add a bunch of spheres to scene
 		let sphereGeometry = new THREE.SphereGeometry(SPHERE_SIZE, 20, 20);
-
 
 		for (let i = 0; i < TOTAL_SPHERES; i++) {
 			let sphereMaterial = new THREE.MeshBasicMaterial({
@@ -368,13 +351,11 @@ const ThreeDemo = React.createClass({
 			sphere.userData.dz = getRandom(-100, 100);
 
 			this.spheres.push(sphere);
-			scene.add(sphere);
+			this.scene.add(sphere);
 		}
 	},
 
 	centerPointSphere () {
-		let scene = this.state.scene;
-
 		let sphereGeometry = new THREE.SphereGeometry(5, 20, 20);
 
 		let material = new THREE.MeshBasicMaterial({
@@ -382,33 +363,22 @@ const ThreeDemo = React.createClass({
 		});
 
 		let center = new THREE.Mesh(sphereGeometry, material);
-		scene.add(center);
+		this.scene.add(center);
 	},
 
 	updateCamera () {
-		let {
-			scene,
-			camera
-		} = this.state;
+		let x = this.camera.position.x;
+		let y = this.camera.position.y;
+		let z = this.camera.position.z;
 
-		let x = camera.position.x;
-		let y = camera.position.y;
-		let z = camera.position.z;
+		this.camera.position.x = x * Math.cos(cameraRotationStep) + z * Math.sin(cameraRotationStep);
+		this.camera.position.y = y * Math.cos(cameraRotationStep / 4) + z * Math.sin(cameraRotationStep / 4);
+		this.camera.position.z = z * Math.cos(cameraRotationStep) - x * Math.sin(cameraRotationStep);
 
-		camera.position.x = x * Math.cos(cameraRotationStep) + z * Math.sin(cameraRotationStep);
-		camera.position.y = y * Math.cos(cameraRotationStep / 4) + z * Math.sin(cameraRotationStep / 4);
-		camera.position.z = z * Math.cos(cameraRotationStep) - x * Math.sin(cameraRotationStep);
-
-		camera.lookAt(scene.position);
+		this.camera.lookAt(this.scene.position);
 	},
 
 	render3D () {
-		let {
-			scene,
-			camera,
-			renderer
-		} = this.state;
-
 		stats.begin();
 
 		requestAnimationFrame(this.render3D);
@@ -417,7 +387,7 @@ const ThreeDemo = React.createClass({
 
 		this.updateCamera();
 
-		renderer.render(scene, camera);
+		this.renderer.render(this.scene, this.camera);
 
 		stats.end();
 	},
