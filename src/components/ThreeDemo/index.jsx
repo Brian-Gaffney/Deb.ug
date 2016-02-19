@@ -33,13 +33,19 @@ const PHANTOM_SPHERE_RADIUS = 190; // Radius of "phantom" sphere on which all po
 const TOTAL_SPHERES = 120;
 const SPHERE_SIZE = 3;
 const SPHERE_COLOR = BLUE.hex;
-const SPHERE_SCALING_FACTOR = 2.2;
+const SPHERE_SCALING_FACTOR = 1.8;
 
 const TOTAL_LINES = Math.floor(TOTAL_SPHERES * 2);
 const CURVE_POINTS = 250; // Determines accuracy when converting a curve to points
 const LINE_COLOR = ORANGE.hex; // Orange
-const LINE_MIDPOINT_OFFSET = 70;
 const LINE_DRAW_DURATION = 1500; // How many ms it takes to animate drawing a line
+
+const LINE_MIDPOINT_JIGGLE = 50;
+// Subsequent midpoints have less and less jiggle
+// They get closer and closer to their "goal"
+const LINE_MIDPOINT_JIGGLE2 = LINE_MIDPOINT_JIGGLE / 2;
+const LINE_MIDPOINT_JIGGLE3 = LINE_MIDPOINT_JIGGLE / 4;
+const LINE_MIDPOINT_JIGGLE4 = LINE_MIDPOINT_JIGGLE / 8;
 
 const LINE_DRAW_DELAY = 500;
 const COLOR_TRANSITION_DURATION = LINE_DRAW_DELAY + LINE_DRAW_DURATION;
@@ -147,18 +153,38 @@ const ThreeDemo = React.createClass({
 	generateCurvePoints (s1, s2) {
 		// Set a midpoint between the two spheres
 		let midPoint = new THREE.Vector3();
+		let midPoint2 = new THREE.Vector3();
+		let midPoint3 = new THREE.Vector3();
+		let midPoint4 = new THREE.Vector3();
 
-		midPoint.lerpVectors(s1.position, s2.position, 0.5);
+		midPoint.lerpVectors(s1.position, s2.position, 0.2);
+		midPoint2.lerpVectors(s1.position, s2.position, 0.4);
+		midPoint3.lerpVectors(s1.position, s2.position, 0.6);
+		midPoint4.lerpVectors(s1.position, s2.position, 0.8);
 
-		// Add some jiggle to the midpoint
-		midPoint.x += getRandom(-LINE_MIDPOINT_OFFSET, LINE_MIDPOINT_OFFSET);
-		midPoint.y += getRandom(-LINE_MIDPOINT_OFFSET, LINE_MIDPOINT_OFFSET);
-		midPoint.z += getRandom(-LINE_MIDPOINT_OFFSET, LINE_MIDPOINT_OFFSET);
+		// Add some jiggle to the midpoints
+		midPoint.x += getRandom(-LINE_MIDPOINT_JIGGLE, LINE_MIDPOINT_JIGGLE);
+		midPoint.y += getRandom(-LINE_MIDPOINT_JIGGLE, LINE_MIDPOINT_JIGGLE);
+		midPoint.z += getRandom(-LINE_MIDPOINT_JIGGLE, LINE_MIDPOINT_JIGGLE);
 
-		// Create a curve from sphere 1 to 2 via the midpoint
+		midPoint2.x += getRandom(-LINE_MIDPOINT_JIGGLE2, LINE_MIDPOINT_JIGGLE2);
+		midPoint2.y += getRandom(-LINE_MIDPOINT_JIGGLE2, LINE_MIDPOINT_JIGGLE2);
+		midPoint2.z += getRandom(-LINE_MIDPOINT_JIGGLE2, LINE_MIDPOINT_JIGGLE2);
+
+		midPoint3.x += getRandom(-LINE_MIDPOINT_JIGGLE3, LINE_MIDPOINT_JIGGLE3);
+		midPoint3.y += getRandom(-LINE_MIDPOINT_JIGGLE3, LINE_MIDPOINT_JIGGLE3);
+		midPoint3.z += getRandom(-LINE_MIDPOINT_JIGGLE3, LINE_MIDPOINT_JIGGLE3);
+
+		midPoint4.x += getRandom(-LINE_MIDPOINT_JIGGLE4, LINE_MIDPOINT_JIGGLE4);
+		midPoint4.y += getRandom(-LINE_MIDPOINT_JIGGLE4, LINE_MIDPOINT_JIGGLE4);
+		midPoint4.z += getRandom(-LINE_MIDPOINT_JIGGLE4, LINE_MIDPOINT_JIGGLE4);
+
+		// Create a curve from sphere 1 to 2 via the midpoints
 		let curve = new THREE.CatmullRomCurve3([
 			s1.position,
 			midPoint,
+			midPoint2,
+			midPoint3,
 			s2.position
 		]);
 
