@@ -83,18 +83,31 @@ const ThreeDemo = React.createClass({
 		document.onmousemove = this.handleMouseMove;
 	},
 
-	line: {},
+	line: null,
+	startingSphere: null,
+	endingSphere: null,
+
 	initLineDrawing () {
-		let curvePoints = this.generateCurvePoints();
+		if (!this.startingSphere) {
+			this.startingSphere = this.spheres[getRandom(0, this.spheres.length)];
+		}
+
+		if (!this.endingSphere) {
+			this.endingSphere = this.spheres[getRandom(0, this.spheres.length)];
+		}
+
+		// Update old end to be new start
+		if (this.startingSphere && this.endingSphere) {
+			this.startingSphere = this.endingSphere;
+			this.endingSphere = this.spheres[getRandom(0, this.spheres.length)];
+		}
+
+		let curvePoints = this.generateCurvePoints(this.startingSphere, this.endingSphere);
 
 		this.drawLine(curvePoints);
 	},
 
-	generateCurvePoints () {
-		// Get two random spheres
-		let s1 = this.spheres[getRandom(0, this.spheres.length)];
-		let s2 = this.spheres[getRandom(0, this.spheres.length)];
-
+	generateCurvePoints (s1, s2) {
 		// Set a midpoint between the two spheres
 		let midPoint = new THREE.Vector3();
 		midPoint.lerpVectors(s1.position, s2.position, 0.5);
@@ -116,64 +129,26 @@ const ThreeDemo = React.createClass({
 
 	drawLine (curvePoints) {
 		this
-			.lineOut(curvePoints)
-			.delay(2000)
-			.then(this.lineIn)
-			.finally(() => {
-				console.log('### done');
+			.animateLineDrawing(curvePoints)
+			.delay(500)
+			.then((curvePoints) => {
+				return this.animateLineDrawing(curvePoints, true)
 			})
+			.delay(500)
+			.finally(this.initLineDrawing)
 		;
 	},
 
-	lineIn (curvePoints) {
-		let {
-			scene
-		} = this.state;
-
-		let counter = curvePoints.length;
-
-		curvePoints.reverse();
-
-		return new Promise((resolve) => {
-
-			let intervalPeriod = LINE_DRAW_DURATION / CURVE_POINTS;
-
-			let interval = window.setInterval(() => {
-				// Clone curve points into a new array
-				var points = curvePoints.slice();
-
-				// Splice out a subset of points to draw
-				points.splice(counter);
-
-				counter--;
-
-				// Remove previous line
-				if (this.line) {
-					scene.remove(this.line);
-				}
-
-				var geometry = new THREE.Geometry();
-				geometry.vertices = points;
-				this.line = new THREE.Line(geometry, LINE_MATERIAL);
-				scene.add(this.line);
-
-				// Resolve promise after we reach the end of the line
-				if (counter < 1) {
-					window.clearInterval(interval);
-
-					resolve(curvePoints);
-				}
-
-			}, intervalPeriod);
-		});
-	},
-
-	lineOut (curvePoints) {
+	animateLineDrawing (curvePoints, backward = false) {
 		let {
 			scene
 		} = this.state;
 
 		let counter = 1;
+		if (backward) {
+			counter = curvePoints.length;
+			curvePoints.reverse();
+		}
 
 		return new Promise((resolve) => {
 
@@ -186,7 +161,11 @@ const ThreeDemo = React.createClass({
 				// Splice out a subset of points to draw
 				points.splice(counter);
 
-				counter++;
+				if (backward) {
+					counter--;
+				} else {
+					counter++;
+				}
 
 				// Remove previous line
 				if (this.line) {
@@ -199,9 +178,8 @@ const ThreeDemo = React.createClass({
 				scene.add(this.line);
 
 				// Resolve promise after we reach the end of the line
-				if (counter === curvePoints.length) {
+				if ((backward && counter < 1) || counter === curvePoints.length) {
 					window.clearInterval(interval);
-
 					resolve(curvePoints);
 				}
 
