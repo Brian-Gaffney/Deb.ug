@@ -5,17 +5,19 @@ import AboutMe from 'components/content/AboutMe';
 import Technologies from 'components/content/Technologies';
 import ThreeDemo from 'components/ThreeDemo';
 
+import styles from './styles.scss';
+
 const App = React.createClass({
 
 	displayName: 'App',
 
 	render () {
 		return (
-			<div>
+			<div className={styles.component}>
+				<ThreeDemo />
 				<GoogleAnalytics />
 				<AboutMe />
 				<Technologies />
-				<ThreeDemo />
 			</div>
 		);
 	}

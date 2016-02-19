@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import THREE from 'vendor/three';
+import THREE from 'utils/three';
 import Stats from 'vendor/stats';
 
 import styles from './styles.scss';
@@ -16,6 +16,8 @@ const TOTAL_LINES = Math.floor(TOTAL_SPHERES * 2);
 const CURVE_POINTS = 50 - 1; // Determines accuracy when converting a curve to points
 const LINE_COLOR = 0x7777ff;
 const LINE_MIDPOINT_OFFSET = 25;
+
+const MOUSE_MOVE_STEP = 0.004;
 
 
 const ThreeDemo = React.createClass({
@@ -93,9 +95,59 @@ const ThreeDemo = React.createClass({
 	},
 
 	init () {
-		this.centerPointSphere();
+		// this.centerPointSphere();
 		this.initSpheres();
 		this.render3D();
+		this.initMouseDetection();
+	},
+
+	initMouseDetection () {
+		document.onmousemove = this.handleMouseMove;
+	},
+
+	lastPosition: {},
+	handleMouseMove (event) {
+
+		let {
+			scene,
+			camera
+		} = this.state;
+
+		if (this.lastPosition.x) {
+			var deltaX = this.lastPosition.x - event.pageX;
+			var deltaY = this.lastPosition.y - event.pageY;
+
+			var x = camera.position.x;
+			var y = camera.position.y;
+			var z = camera.position.z;
+
+			if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0) {
+				// Left
+				camera.position.x = x * Math.cos(MOUSE_MOVE_STEP) + z * Math.sin(MOUSE_MOVE_STEP);
+				camera.position.y = y * Math.cos(MOUSE_MOVE_STEP / 4) + z * Math.sin(MOUSE_MOVE_STEP / 4);
+
+			} else if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX < 0) {
+				// Right
+				camera.position.x = x * Math.cos(-MOUSE_MOVE_STEP) + z * Math.sin(-MOUSE_MOVE_STEP);
+				camera.position.y = y * Math.cos(-MOUSE_MOVE_STEP / 4) + z * Math.sin(-MOUSE_MOVE_STEP / 4);
+
+			} else if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0) {
+				// Up
+				camera.position.z = z * Math.cos(MOUSE_MOVE_STEP) - x * Math.sin(MOUSE_MOVE_STEP);
+
+			} else if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY < 0) {
+				// Down
+				camera.position.z = z * Math.cos(-MOUSE_MOVE_STEP) - x * Math.sin(-MOUSE_MOVE_STEP);
+			}
+
+			camera.lookAt(scene.position);
+		}
+
+		//Update last position for next time
+		this.lastPosition = {
+			x : event.pageX,
+			y : event.pageY
+		};
 	},
 
 	spheres: [], // Contains all spheres to be rendered
@@ -109,7 +161,8 @@ const ThreeDemo = React.createClass({
 		var sphereGeometry = new THREE.SphereGeometry(1.5, 20, 20);
 
 		var sphereMaterial = new THREE.MeshBasicMaterial({
-			color: SPHERE_COLOR
+			color: SPHERE_COLOR,
+			opacity: 1
 		});
 
 		for (var i = 0; i < TOTAL_SPHERES; i++) {
@@ -190,10 +243,7 @@ const ThreeDemo = React.createClass({
 
 	render () {
 		return (
-			<div>
-				<h2>
-					Three demo
-				</h2>
+			<div className={styles.component}>
 				<canvas className={styles.canvas} ref="canvas" />
 			</div>
 		);
