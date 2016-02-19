@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Promise from 'bluebird';
 import Stats from 'vendor/stats';
 import THREE from 'utils/three';
 import {
@@ -13,14 +14,15 @@ const stats = new Stats();
 
 const cameraRotationStep = 0.002;
 const PHANTOM_SPHERE_RADIUS = 190; // Radius of "phantom" sphere on which all points are placed
+const SPHERE_SIZE = 2;
 const SPHERE_COLOR = 0x6666dd;
 
-const TOTAL_SPHERES = 150;
+const TOTAL_SPHERES = 220;
 const TOTAL_LINES = Math.floor(TOTAL_SPHERES * 2);
 const CURVE_POINTS = 250; // Determines accuracy when converting a curve to points
 const LINE_COLOR = 0xffa500;
 const LINE_MIDPOINT_OFFSET = 25;
-const LINE_DRAW_DURATION = 5000; // How many ms it takes to animate drawing a line
+const LINE_DRAW_DURATION = 1500; // How many ms it takes to animate drawing a line
 
 const MOUSE_MOVE_STEP = 0.004;
 
@@ -113,46 +115,98 @@ const ThreeDemo = React.createClass({
 	},
 
 	drawLine (curvePoints) {
+		this
+			.lineOut(curvePoints)
+			.delay(2000)
+			.then(this.lineIn)
+			.finally(() => {
+				console.log('### done');
+			})
+		;
+	},
+
+	lineIn (curvePoints) {
+		let {
+			scene
+		} = this.state;
+
+		let counter = curvePoints.length;
+
+		curvePoints.reverse();
+
+		return new Promise((resolve) => {
+
+			let intervalPeriod = LINE_DRAW_DURATION / CURVE_POINTS;
+
+			let interval = window.setInterval(() => {
+				// Clone curve points into a new array
+				var points = curvePoints.slice();
+
+				// Splice out a subset of points to draw
+				points.splice(counter);
+
+				counter--;
+
+				// Remove previous line
+				if (this.line) {
+					scene.remove(this.line);
+				}
+
+				var geometry = new THREE.Geometry();
+				geometry.vertices = points;
+				this.line = new THREE.Line(geometry, LINE_MATERIAL);
+				scene.add(this.line);
+
+				// Resolve promise after we reach the end of the line
+				if (counter < 1) {
+					window.clearInterval(interval);
+
+					resolve(curvePoints);
+				}
+
+			}, intervalPeriod);
+		});
+	},
+
+	lineOut (curvePoints) {
 		let {
 			scene
 		} = this.state;
 
 		let counter = 1;
-		let line;
 
-		let intervalPeriod = LINE_DRAW_DURATION / CURVE_POINTS;
+		return new Promise((resolve) => {
 
-		let interval = window.setInterval(() => {
-			// Clone curve points into a new array
-			var points = curvePoints.slice();
+			let intervalPeriod = LINE_DRAW_DURATION / CURVE_POINTS;
 
-			// Splice out a subset of points to draw
-			points.splice(counter);
+			let interval = window.setInterval(() => {
+				// Clone curve points into a new array
+				var points = curvePoints.slice();
 
-			counter++;
+				// Splice out a subset of points to draw
+				points.splice(counter);
 
-			// Remove previous line
-			if (this.line) {
-				scene.remove(line);
-			}
+				counter++;
 
-			var geometry = new THREE.Geometry();
-			geometry.vertices = points;
-			line = new THREE.Line(geometry, LINE_MATERIAL);
-			scene.add(line);
+				// Remove previous line
+				if (this.line) {
+					scene.remove(this.line);
+				}
 
+				var geometry = new THREE.Geometry();
+				geometry.vertices = points;
+				this.line = new THREE.Line(geometry, LINE_MATERIAL);
+				scene.add(this.line);
 
-			// When we reach the end of the line
-			if (counter === curvePoints.length) {
-				window.clearInterval(interval);
+				// Resolve promise after we reach the end of the line
+				if (counter === curvePoints.length) {
+					window.clearInterval(interval);
 
-				window.setTimeout(() => {
-					scene.remove(line);
-					this.initLineDrawing();
-				}, 2000);
-			}
+					resolve(curvePoints);
+				}
 
-		}, intervalPeriod);
+			}, intervalPeriod);
+		});
 	},
 
 	lastMousePosition: {},
@@ -208,7 +262,7 @@ const ThreeDemo = React.createClass({
 		} = this.state;
 
 		// Add a bunch of spheres to scene
-		let sphereGeometry = new THREE.SphereGeometry(1.5, 20, 20);
+		let sphereGeometry = new THREE.SphereGeometry(SPHERE_SIZE, 20, 20);
 
 		let sphereMaterial = new THREE.MeshBasicMaterial({
 			color: SPHERE_COLOR,
