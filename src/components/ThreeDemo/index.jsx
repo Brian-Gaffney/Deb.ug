@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import TWEEN from 'tween.js';
 import Promise from 'bluebird';
 import Stats from 'vendor/stats';
 import THREE from 'utils/three';
@@ -12,17 +13,36 @@ import styles from './styles.scss';
 
 const stats = new Stats();
 
+const ORANGE = {
+	hex: 0xffa500,
+	r: 1,
+	g: 0.64,
+	b: 0,
+};
+
+const BLUE = {
+	hex: 0x6666dd,
+	r: 0.4,
+	g: 0.4,
+	b: 0.8666,
+};
+
 const cameraRotationStep = 0.002;
 const PHANTOM_SPHERE_RADIUS = 190; // Radius of "phantom" sphere on which all points are placed
-const SPHERE_SIZE = 2;
-const SPHERE_COLOR = 0x6666dd;
 
-const TOTAL_SPHERES = 220;
+const TOTAL_SPHERES = 120;
+const SPHERE_SIZE = 3;
+const SPHERE_COLOR = BLUE.hex;
+const SPHERE_SCALING_FACTOR = 2.2;
+
 const TOTAL_LINES = Math.floor(TOTAL_SPHERES * 2);
 const CURVE_POINTS = 250; // Determines accuracy when converting a curve to points
-const LINE_COLOR = 0xffa500;
-const LINE_MIDPOINT_OFFSET = 25;
+const LINE_COLOR = ORANGE.hex; // Orange
+const LINE_MIDPOINT_OFFSET = 70;
 const LINE_DRAW_DURATION = 1500; // How many ms it takes to animate drawing a line
+
+const LINE_DRAW_DELAY = 500;
+const COLOR_TRANSITION_DURATION = LINE_DRAW_DELAY + LINE_DRAW_DURATION;
 
 const MOUSE_MOVE_STEP = 0.004;
 
@@ -30,7 +50,6 @@ const LINE_MATERIAL = new THREE.LineBasicMaterial({
 	color: LINE_COLOR,
 	linewidth: 1.7
 });
-
 
 
 const ThreeDemo = React.createClass({
@@ -83,23 +102,41 @@ const ThreeDemo = React.createClass({
 		document.onmousemove = this.handleMouseMove;
 	},
 
+	// Get a random sphere (that's not notThisOne)
+	getRandomSphere (notThisOne) {
+		let sphere = this.spheres[getRandom(0, this.spheres.length)];
+
+		while (sphere === notThisOne) {
+			sphere = this.spheres[getRandom(0, this.spheres.length)];
+		}
+
+		return sphere;
+	},
+
 	line: null,
 	startingSphere: null,
 	endingSphere: null,
 
 	initLineDrawing () {
-		if (!this.startingSphere) {
-			this.startingSphere = this.spheres[getRandom(0, this.spheres.length)];
-		}
 
-		if (!this.endingSphere) {
-			this.endingSphere = this.spheres[getRandom(0, this.spheres.length)];
-		}
+		// Initialisation step
+		if (!this.startingSphere && !this.endingSphere) {
+			this.startingSphere = this.getRandomSphere();
+			this.endingSphere = this.getRandomSphere(this.startingSphere);
 
-		// Update old end to be new start
-		if (this.startingSphere && this.endingSphere) {
+			// Make the first starting sphere orange
+			this.startingSphere.material.color.r = ORANGE.r;
+			this.startingSphere.material.color.g = ORANGE.g;
+			this.startingSphere.material.color.b = ORANGE.b;
+
+			// Make the first starting sphere big
+			this.startingSphere.scale.x = SPHERE_SCALING_FACTOR;
+			this.startingSphere.scale.y = SPHERE_SCALING_FACTOR;
+			this.startingSphere.scale.z = SPHERE_SCALING_FACTOR;
+		} else {
+			// Update old end to be new start
 			this.startingSphere = this.endingSphere;
-			this.endingSphere = this.spheres[getRandom(0, this.spheres.length)];
+			this.endingSphere = this.getRandomSphere(this.startingSphere);
 		}
 
 		let curvePoints = this.generateCurvePoints(this.startingSphere, this.endingSphere);
@@ -110,12 +147,13 @@ const ThreeDemo = React.createClass({
 	generateCurvePoints (s1, s2) {
 		// Set a midpoint between the two spheres
 		let midPoint = new THREE.Vector3();
+
 		midPoint.lerpVectors(s1.position, s2.position, 0.5);
 
 		// Add some jiggle to the midpoint
-		midPoint.x += getRandom(-80, 80);
-		midPoint.y += getRandom(-80, 80);
-		midPoint.z += getRandom(-80, 80);
+		midPoint.x += getRandom(-LINE_MIDPOINT_OFFSET, LINE_MIDPOINT_OFFSET);
+		midPoint.y += getRandom(-LINE_MIDPOINT_OFFSET, LINE_MIDPOINT_OFFSET);
+		midPoint.z += getRandom(-LINE_MIDPOINT_OFFSET, LINE_MIDPOINT_OFFSET);
 
 		// Create a curve from sphere 1 to 2 via the midpoint
 		let curve = new THREE.CatmullRomCurve3([
@@ -127,14 +165,54 @@ const ThreeDemo = React.createClass({
 		return curve.getPoints(CURVE_POINTS);
 	},
 
+	scaleSphere (sphere, down = false) {
+
+		let scale = SPHERE_SCALING_FACTOR;
+		if (down) {
+			scale = 1;
+		}
+
+		new TWEEN
+			.Tween(sphere.scale)
+			.to({
+				x: scale,
+				y: scale,
+				z: scale
+			}, COLOR_TRANSITION_DURATION)
+			.start()
+		;
+	},
+
+	recolorSphere (sphere, color) {
+		new TWEEN
+			.Tween(sphere.material.color)
+			.to({
+				r: color.r,
+				g: color.g,
+				b: color.b
+			}, COLOR_TRANSITION_DURATION)
+			.start()
+		;
+	},
+
 	drawLine (curvePoints) {
+
+		// Start making the origin sphere blue 
+		this.recolorSphere(this.startingSphere, BLUE);
+		this.scaleSphere(this.startingSphere, true);
+
 		this
 			.animateLineDrawing(curvePoints)
-			.delay(500)
+			.tap(() => {
+				// Start making the destination sphere orange once the line touches it
+				this.recolorSphere(this.endingSphere, ORANGE);
+				this.scaleSphere(this.endingSphere);
+			})
+			.delay(LINE_DRAW_DELAY)
 			.then((curvePoints) => {
 				return this.animateLineDrawing(curvePoints, true)
 			})
-			.delay(500)
+			.delay(LINE_DRAW_DELAY * 3)
 			.finally(this.initLineDrawing)
 		;
 	},
@@ -242,12 +320,13 @@ const ThreeDemo = React.createClass({
 		// Add a bunch of spheres to scene
 		let sphereGeometry = new THREE.SphereGeometry(SPHERE_SIZE, 20, 20);
 
-		let sphereMaterial = new THREE.MeshBasicMaterial({
-			color: SPHERE_COLOR,
-			opacity: 1
-		});
 
 		for (let i = 0; i < TOTAL_SPHERES; i++) {
+			let sphereMaterial = new THREE.MeshBasicMaterial({
+				color: SPHERE_COLOR,
+				opacity: 1
+			});
+
 			let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 			let positionOffset = 220;
 
@@ -307,6 +386,8 @@ const ThreeDemo = React.createClass({
 		stats.begin();
 
 		requestAnimationFrame(this.render3D);
+
+		TWEEN.update();
 
 		this.updateCamera();
 
