@@ -17,9 +17,10 @@ const SPHERE_COLOR = 0x6666dd;
 
 const TOTAL_SPHERES = 150;
 const TOTAL_LINES = Math.floor(TOTAL_SPHERES * 2);
-const CURVE_POINTS = 50; // Determines accuracy when converting a curve to points
+const CURVE_POINTS = 250; // Determines accuracy when converting a curve to points
 const LINE_COLOR = 0xffa500;
 const LINE_MIDPOINT_OFFSET = 25;
+const LINE_DRAW_DURATION = 5000; // How many ms it takes to animate drawing a line
 
 const MOUSE_MOVE_STEP = 0.004;
 
@@ -72,7 +73,7 @@ const ThreeDemo = React.createClass({
 	},
 
 	init () {
-		this.centerPointSphere();
+		// this.centerPointSphere();
 		this.initSpheres();
 		this.render3D();
 		this.initLineDrawing();
@@ -82,21 +83,12 @@ const ThreeDemo = React.createClass({
 
 	line: {},
 	initLineDrawing () {
-		window.setInterval(() => {
-			this.drawLine();
-		}, 1000);
+		let curvePoints = this.generateCurvePoints();
+
+		this.drawLine(curvePoints);
 	},
 
-	drawLine () {
-		let {
-			scene
-		} = this.state;
-
-		// Remove the last line
-		if (this.line) {
-			scene.remove(this.line);
-		}
-
+	generateCurvePoints () {
 		// Get two random spheres
 		let s1 = this.spheres[getRandom(0, this.spheres.length)];
 		let s2 = this.spheres[getRandom(0, this.spheres.length)];
@@ -117,11 +109,50 @@ const ThreeDemo = React.createClass({
 			s2.position
 		]);
 
-		let geometry = new THREE.Geometry();
-		geometry.vertices = curve.getPoints(CURVE_POINTS);
+		return curve.getPoints(CURVE_POINTS);
+	},
 
-		this.line = new THREE.Line(geometry, LINE_MATERIAL);
-		scene.add(this.line);
+	drawLine (curvePoints) {
+		let {
+			scene
+		} = this.state;
+
+		let counter = 1;
+		let line;
+
+		let intervalPeriod = LINE_DRAW_DURATION / CURVE_POINTS;
+
+		let interval = window.setInterval(() => {
+			// Clone curve points into a new array
+			var points = curvePoints.slice();
+
+			// Splice out a subset of points to draw
+			points.splice(counter);
+
+			counter++;
+
+			// Remove previous line
+			if (this.line) {
+				scene.remove(line);
+			}
+
+			var geometry = new THREE.Geometry();
+			geometry.vertices = points;
+			line = new THREE.Line(geometry, LINE_MATERIAL);
+			scene.add(line);
+
+
+			// When we reach the end of the line
+			if (counter === curvePoints.length) {
+				window.clearInterval(interval);
+
+				window.setTimeout(() => {
+					scene.remove(line);
+					this.initLineDrawing();
+				}, 2000);
+			}
+
+		}, intervalPeriod);
 	},
 
 	lastMousePosition: {},
@@ -205,7 +236,6 @@ const ThreeDemo = React.createClass({
 	},
 
 	centerPointSphere () {
-		console.log('centerPointSphere()');
 		let scene = this.state.scene;
 
 		let sphereGeometry = new THREE.SphereGeometry(5, 20, 20);
