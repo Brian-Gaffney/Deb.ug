@@ -105,11 +105,11 @@ module.exports = {
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 
-		new SplitByPathPlugin(
-			[
-				{name: 'vendor', path: path.join(__dirname, 'node_modules')}
-			]
-		),
+		// new SplitByPathPlugin(
+		// 	[
+		// 		{name: 'vendor', path: path.join(__dirname, 'node_modules')}
+		// 	]
+		// ),
 
 		new HtmlWebpackPlugin({
 			title: 'Brian Gaffney - deb.ug',
