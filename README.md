@@ -9,9 +9,6 @@ Site - https://deb.ug
 
 S3 bucket - http://deb.ug.s3-website-us-east-1.amazonaws.com
 
-gzip
-	Remove gzip stuff from deploy script
-	Turn on gzip in CloudFront
 Fix mouse movement to camera bindings
 Click action?
 	Spawn another line?

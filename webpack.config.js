@@ -109,7 +109,14 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			title: 'Brian Gaffney - deb.ug',
 			template: './src/index.html',
-			inject: 'body'
+			inject: 'body',
+			minify: {
+				collapseWhitespace: true,
+				removeComments: true,
+				removeRedundantAttributes: true,
+				removeScriptTypeAttributes: true,
+				removeStyleLinkTypeAttributes: true
+			}
 		})
 	]
 
