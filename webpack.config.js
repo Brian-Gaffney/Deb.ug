@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var SplitByPathPlugin = require('webpack-split-by-path');
 
 module.exports = {
 
@@ -104,12 +103,6 @@ module.exports = {
 
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
-
-		// new SplitByPathPlugin(
-		// 	[
-		// 		{name: 'vendor', path: path.join(__dirname, 'node_modules')}
-		// 	]
-		// ),
 
 		new HtmlWebpackPlugin({
 			title: 'Brian Gaffney - deb.ug',
