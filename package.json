@@ -4,7 +4,7 @@
   "description": "Personal website for Brian Gaffney",
   "main": "src/main.js",
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --port 3001 --progress",
+    "start": "NODE_ENV=development webpack-dev-server --progress",
     "build": "rm -rf ./build && NODE_ENV=production webpack --config webpack.dist.config.js --colors --progress --display-chunks --display-modules",
     "deploy": "npm run build && ./deploy.sh",
     "test": "echo \"Error: no test specified\" && exit 1"

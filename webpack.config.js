@@ -22,7 +22,9 @@ module.exports = {
 		quiet: false,
 		noInfo: false,
 		compress: true, // Enables gzip
-		historyApiFallback: true
+		historyApiFallback: true,
+		host: '0.0.0.0',
+		port: 3000
 	},
 
 	eslint: {
@@ -36,7 +38,7 @@ module.exports = {
 				test: /\.(js|jsx|svg)$/,
 				loader: 'babel',
 				include: [
-					path.resolve(__dirname, "src"),
+					path.resolve(__dirname, 'src'),
 				],
 				query: {
 					presets: ['react', 'es2015']

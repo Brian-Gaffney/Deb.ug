@@ -27,34 +27,41 @@ const BLUE = {
 	b: 0.8666,
 };
 
-const cameraRotationStep = 0.002;
-const PHANTOM_SPHERE_RADIUS = 190; // Radius of "phantom" sphere on which all points are placed
+const CAMERA_ROTATION_STEP = 0.002;
+const PHANTOM_SPHERE_RADIUS = 150; // Radius of "phantom" sphere on which all points are placed
 
-const TOTAL_SPHERES = 120;
-const SPHERE_SIZE = 3;
+const TOTAL_SPHERES = 150;
+const SPHERE_SIZE = 1.9;
 const SPHERE_COLOR = BLUE.hex;
-const SPHERE_SCALING_FACTOR = 1.8;
+const SPHERE_SCALING_FACTOR = 2.2;
 
-const TOTAL_LINES = Math.floor(TOTAL_SPHERES * 2);
+const TOTAL_LINES = TOTAL_SPHERES * 2;
 const CURVE_POINTS = 250; // Determines accuracy when converting a curve to points
 const LINE_COLOR = ORANGE.hex;
 const LINE_DRAW_DURATION = 1500; // How many ms it takes to animate drawing a line
+const LINE_WIDTH = 2.5;
 
 const LINE_MIDPOINT_JIGGLE = 50;
 // Subsequent midpoints have less and less jiggle
 // They get closer and closer to their "goal"
 const LINE_MIDPOINT_JIGGLE2 = LINE_MIDPOINT_JIGGLE / 2;
 const LINE_MIDPOINT_JIGGLE3 = LINE_MIDPOINT_JIGGLE / 4;
-const LINE_MIDPOINT_JIGGLE4 = LINE_MIDPOINT_JIGGLE / 8;
+const LINE_MIDPOINT_JIGGLE4 = LINE_MIDPOINT_JIGGLE / 6;
 
 const LINE_DRAW_DELAY = 500;
 const COLOR_TRANSITION_DURATION = LINE_DRAW_DELAY + LINE_DRAW_DURATION;
 
 const MOUSE_MOVE_STEP = 0.004;
+const MOVE_WHEEL_ZOOM_STEP = 1;
 
 const LINE_MATERIAL = new THREE.LineBasicMaterial({
 	color: LINE_COLOR,
-	linewidth: 1.7
+	linewidth: LINE_WIDTH
+});
+
+const SPHERE_MATERIAL = new THREE.MeshBasicMaterial({
+	color: SPHERE_COLOR,
+	opacity: 1
 });
 
 
@@ -68,8 +75,15 @@ const ThreeDemo = React.createClass({
 	endingSphere: null,
 	lastMousePosition: {},
 	scene: null,
+	scene: null,
 	camera: null,
 	renderer: null,
+
+	getInitialState () {
+		return {
+			show: false
+		};
+	},
 
 	componentDidMount () {
 		this.initStats();
@@ -92,7 +106,6 @@ const ThreeDemo = React.createClass({
 		this.renderer = new THREE.WebGLRenderer({
 			alpha: true,
 			antialias: true,
-			precision: 'highp',
 			canvas
 		});
 
@@ -102,6 +115,10 @@ const ThreeDemo = React.createClass({
 		this.scene = new THREE.Scene();
 
 		this.init();
+
+		this.setState({
+			show: true
+		});
 	},
 
 	init () {
@@ -111,6 +128,7 @@ const ThreeDemo = React.createClass({
 		this.initLineDrawing();
 
 		document.onmousemove = this.handleMouseMove;
+		document.addEventListener('mousewheel', this.handleMouseWheel, false);
 	},
 
 	// Get a random sphere (that's not notThisOne)
@@ -239,7 +257,7 @@ const ThreeDemo = React.createClass({
 			.then((curvePoints) => {
 				return this.animateLineDrawing(curvePoints, true)
 			})
-			.delay(LINE_DRAW_DELAY * 3)
+			.delay(LINE_DRAW_DELAY * 2)
 			.finally(this.initLineDrawing)
 		;
 	},
@@ -288,6 +306,14 @@ const ThreeDemo = React.createClass({
 		});
 	},
 
+	// Camera zoom based on mouse wheel
+	handleMouseWheel (event) {
+		let up = !!(event.wheelDelta > 0);
+		let zoom = up ? -MOVE_WHEEL_ZOOM_STEP : MOVE_WHEEL_ZOOM_STEP;
+		this.camera.fov += zoom;
+		this.camera.updateProjectionMatrix();
+	},
+
 	handleMouseMove (event) {
 		if (this.lastMousePosition.x) {
 			let deltaX = this.lastMousePosition.x - event.pageX;
@@ -331,24 +357,11 @@ const ThreeDemo = React.createClass({
 		let sphereGeometry = new THREE.SphereGeometry(SPHERE_SIZE, 20, 20);
 
 		for (let i = 0; i < TOTAL_SPHERES; i++) {
-			let sphereMaterial = new THREE.MeshBasicMaterial({
-				color: SPHERE_COLOR,
-				opacity: 1
-			});
-
-			let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+			let sphere = new THREE.Mesh(sphereGeometry, SPHERE_MATERIAL.clone());
 			let positionOffset = 220;
 
 			let pos = getRandomPointOnSphere(PHANTOM_SPHERE_RADIUS);
 			sphere.position.set(pos.x, pos.y, pos.z);
-
-			// Origin - Used for later bounds checking
-			sphere.userData.originalPosition = sphere.position.clone();
-
-			// Data for moving spheres - Used by updateSpheres()
-			sphere.userData.dx = getRandom(-100, 100);
-			sphere.userData.dy = getRandom(-100, 100);
-			sphere.userData.dz = getRandom(-100, 100);
 
 			this.spheres.push(sphere);
 			this.scene.add(sphere);
@@ -371,9 +384,9 @@ const ThreeDemo = React.createClass({
 		let y = this.camera.position.y;
 		let z = this.camera.position.z;
 
-		this.camera.position.x = x * Math.cos(cameraRotationStep) + z * Math.sin(cameraRotationStep);
-		this.camera.position.y = y * Math.cos(cameraRotationStep / 4) + z * Math.sin(cameraRotationStep / 4);
-		this.camera.position.z = z * Math.cos(cameraRotationStep) - x * Math.sin(cameraRotationStep);
+		this.camera.position.x = x * Math.cos(CAMERA_ROTATION_STEP) + z * Math.sin(CAMERA_ROTATION_STEP);
+		this.camera.position.y = y * Math.cos(CAMERA_ROTATION_STEP / 4) + z * Math.sin(CAMERA_ROTATION_STEP / 4);
+		this.camera.position.z = z * Math.cos(CAMERA_ROTATION_STEP) - x * Math.sin(CAMERA_ROTATION_STEP);
 
 		this.camera.lookAt(this.scene.position);
 	},
@@ -400,8 +413,15 @@ const ThreeDemo = React.createClass({
 	},
 
 	render () {
+
+		let className = styles.component;
+
+		if (this.state.show) {
+			className += ` ${styles.show}`;
+		}
+
 		return (
-			<div className={styles.component}>
+			<div className={className}>
 				<canvas className={styles.canvas} ref="canvas" />
 			</div>
 		);

@@ -3,6 +3,7 @@ import React from 'react';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import AboutMe from 'components/content/AboutMe';
 import Technologies from 'components/content/Technologies';
+import { hasWebGl } from 'utils/featureDetection';
 
 import styles from './styles.scss';
 
@@ -17,7 +18,13 @@ const App = React.createClass({
 	},
 
 	componentDidMount () {
-		// Load ThreeDemo in a separate bundle
+		if (hasWebGl()) {
+			this.loadThreeDemo();
+		}
+	},
+
+	// Load ThreeDemo from a separate bundle
+	loadThreeDemo () {
 		require.ensure([], () => {
 			var ThreeDemo = require('components/ThreeDemo').default;
 
@@ -40,10 +47,14 @@ const App = React.createClass({
 
 		return (
 			<div className={styles.component}>
+				<div className={styles.contentWrapper}>
+					<AboutMe />
+					<Technologies />
+				</div>
+
 				{ ThreeDemo }
+
 				<GoogleAnalytics />
-				<AboutMe />
-				<Technologies />
 			</div>
 		);
 	}

@@ -12,6 +12,9 @@ body {
 	background-image: url(../img/bg.png);
 	background-size: auto;
 	background-repeat: repeat repeat;
+
+	font-family: 'Open Sans', Verdana, Geneva, sans-serif;
+	font-style: normal;
 }
 
 a {
@@ -25,12 +28,6 @@ a {
 		color: #0166FF;
 		background-color: rgba($color-primary, 0.8);
 	}
-}
-
-h1, h2 {
-	font-family: 'Open Sans', Verdana, Geneva, sans-serif;
-	font-style: normal;
-	font-weight: 700;
 }
 
 h1 {
