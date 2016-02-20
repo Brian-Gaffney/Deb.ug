@@ -5,8 +5,9 @@
   "main": "src/main.js",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --progress",
-    "build": "rm -rf ./build && NODE_ENV=production webpack --config webpack.dist.config.js --colors --progress --display-chunks --display-modules",
-    "deploy": "npm run build && ./deploy.sh",
+    "build": "npm run deleteBuild && NODE_ENV=production webpack --config webpack.dist.config.js --colors --progress --display-chunks --display-modules",
+    "deleteBuild": "rm -rf ./build",
+    "deploy": "npm run build && ./deploy.sh && npm run deleteBuild",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
