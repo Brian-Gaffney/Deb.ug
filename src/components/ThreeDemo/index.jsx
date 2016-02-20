@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TWEEN from 'tween.js';
 import Promise from 'bluebird';
-import Stats from 'vendor/stats';
 import THREE from 'utils/three';
 import {
 	getRandom,
@@ -10,8 +9,6 @@ import {
 } from 'utils/maths';
 
 import styles from './styles.scss';
-
-const stats = new Stats();
 
 const ORANGE = {
 	hex: 0xffa500,
@@ -86,12 +83,8 @@ const ThreeDemo = React.createClass({
 	},
 
 	componentDidMount () {
-		this.initStats();
-
-		document.body.appendChild(stats.domElement);
-
 		let canvas = ReactDOM.findDOMNode(this.refs.canvas);
-		
+
 		let WIDTH = canvas.clientWidth;
 		let HEIGHT = canvas.clientHeight;
 
@@ -381,8 +374,6 @@ const ThreeDemo = React.createClass({
 	},
 
 	render3D () {
-		stats.begin();
-
 		requestAnimationFrame(this.render3D);
 
 		TWEEN.update();
@@ -390,19 +381,9 @@ const ThreeDemo = React.createClass({
 		this.updateCamera();
 
 		this.renderer.render(this.scene, this.camera);
-
-		stats.end();
-	},
-
-	initStats () {
-		stats.setMode(0); // 0: fps, 1: ms, 2: mb
-		stats.domElement.style.position = 'absolute';
-		stats.domElement.style.left = '0px';
-		stats.domElement.style.top = '0px';
 	},
 
 	render () {
-
 		let className = styles.component;
 
 		if (this.state.show) {
