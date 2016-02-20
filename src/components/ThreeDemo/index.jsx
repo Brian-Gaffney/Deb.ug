@@ -122,13 +122,13 @@ const ThreeDemo = React.createClass({
 	},
 
 	init () {
-		// this.centerPointSphere();
 		this.initSpheres();
 		this.render3D();
 		this.initLineDrawing();
 
-		document.onmousemove = this.handleMouseMove;
-		document.addEventListener('mousewheel', this.handleMouseWheel, false);
+		let canvas = ReactDOM.findDOMNode(this.refs.canvas);
+		canvas.onmousemove = this.handleMouseMove;
+		canvas.addEventListener('mousewheel', this.handleMouseWheel, false);
 	},
 
 	// Get a random sphere (that's not notThisOne)
@@ -366,17 +366,6 @@ const ThreeDemo = React.createClass({
 			this.spheres.push(sphere);
 			this.scene.add(sphere);
 		}
-	},
-
-	centerPointSphere () {
-		let sphereGeometry = new THREE.SphereGeometry(5, 20, 20);
-
-		let material = new THREE.MeshBasicMaterial({
-			color: 0x882121
-		});
-
-		let center = new THREE.Mesh(sphereGeometry, material);
-		this.scene.add(center);
 	},
 
 	updateCamera () {
