@@ -107,7 +107,6 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 
 		new HtmlWebpackPlugin({
-			title: 'Brian Gaffney - deb.ug',
 			template: './src/index.html',
 			inject: 'body',
 			minify: {
