@@ -45,21 +45,7 @@ module.exports = {
 				}
 			},
 
-			{
-				// Use regular scss (no modules) for 'styles/**/*.scss'
-				test: /styles\/.+\.scss$/,
-				loader: 'style!css!resolve-url!autoprefixer!sass?' +
-				'includePaths[]=' + encodeURIComponent(path.resolve(__dirname, './src')) +
-				'&includePaths[]=' + encodeURIComponent(path.resolve(__dirname, './node_modules'))
-			},
-
-			// Load regular css
-			{
-				test: /\.css$/,
-				loader: 'style!css!autoprefixer'
-			},
-
-			// User the url loader for images
+			// Use the url loader for images
 			{
 				test: /\.(jpg|png)$/,
 				loader: 'url?limit=20000' + // inline as base64 if < 20kb

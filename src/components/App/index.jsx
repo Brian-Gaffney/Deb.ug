@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleRoot } from 'radium';
 
-import GoogleAnalytics from './components/GoogleAnalytics';
+import GoogleAnalytics from './GoogleAnalytics';
+import GlobalStyles from './GlobalStyles';
 import AboutMe from 'components/content/AboutMe';
 import Technologies from 'components/content/Technologies';
 import { hasWebGl } from 'utils/featureDetection';
+
 
 const styles = {
 	contentWrapper: {
@@ -53,6 +55,9 @@ const App = React.createClass({
 
 		return (
 			<StyleRoot>
+
+				<GlobalStyles />
+
 				<div style={styles.contentWrapper}>
 					<AboutMe />
 					<Technologies />

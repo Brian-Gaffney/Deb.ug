@@ -1,8 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-import 'styles/global.scss';
-
 import App from './components/App';
 
 let el = document.createElement('div');
