@@ -29,6 +29,7 @@
     "bluebird": "^3.3.1",
     "eslint-friendly-formatter": "^1.2.2",
     "file-loader": "^0.8.5",
+    "hex-rgb": "^1.0.0",
     "html-minifier": "^1.2.0",
     "html-webpack-plugin": "^1.7.0",
     "path": "^0.12.7",

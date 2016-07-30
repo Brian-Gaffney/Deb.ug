@@ -1,19 +1,13 @@
 import React from 'react';
 import Radium, { Style } from 'radium';
 import background from './bg.png';
-
-const colours = {
-	primary: {
-		hex: '#FFA500',
-		rgb: '255,165,0'
-	}
-}
+import colors from 'colors';
 
 const globalStyles = {
 	body: {
 		height: '100%',
 		background: 'lightgrey',
-		color: 'rgb(60, 60, 70)',
+		color: colors.text.hex,
 		padding: '1% 4%',
 
 		fontFamily: "'Open Sans', Verdana, Geneva, sans-serif",
@@ -38,8 +32,10 @@ const globalStyles = {
 	},
 
 	'a:hover': {
-		color: '#0166FF',
-		backgroundColor: `rgba(${colours.primary.rgb}, 0.8)`
+		// color: colors.secondary.hex,
+		color: '#2244dd',
+		// backgroundColor: `rgba(${colors.primary.rgb}, 0.8)`
+		backgroundColor: '#772222'
 	},
 
 	h1: {

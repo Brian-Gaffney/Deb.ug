@@ -8,6 +8,7 @@ import {
 	getRandom,
 	getRandomPointOnSphere
 } from 'utils/maths';
+import colors from 'colors';
 
 const styles = {
 	hide: {
@@ -36,41 +37,26 @@ const styles = {
 		}
 	},
 	canvas: {
-		outline: '2px solid lightblue',
 		width: '100%',
 		height: '100%',
 	}
-};
-
-const ORANGE = {
-	hex: 0xffa500,
-	r: 1,
-	g: 0.64,
-	b: 0,
-};
-
-const BLUE = {
-	hex: 0x6666dd,
-	r: 0.4,
-	g: 0.4,
-	b: 0.8666,
 };
 
 const CAMERA_ROTATION_STEP = 0.002;
 const PHANTOM_SPHERE_RADIUS = 150; // Radius of "phantom" sphere on which all points are placed
 
 const TOTAL_SPHERES = 150;
-const SPHERE_SIZE = 1.9;
-const SPHERE_COLOR = BLUE.hex;
+const SPHERE_SIZE = 2.2;
+const SPHERE_COLOR = `rgb(${colors.secondary.rgb})`;
 const SPHERE_SCALING_FACTOR = 3.5;
 
 const MIDPOINT_COUNT = 4;
 
 const TOTAL_LINES = TOTAL_SPHERES * 2;
 const CURVE_POINTS = 250; // Determines accuracy when converting a curve to points
-const LINE_COLOR = ORANGE.hex;
+const LINE_COLOR = `rgb(${colors.primary.rgb})`;
 const LINE_DRAW_DURATION = 1500; // How many ms it takes to animate drawing a line
-const LINE_WIDTH = 2.5;
+const LINE_WIDTH = 3.2;
 
 const MIDPOINT_NOISE = 100;
 
@@ -89,7 +75,6 @@ const SPHERE_MATERIAL = new THREE.MeshBasicMaterial({
 	color: SPHERE_COLOR,
 	opacity: 1
 });
-
 
 const ThreeDemo = React.createClass({
 
@@ -174,10 +159,10 @@ const ThreeDemo = React.createClass({
 			this.startingSphere = this.getRandomSphere();
 			this.endingSphere = this.getRandomSphere(this.startingSphere);
 
-			// Make the first starting sphere orange
-			this.startingSphere.material.color.r = ORANGE.r;
-			this.startingSphere.material.color.g = ORANGE.g;
-			this.startingSphere.material.color.b = ORANGE.b;
+			// Highlight the first starting sphere
+			this.startingSphere.material.color.r = colors.primary.rDecimal;
+			this.startingSphere.material.color.g = colors.primary.gDecimal;
+			this.startingSphere.material.color.b = colors.primary.bDecimal;
 
 			// Make the first starting sphere big
 			this.startingSphere.scale.x = SPHERE_SCALING_FACTOR;
@@ -207,9 +192,11 @@ const ThreeDemo = React.createClass({
 	// Create a nice curve from sphere one to sphere 2
 	generateCurvePoints (s1, s2) {
 
-		const midPoints = [...Array(MIDPOINT_COUNT)].map((o, i) => {
+		const midPoints = [...Array(MIDPOINT_COUNT)].map((o, i, source) => {
+			const distanceAlongLine = (i + 1) / (source.length + 1);
+
 			const point = new THREE.Vector3()
-				.lerpVectors(s1.position, s2.position, 0.2);
+				.lerpVectors(s1.position, s2.position, distanceAlongLine);
 
 			return this.addNoiseToPoint(point, i + 1);
 		});
@@ -241,24 +228,24 @@ const ThreeDemo = React.createClass({
 		new TWEEN
 			.Tween(sphere.material.color)
 			.to({
-				r: color.r,
-				g: color.g,
-				b: color.b
+				r: color.rDecimal,
+				g: color.gDecimal,
+				b: color.bDecimal
 			}, COLOR_TRANSITION_DURATION)
 			.start()
 		;
 	},
 
 	drawLine (curvePoints) {
-		// Start making the origin sphere blue 
-		this.recolorSphere(this.startingSphere, BLUE);
+		// Start making the origin sphere the secondary color
+		this.recolorSphere(this.startingSphere, colors.secondary);
 		this.scaleSphere(this.startingSphere, false);
 
 		this
 			.animateLineDrawing(curvePoints)
 			.tap(() => {
-				// Start making the destination sphere orange once the line touches it
-				this.recolorSphere(this.endingSphere, ORANGE);
+				// Start highlighting the destination sphere once the line touches it
+				this.recolorSphere(this.endingSphere, colors.primary);
 				this.scaleSphere(this.endingSphere);
 			})
 			.delay(LINE_DRAW_DELAY)
