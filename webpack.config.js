@@ -39,10 +39,7 @@ module.exports = {
 				loader: 'babel',
 				include: [
 					path.resolve(__dirname, 'src'),
-				],
-				query: {
-					presets: ['react', 'es2015']
-				}
+				]
 			},
 
 			// Use the url loader for images

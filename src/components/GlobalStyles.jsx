@@ -16,15 +16,11 @@ const globalStyles = {
 		// Background tile from: http://subtlepatterns.com
 		backgroundImage: `url(${background})`,
 		backgroundSize: 'auto',
-		backgroundRepeat: 'repeat repeat',
-
-		':hover': {
-			background: 'red'
-		}
+		backgroundRepeat: 'repeat repeat'
 	},
 
 	a: {
-		color: 'rgb(100,100,100)',
+		color: colors.text.hex,
 		padding: '5px 8px',
 
 		transition: 'color 0.5s ease-in, background-color 0.5s ease-out',
@@ -32,10 +28,8 @@ const globalStyles = {
 	},
 
 	'a:hover': {
-		// color: colors.secondary.hex,
-		color: '#2244dd',
-		// backgroundColor: `rgba(${colors.primary.rgb}, 0.8)`
-		backgroundColor: '#772222'
+		color: colors.secondary.hex,
+		backgroundColor: `rgba(${colors.primary.rgb}, 0.7)`
 	},
 
 	h1: {
@@ -59,7 +53,7 @@ const globalStyles = {
 	},
 
 	'ul li': {
-		marginBottom: '0.4em',
+		marginBottom: '0.5em',
 
 		'@media screen and (max-width: 700px)': {
 			marginBottom: '0.8em'

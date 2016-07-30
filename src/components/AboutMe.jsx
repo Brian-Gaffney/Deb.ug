@@ -3,7 +3,7 @@ import Radium from 'radium';
 
 const styles = {
 	list: {
-		marginTop: '1em',
+		marginTop: '1em'
 	}
 };
 

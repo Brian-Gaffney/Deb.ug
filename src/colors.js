@@ -1,9 +1,37 @@
 import hexToRgb from 'hex-rgb';
 
+const colorVariations = [
+	{
+		primary: '#FFA500',
+		secondary: '#6666DD'
+	},
+	{
+		primary: '#6666DD',
+		secondary: '#FFA500'
+	},
+	{
+		primary: '#22dddd',
+		secondary: '#CC4477'
+	},
+	{
+		primary: '#8822BB',
+		secondary: '#FAF750'
+	},
+	{
+		primary: '#DD2222',
+		secondary: '#2222DD'
+	},
+	{
+		primary: '#2222DD',
+		secondary: '#DD2222'
+	}
+];
+
+const variation = colorVariations[Math.floor(Math.random() * colorVariations.length)];
+
 const colors = {
-	text: '#3C3C46',
-	primary: '#FFA500',
-	secondary: '#6666DD'
+	text: '#3C3C44',
+	...variation
 };
 
 const rgbHexColors = {};
