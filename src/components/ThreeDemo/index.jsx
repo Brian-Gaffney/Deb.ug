@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Radium from 'radium';
 import TWEEN from 'tween.js';
 import Promise from 'bluebird';
 import THREE from 'utils/three';
@@ -8,7 +9,38 @@ import {
 	getRandomPointOnSphere
 } from 'utils/maths';
 
-import styles from './styles.scss';
+const styles = {
+	hide: {
+		opacity: 0
+	},
+	component: {
+		position: 'absolute',
+		zIndex: -'50',
+		bottom: '5%',
+		right: '5%',
+		width: '70%',
+		height: '70%',
+		transition: 'opacity 1000ms ease-in',
+		overflow: 'hidden',
+
+		'@media screen and (max-width: 1440px)': {
+			width: '100%',
+			height: '600px',
+			position: 'static'
+		},
+
+		'@media screen and (max-width: 900px)': {
+			width: '100%',
+			height: '400px',
+			position: 'static'
+		}
+	},
+	canvas: {
+		outline: '2px solid lightblue',
+		width: '100%',
+		height: '100%',
+	}
+};
 
 const ORANGE = {
 	hex: 0xffa500,
@@ -30,7 +62,9 @@ const PHANTOM_SPHERE_RADIUS = 150; // Radius of "phantom" sphere on which all po
 const TOTAL_SPHERES = 150;
 const SPHERE_SIZE = 1.9;
 const SPHERE_COLOR = BLUE.hex;
-const SPHERE_SCALING_FACTOR = 2.2;
+const SPHERE_SCALING_FACTOR = 3.5;
+
+const MIDPOINT_COUNT = 4;
 
 const TOTAL_LINES = TOTAL_SPHERES * 2;
 const CURVE_POINTS = 250; // Determines accuracy when converting a curve to points
@@ -38,12 +72,7 @@ const LINE_COLOR = ORANGE.hex;
 const LINE_DRAW_DURATION = 1500; // How many ms it takes to animate drawing a line
 const LINE_WIDTH = 2.5;
 
-const LINE_MIDPOINT_JIGGLE = 50;
-// Subsequent midpoints have less and less jiggle
-// They get closer and closer to their "goal"
-const LINE_MIDPOINT_JIGGLE2 = LINE_MIDPOINT_JIGGLE / 2;
-const LINE_MIDPOINT_JIGGLE3 = LINE_MIDPOINT_JIGGLE / 4;
-const LINE_MIDPOINT_JIGGLE4 = LINE_MIDPOINT_JIGGLE / 6;
+const MIDPOINT_NOISE = 100;
 
 const LINE_DRAW_DELAY = 500;
 const COLOR_TRANSITION_DURATION = LINE_DRAW_DELAY + LINE_DRAW_DURATION;
@@ -83,15 +112,23 @@ const ThreeDemo = React.createClass({
 	},
 
 	componentDidMount () {
-		let canvas = ReactDOM.findDOMNode(this.refs.canvas);
+		// Small delay so that Radium has time
+		// to set the canvas size
+		window.setTimeout(() => {
+			this.init();
+		}, 50);
+	},
 
-		let WIDTH = canvas.clientWidth;
-		let HEIGHT = canvas.clientHeight;
+	init () {
+		const canvas = ReactDOM.findDOMNode(this.refs.canvas);
 
-		let VIEW_ANGLE = 45;
-		let ASPECT = WIDTH / HEIGHT;
-		let NEAR = 0.1;
-		let FAR = 10000;
+		const WIDTH = canvas.clientWidth;
+		const HEIGHT = canvas.clientHeight;
+
+		const VIEW_ANGLE = 45;
+		const ASPECT = WIDTH / HEIGHT;
+		const NEAR = 0.1;
+		const FAR = 10000;
 
 		this.camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
 		this.camera.position.set(0, 20, 500);
@@ -107,21 +144,16 @@ const ThreeDemo = React.createClass({
 
 		this.scene = new THREE.Scene();
 
-		this.init();
-
-		this.setState({
-			show: true
-		});
-	},
-
-	init () {
 		this.initSpheres();
 		this.render3D();
 		this.initLineDrawing();
 
-		let canvas = ReactDOM.findDOMNode(this.refs.canvas);
 		canvas.onmousemove = this.handleMouseMove;
 		canvas.addEventListener('mousewheel', this.handleMouseWheel, false);
+
+		this.setState({
+			show: true
+		});
 	},
 
 	// Get a random sphere (that's not notThisOne)
@@ -157,58 +189,42 @@ const ThreeDemo = React.createClass({
 			this.endingSphere = this.getRandomSphere(this.startingSphere);
 		}
 
-		let curvePoints = this.generateCurvePoints(this.startingSphere, this.endingSphere);
+		const curvePoints = this.generateCurvePoints(this.startingSphere, this.endingSphere);
 
 		this.drawLine(curvePoints);
 	},
 
-	generateCurvePoints (s1, s2) {
-		// Set a midpoint between the two spheres
-		let midPoint = new THREE.Vector3();
-		let midPoint2 = new THREE.Vector3();
-		let midPoint3 = new THREE.Vector3();
-		let midPoint4 = new THREE.Vector3();
+	addNoiseToPoint (point, noiseFactor = 1) {
+		const noise = MIDPOINT_NOISE / noiseFactor;
 
-		midPoint.lerpVectors(s1.position, s2.position, 0.2);
-		midPoint2.lerpVectors(s1.position, s2.position, 0.4);
-		midPoint3.lerpVectors(s1.position, s2.position, 0.6);
-		midPoint4.lerpVectors(s1.position, s2.position, 0.8);
+		point.x += getRandom(-noise, noise);
+		point.y += getRandom(-noise, noise);
+		point.z += getRandom(-noise, noise);
 
-		// Add some jiggle to the midpoints
-		midPoint.x += getRandom(-LINE_MIDPOINT_JIGGLE, LINE_MIDPOINT_JIGGLE);
-		midPoint.y += getRandom(-LINE_MIDPOINT_JIGGLE, LINE_MIDPOINT_JIGGLE);
-		midPoint.z += getRandom(-LINE_MIDPOINT_JIGGLE, LINE_MIDPOINT_JIGGLE);
-
-		midPoint2.x += getRandom(-LINE_MIDPOINT_JIGGLE2, LINE_MIDPOINT_JIGGLE2);
-		midPoint2.y += getRandom(-LINE_MIDPOINT_JIGGLE2, LINE_MIDPOINT_JIGGLE2);
-		midPoint2.z += getRandom(-LINE_MIDPOINT_JIGGLE2, LINE_MIDPOINT_JIGGLE2);
-
-		midPoint3.x += getRandom(-LINE_MIDPOINT_JIGGLE3, LINE_MIDPOINT_JIGGLE3);
-		midPoint3.y += getRandom(-LINE_MIDPOINT_JIGGLE3, LINE_MIDPOINT_JIGGLE3);
-		midPoint3.z += getRandom(-LINE_MIDPOINT_JIGGLE3, LINE_MIDPOINT_JIGGLE3);
-
-		midPoint4.x += getRandom(-LINE_MIDPOINT_JIGGLE4, LINE_MIDPOINT_JIGGLE4);
-		midPoint4.y += getRandom(-LINE_MIDPOINT_JIGGLE4, LINE_MIDPOINT_JIGGLE4);
-		midPoint4.z += getRandom(-LINE_MIDPOINT_JIGGLE4, LINE_MIDPOINT_JIGGLE4);
-
-		// Create a curve from sphere 1 to 2 via the midpoints
-		let curve = new THREE.CatmullRomCurve3([
-			s1.position,
-			midPoint,
-			midPoint2,
-			midPoint3,
-			s2.position
-		]);
-
-		return curve.getPoints(CURVE_POINTS);
+		return point;
 	},
 
-	scaleSphere (sphere, down = false) {
+	// Create a nice curve from sphere one to sphere 2
+	generateCurvePoints (s1, s2) {
 
-		let scale = SPHERE_SCALING_FACTOR;
-		if (down) {
-			scale = 1;
-		}
+		const midPoints = [...Array(MIDPOINT_COUNT)].map((o, i) => {
+			const point = new THREE.Vector3()
+				.lerpVectors(s1.position, s2.position, 0.2);
+
+			return this.addNoiseToPoint(point, i + 1);
+		});
+
+		// Create a curve from sphere 1 to 2 via the midpoints
+		return new THREE.CatmullRomCurve3([
+			s1.position,
+			...midPoints,
+			s2.position
+		]).getPoints(CURVE_POINTS);
+	},
+
+	scaleSphere (sphere, scaleUp = true) {
+		// Scale up or return to normal scale (1)
+		const scale = scaleUp ? SPHERE_SCALING_FACTOR : 1;
 
 		new TWEEN
 			.Tween(sphere.scale)
@@ -234,10 +250,9 @@ const ThreeDemo = React.createClass({
 	},
 
 	drawLine (curvePoints) {
-
 		// Start making the origin sphere blue 
 		this.recolorSphere(this.startingSphere, BLUE);
-		this.scaleSphere(this.startingSphere, true);
+		this.scaleSphere(this.startingSphere, false);
 
 		this
 			.animateLineDrawing(curvePoints)
@@ -248,49 +263,45 @@ const ThreeDemo = React.createClass({
 			})
 			.delay(LINE_DRAW_DELAY)
 			.then((curvePoints) => {
-				return this.animateLineDrawing(curvePoints, true)
+				return this.animateLineDrawing(curvePoints, false)
 			})
 			.delay(LINE_DRAW_DELAY * 2)
 			.finally(this.initLineDrawing)
 		;
 	},
 
-	animateLineDrawing (curvePoints, backward = false) {
-		let counter = 1;
-		if (backward) {
-			counter = curvePoints.length;
+	animateLineDrawing (curvePoints, forward = true) {
+		let counter = forward ? 1 : curvePoints.length;
+
+		if (!forward) {
 			curvePoints.reverse();
 		}
 
 		return new Promise((resolve) => {
+			const intervalPeriod = LINE_DRAW_DURATION / CURVE_POINTS;
 
-			let intervalPeriod = LINE_DRAW_DURATION / CURVE_POINTS;
-
-			let interval = window.setInterval(() => {
+			const interval = window.setInterval(() => {
 				// Clone curve points into a new array
-				var points = curvePoints.slice();
+				const points = curvePoints.slice();
 
 				// Splice out a subset of points to draw
 				points.splice(counter);
 
-				if (backward) {
-					counter--;
-				} else {
-					counter++;
-				}
+				// (inc/dec)remenent counter
+				forward ? counter++ : counter--;
 
 				// Remove previous line
 				if (this.line) {
 					this.scene.remove(this.line);
 				}
 
-				var geometry = new THREE.Geometry();
+				const geometry = new THREE.Geometry();
 				geometry.vertices = points;
 				this.line = new THREE.Line(geometry, LINE_MATERIAL);
 				this.scene.add(this.line);
 
 				// Resolve promise after we reach the end of the line
-				if ((backward && counter < 1) || counter === curvePoints.length) {
+				if ((!forward && counter < 1) || counter === curvePoints.length) {
 					window.clearInterval(interval);
 					resolve(curvePoints);
 				}
@@ -301,20 +312,20 @@ const ThreeDemo = React.createClass({
 
 	// Camera zoom based on mouse wheel
 	handleMouseWheel (event) {
-		let up = !!(event.wheelDelta > 0);
-		let zoom = up ? -MOVE_WHEEL_ZOOM_STEP : MOVE_WHEEL_ZOOM_STEP;
+		const up = !!(event.wheelDelta > 0);
+		const zoom = up ? -MOVE_WHEEL_ZOOM_STEP : MOVE_WHEEL_ZOOM_STEP;
 		this.camera.fov += zoom;
 		this.camera.updateProjectionMatrix();
 	},
 
 	handleMouseMove (event) {
 		if (this.lastMousePosition.x) {
-			let deltaX = this.lastMousePosition.x - event.pageX;
-			let deltaY = this.lastMousePosition.y - event.pageY;
+			const deltaX = this.lastMousePosition.x - event.pageX;
+			const deltaY = this.lastMousePosition.y - event.pageY;
 
-			let x = this.camera.position.x;
-			let y = this.camera.position.y;
-			let z = this.camera.position.z;
+			const x = this.camera.position.x;
+			const y = this.camera.position.y;
+			const z = this.camera.position.z;
 
 			if (Math.abs(deltaX) > Math.abs(deltaY) && deltaX > 0) {
 				// Left
@@ -347,13 +358,13 @@ const ThreeDemo = React.createClass({
 
 	initSpheres () {
 		// Add a bunch of spheres to scene
-		let sphereGeometry = new THREE.SphereGeometry(SPHERE_SIZE, 20, 20);
+		const sphereGeometry = new THREE.SphereGeometry(SPHERE_SIZE, 20, 20);
 
 		for (let i = 0; i < TOTAL_SPHERES; i++) {
-			let sphere = new THREE.Mesh(sphereGeometry, SPHERE_MATERIAL.clone());
-			let positionOffset = 220;
+			const sphere = new THREE.Mesh(sphereGeometry, SPHERE_MATERIAL.clone());
+			const positionOffset = 220;
 
-			let pos = getRandomPointOnSphere(PHANTOM_SPHERE_RADIUS);
+			const pos = getRandomPointOnSphere(PHANTOM_SPHERE_RADIUS);
 			sphere.position.set(pos.x, pos.y, pos.z);
 
 			this.spheres.push(sphere);
@@ -362,9 +373,11 @@ const ThreeDemo = React.createClass({
 	},
 
 	updateCamera () {
-		let x = this.camera.position.x;
-		let y = this.camera.position.y;
-		let z = this.camera.position.z;
+		const {
+			x,
+			y,
+			z
+		} = this.camera.position;
 
 		this.camera.position.x = x * Math.cos(CAMERA_ROTATION_STEP) + z * Math.sin(CAMERA_ROTATION_STEP);
 		this.camera.position.y = y * Math.cos(CAMERA_ROTATION_STEP / 4) + z * Math.sin(CAMERA_ROTATION_STEP / 4);
@@ -384,18 +397,17 @@ const ThreeDemo = React.createClass({
 	},
 
 	render () {
-		let className = styles.component;
-
-		if (this.state.show) {
-			className += ` ${styles.show}`;
-		}
+		const style = [
+			styles.component,
+			this.state.show ? null : styles['hide']
+		];
 
 		return (
-			<div className={className}>
-				<canvas className={styles.canvas} ref="canvas" />
+			<div style={style}>
+				<canvas style={styles.canvas} ref="canvas" />
 			</div>
 		);
 	}
 });
 
-export default ThreeDemo;
+export default Radium(ThreeDemo);

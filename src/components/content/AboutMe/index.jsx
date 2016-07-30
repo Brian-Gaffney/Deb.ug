@@ -1,5 +1,11 @@
 import React from 'react';
-import styles from './styles.scss';
+import Radium from 'radium';
+
+const styles = {
+	list: {
+		marginTop: '1em',
+	}
+};
 
 const AboutMe = React.createClass({
 
@@ -7,7 +13,7 @@ const AboutMe = React.createClass({
 
 	render () {
 		return (
-			<div>
+			<div style={styles.component}>
 				<h1>
 					Brian Gaffney
 				</h1>
@@ -20,7 +26,7 @@ const AboutMe = React.createClass({
 					I like building single page apps, good user interfaces and clearly conveying information.
 				</p>
 
-				<ul className={styles.contactInfo}>
+				<ul style={styles.list}>
 					<li>
 						<a href="mailto:brian@deb.ug">brian@deb.ug</a>
 					</li>
@@ -39,4 +45,4 @@ const AboutMe = React.createClass({
 	}
 });
 
-export default AboutMe;
+export default Radium(AboutMe);

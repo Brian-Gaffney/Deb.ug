@@ -46,18 +46,6 @@ module.exports = {
 			},
 
 			{
-				// Use CSS modules for scss, excluding 'styles/**/*.scss'
-				test: /\.scss$/,
-				exclude: [
-					/styles\/.+\.scss$/
-				],
-				loader: 'style!css?modules&localIdentName=[local]__[hash:base64]!resolve-url!autoprefixer!sass?' +
-				'includePaths[]=' + encodeURIComponent(path.resolve(__dirname, './src')) +
-				'&includePaths[]=' + encodeURIComponent(path.resolve(__dirname, './node_modules')),
-				name: 'scssModuleLoader'
-			},
-
-			{
 				// Use regular scss (no modules) for 'styles/**/*.scss'
 				test: /styles\/.+\.scss$/,
 				loader: 'style!css!resolve-url!autoprefixer!sass?' +

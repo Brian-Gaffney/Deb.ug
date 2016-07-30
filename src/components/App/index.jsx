@@ -1,11 +1,17 @@
 import React from 'react';
+import { StyleRoot } from 'radium';
 
 import GoogleAnalytics from './components/GoogleAnalytics';
 import AboutMe from 'components/content/AboutMe';
 import Technologies from 'components/content/Technologies';
 import { hasWebGl } from 'utils/featureDetection';
 
-import styles from './styles.scss';
+const styles = {
+	contentWrapper: {
+		zIndex: 100,
+		position: 'relative'
+	}
+};
 
 const App = React.createClass({
 
@@ -46,8 +52,8 @@ const App = React.createClass({
 		let ThreeDemo = this.renderThreeDemo();
 
 		return (
-			<div className={styles.component}>
-				<div className={styles.contentWrapper}>
+			<StyleRoot>
+				<div style={styles.contentWrapper}>
 					<AboutMe />
 					<Technologies />
 				</div>
@@ -55,7 +61,7 @@ const App = React.createClass({
 				{ ThreeDemo }
 
 				<GoogleAnalytics />
-			</div>
+			</StyleRoot>
 		);
 	}
 });
