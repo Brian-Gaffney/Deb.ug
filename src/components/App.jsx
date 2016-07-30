@@ -3,8 +3,8 @@ import { StyleRoot } from 'radium';
 
 import GoogleAnalytics from './GoogleAnalytics';
 import GlobalStyles from './GlobalStyles';
-import AboutMe from 'components/content/AboutMe';
-import Technologies from 'components/content/Technologies';
+import AboutMe from 'components/AboutMe';
+import Technologies from 'components/Technologies';
 import { hasWebGl } from 'utils/featureDetection';
 
 
@@ -34,7 +34,7 @@ const App = React.createClass({
 	// Load ThreeDemo from a separate bundle
 	loadThreeDemo () {
 		require.ensure([], () => {
-			var ThreeDemo = require('components/ThreeDemo').default;
+			var ThreeDemo = require('components/ThreeJSDemo').default;
 
 			this.setState({
 				ThreeDemo
