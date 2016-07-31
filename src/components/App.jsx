@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleRoot } from 'radium';
+import Helmet from 'react-helmet';
 
 import GoogleAnalytics from './GoogleAnalytics';
 import GlobalStyles from './GlobalStyles';
 import AboutMe from 'components/AboutMe';
 import Technologies from 'components/Technologies';
 import { hasWebGl } from 'utils/featureDetection';
-
+import colors from 'colors';
 
 const styles = {
 	contentWrapper: {
@@ -55,6 +56,15 @@ const App = React.createClass({
 
 		return (
 			<StyleRoot>
+
+				<Helmet
+					meta={[
+						{
+							name: 'theme-color',
+							content: colors.primary.hex
+						}
+					]}
+				/>
 
 				<GlobalStyles />
 
