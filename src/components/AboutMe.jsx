@@ -19,7 +19,7 @@ const AboutMe = React.createClass({
 				</h1>
 
 				<h2>
-					Web developer in Melbourne, Australia.
+					JS developer in Melbourne, Australia.
 				</h2>
 
 				<p>

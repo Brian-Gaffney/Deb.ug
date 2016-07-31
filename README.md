@@ -10,11 +10,3 @@ S3 bucket - http://deb.ug.s3-website-us-east-1.amazonaws.com
 
 ## Todo
 * Fix mouse movement to camera bindings
-Content
-	Redux
-	PostCSS
-	Mongo
-	Node
-	Express
-	Webpack?
-	Git

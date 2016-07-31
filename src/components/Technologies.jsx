@@ -1,10 +1,13 @@
 import React from 'react';
 
 const TECHNOLOGIES = [
-	'React.js',
-	'Backbone.js',
+	'React and Redux',
+	'MongoDB',
+	'Node',
+	'Express',
 	'Webpack and Gulp',
-	'SASS',
+	'PostCSS and SASS',
+	'Git',
 	'Linux'
 ];
 
