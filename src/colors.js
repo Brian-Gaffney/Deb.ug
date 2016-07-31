@@ -14,10 +14,6 @@ const colorVariations = [
 		secondary: '#CC4477'
 	},
 	{
-		primary: '#8822BB',
-		secondary: '#FAF750'
-	},
-	{
 		primary: '#DD2222',
 		secondary: '#2222DD'
 	},
@@ -27,8 +23,10 @@ const colorVariations = [
 	}
 ];
 
+// Get a random variation
 const variation = colorVariations[Math.floor(Math.random() * colorVariations.length)];
 
+// Merge defaults with random variation
 const colors = {
 	text: '#3C3C44',
 	...variation
@@ -36,7 +34,12 @@ const colors = {
 
 const rgbHexColors = {};
 
-// Map the hex values to RGB and R, G, B
+/*
+ * Map the hex values to:
+ * RGB string: eg. 220,110,50
+ * Separate R, G and B ints 0-255
+ * Separate decimal R G and B values from 0-1
+ */
 Object.keys(colors).forEach((key, i) => {
 	const hex = colors[key];
 	const rgb = hexToRgb(hex);

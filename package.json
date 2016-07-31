@@ -29,6 +29,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "bluebird": "^3.3.1",
     "eslint-friendly-formatter": "^1.2.2",
+    "favicolor": "^1.0.1",
     "file-loader": "^0.8.5",
     "hex-rgb": "^1.0.0",
     "html-minifier": "^1.2.0",

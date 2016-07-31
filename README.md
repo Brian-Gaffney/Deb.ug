@@ -10,13 +10,11 @@ S3 bucket - http://deb.ug.s3-website-us-east-1.amazonaws.com
 
 ## Todo
 * Fix mouse movement to camera bindings
-* Click action?
-  * Spawn another line?
-  * Add/toggle shader effect?
-    * GlitchPass
-    * Blur
-    * Bokeh
-    * DOF
-    * Ascii
-    * FilmPass
-    * FilmShader
+Content
+	Redux
+	PostCSS
+	Mongo
+	Node
+	Express
+	Webpack?
+	Git

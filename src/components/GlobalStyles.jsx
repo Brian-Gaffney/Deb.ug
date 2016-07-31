@@ -29,7 +29,7 @@ const globalStyles = {
 
 	'a:hover': {
 		color: colors.secondary.hex,
-		backgroundColor: `rgba(${colors.primary.rgb}, 0.7)`
+		backgroundColor: `rgba(${colors.primary.rgb}, 0.8)`
 	},
 
 	h1: {
