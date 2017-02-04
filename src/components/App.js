@@ -1,9 +1,7 @@
 import { Component, h } from 'preact'
-import Helmet from 'react-helmet'
 import injectSheet from 'react-jss'
 
 import { hasWebGl } from '../utils/featureDetection'
-import colors from '../colors'
 
 import GoogleAnalytics from './GoogleAnalytics'
 import GlobalStyles from './GlobalStyles'
@@ -61,17 +59,7 @@ class App extends Component {
 
 		return (
 			<div>
-
 				<GlobalStyles />
-
-				<Helmet
-					meta={[
-						{
-							name: 'theme-color',
-							content: colors.primary.hex,
-						},
-					]}
-				/>
 
 				<div className={classes.contentWrapper}>
 					<AboutMe />
