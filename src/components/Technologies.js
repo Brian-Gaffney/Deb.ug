@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const technologies = [
 	'React and Redux',
@@ -9,8 +9,8 @@ const technologies = [
 	'GraphQL and Apollo',
 	'PostCSS, SASS, Fela, JSS, CSS modules',
 	'Git',
-	'Linux'
-];
+	'Linux',
+]
 
 export default () => (
 	<div>

@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
-import Helmet from 'react-helmet';
+import React, { Component } from 'react'
+import Helmet from 'react-helmet'
 import injectSheet from 'react-jss'
 
-import colors from '../colors';
-import GoogleAnalytics from './GoogleAnalytics';
-import GlobalStyles from './GlobalStyles';
-import AboutMe from './AboutMe.jsx';
-import Technologies from './Technologies';
-import { hasWebGl } from '../utils/featureDetection';
+import { hasWebGl } from '../utils/featureDetection'
+import colors from '../colors'
+
+import GoogleAnalytics from './GoogleAnalytics'
+import GlobalStyles from './GlobalStyles'
+import AboutMe from './AboutMe'
+import Technologies from './Technologies'
 
 const styles = {
 	contentWrapper: {
 		zIndex: 100,
 		position: 'relative',
 	},
-};
+}
 
 class App extends Component {
 
@@ -22,37 +23,37 @@ class App extends Component {
 		super()
 
 		this.state = {
-			ThreeDemo: null
+			ThreeDemo: null,
 		}
 	}
 
 	componentDidMount () {
 		if (hasWebGl()) {
-			this.loadThreeDemo();
+			this.loadThreeDemo()
 		}
 	}
 
 	// Load ThreeDemo from a separate bundle
 	loadThreeDemo () {
 		require.ensure([], () => {
-			var ThreeDemo = require('./ThreeJSDemo').default;
+			let ThreeDemo = require('./ThreeJSDemo').default
 
 			this.setState({
-				ThreeDemo
-			});
-		});
+				ThreeDemo,
+			})
+		})
 	}
 
 	renderThreeDemo () {
 		if (!this.state.ThreeDemo) {
-			return null;
+			return null
 		}
 
 		return <this.state.ThreeDemo />
 	}
 
 	render () {
-		const ThreeDemo = this.renderThreeDemo();
+		const ThreeDemo = this.renderThreeDemo()
 
 		const {
 			classes,
@@ -67,8 +68,8 @@ class App extends Component {
 					meta={[
 						{
 							name: 'theme-color',
-							content: colors.primary.hex
-						}
+							content: colors.primary.hex,
+						},
 					]}
 				/>
 
@@ -81,7 +82,7 @@ class App extends Component {
 
 				<GoogleAnalytics />
 			</div>
-		);
+		)
 	}
 }
 

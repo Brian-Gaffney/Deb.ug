@@ -6,8 +6,8 @@ export default {
 		rDecimal: 0.23529411764705882,
 		gDecimal: 0.23529411764705882,
 		bDecimal: 0.26666666666666666,
-		hex: "#3C3C44",
-		rgb: "60,60,68"
+		hex: '#3C3C44',
+		rgb: '60,60,68',
 	},
 	primary: {
 		r: 255,
@@ -16,8 +16,8 @@ export default {
 		rDecimal: 1,
 		gDecimal: 0.6470588235294118,
 		bDecimal: 0,
-		hex: "#FFA500",
-		rgb: "255,165,0"
+		hex: '#FFA500',
+		rgb: '255,165,0',
 	},
 	secondary: {
 		r: 102,
@@ -26,7 +26,7 @@ export default {
 		rDecimal: 0.4,
 		gDecimal: 0.4,
 		bDecimal: 0.8666666666666667,
-		hex: "#6666DD",
-		rgb: "102,102,221"
-	}
+		hex: '#6666DD',
+		rgb: '102,102,221',
+	},
 }

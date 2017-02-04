@@ -30,7 +30,7 @@ module.exports = {
 	module: {
 		loaders: [
 			{
-				test: /\.(js|jsx|svg)$/,
+				test: /\.js$/,
 				loader: 'babel-loader',
 				include: [
 					path.resolve(__dirname, 'src'),
@@ -47,10 +47,6 @@ module.exports = {
 	},
 
 	resolve: {
-		// Resolve extensionless files with the list below.
-		// Eg. require('foo') will resolve to 'foo.js', 'foo/index.jsx' etc.
-		extensions: ['.js', '.jsx'],
-
 		modules: [
 			__dirname,
 			'node_modules'

@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 import injectSheet from 'react-jss'
 
 const styles = {
 	list: {
-		marginTop: '1em'
-	}
-};
+		marginTop: '1em',
+	},
+}
 
 const AboutMe = ({
 	classes,
@@ -39,7 +39,7 @@ const AboutMe = ({
 				</li>
 			</ul>
 		</div>
-	);
+	)
 }
 
 export default injectSheet(styles)(AboutMe)

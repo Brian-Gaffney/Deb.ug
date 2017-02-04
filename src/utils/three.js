@@ -1,3 +1,3 @@
-import THREE from 'three-js';
+import THREE from 'three-js'
 
-export default THREE();
+export default THREE()
