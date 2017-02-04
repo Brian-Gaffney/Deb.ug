@@ -2,8 +2,20 @@ import { h, Component } from 'preact'
 import injectSheet from 'react-jss'
 import TWEEN from 'tween.js'
 import Promise from 'bluebird'
+import {
+	CatmullRomCurve3,
+	Geometry,
+	Line,
+	LineBasicMaterial,
+	Mesh,
+	MeshBasicMaterial,
+	PerspectiveCamera,
+	Scene,
+	SphereGeometry,
+	Vector3,
+	WebGLRenderer,
+} from 'three'
 
-import THREE from '../utils/three'
 import {
 	getRandom,
 	getRandomPointOnSphere,
@@ -65,12 +77,12 @@ const COLOR_TRANSITION_DURATION = LINE_DRAW_DELAY + LINE_DRAW_DURATION
 const MOUSE_MOVE_STEP = 0.004
 const MOVE_WHEEL_ZOOM_STEP = 1
 
-const LINE_MATERIAL = new THREE.LineBasicMaterial({
+const LINE_MATERIAL = new LineBasicMaterial({
 	color: LINE_COLOR,
 	linewidth: LINE_WIDTH,
 })
 
-const SPHERE_MATERIAL = new THREE.MeshBasicMaterial({
+const SPHERE_MATERIAL = new MeshBasicMaterial({
 	color: SPHERE_COLOR,
 	opacity: 1,
 })
@@ -114,10 +126,10 @@ class ThreeDemo extends Component {
 		const NEAR = 0.1
 		const FAR = 10000
 
-		this.camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR)
+		this.camera = new PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR)
 		this.camera.position.set(0, 20, 500)
 
-		this.renderer = new THREE.WebGLRenderer({
+		this.renderer = new WebGLRenderer({
 			alpha: true,
 			antialias: true,
 			canvas,
@@ -126,7 +138,7 @@ class ThreeDemo extends Component {
 		this.renderer.setClearColor(0xffffff, 0)
 		this.renderer.setSize(WIDTH, HEIGHT)
 
-		this.scene = new THREE.Scene()
+		this.scene = new Scene()
 
 		this.initSpheres()
 		this.render3D()
@@ -194,14 +206,14 @@ class ThreeDemo extends Component {
 		const midPoints = [...Array(MIDPOINT_COUNT)].map((o, i, source) => {
 			const distanceAlongLine = (i + 1) / (source.length + 1)
 
-			const point = new THREE.Vector3()
+			const point = new Vector3()
 				.lerpVectors(s1.position, s2.position, distanceAlongLine)
 
 			return this.addNoiseToPoint(point, i + 1)
 		})
 
 		// Create a curve from sphere 1 to 2 via the midpoints
-		return new THREE.CatmullRomCurve3([
+		return new CatmullRomCurve3([
 			s1.position,
 			...midPoints,
 			s2.position,
@@ -281,9 +293,9 @@ class ThreeDemo extends Component {
 					this.scene.remove(this.line)
 				}
 
-				const geometry = new THREE.Geometry()
+				const geometry = new Geometry()
 				geometry.vertices = points
-				this.line = new THREE.Line(geometry, LINE_MATERIAL)
+				this.line = new Line(geometry, LINE_MATERIAL)
 				this.scene.add(this.line)
 
 				// Resolve promise after we reach the end of the line
@@ -344,10 +356,10 @@ class ThreeDemo extends Component {
 
 	initSpheres () {
 		// Add a bunch of spheres to scene
-		const sphereGeometry = new THREE.SphereGeometry(SPHERE_SIZE, 20, 20)
+		const sphereGeometry = new SphereGeometry(SPHERE_SIZE, 20, 20)
 
 		for (let i = 0; i < TOTAL_SPHERES; i++) {
-			const sphere = new THREE.Mesh(sphereGeometry, SPHERE_MATERIAL.clone())
+			const sphere = new Mesh(sphereGeometry, SPHERE_MATERIAL.clone())
 
 			const pos = getRandomPointOnSphere(PHANTOM_SPHERE_RADIUS)
 			sphere.position.set(pos.x, pos.y, pos.z)

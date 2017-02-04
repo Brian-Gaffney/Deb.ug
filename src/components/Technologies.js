@@ -3,10 +3,9 @@ import { h } from 'preact'
 const technologies = [
 	'React and Redux',
 	'Mongo and RethinkDB',
-	'Node',
-	'Express',
-	'Webpack',
+	'Node and Express',
 	'GraphQL and Apollo',
+	'Webpack',
 	'PostCSS, SASS, Fela, JSS, CSS modules',
 	'Git',
 	'Linux',
