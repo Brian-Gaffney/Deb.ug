@@ -6,11 +6,11 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 module.exports = {
 
 	entry: [
-		`${__dirname  }/src/main.js`,
+		`${__dirname  }/../src/main.js`,
 	],
 
 	output: {
-		path: `${__dirname  }/build`,
+		path: `${__dirname  }/../build`,
 		filename: '[name].js',
 		publicPath: '/',
 	},
@@ -34,8 +34,8 @@ module.exports = {
 				test: /\.js$/,
 				loader: 'babel-loader',
 				include: [
-					path.resolve(__dirname, './src'),
-					path.resolve(__dirname, './node_modules/preact-compat/src'),
+					path.resolve(__dirname, '../src'),
+					path.resolve(__dirname, '../node_modules/preact-compat/src'),
 				],
 			},
 
@@ -64,7 +64,7 @@ module.exports = {
 
 		new HtmlWebpackPlugin({
 			// template: './index.html',
-			template: `${__dirname  }/src/index.html`,
+			template: `${__dirname  }/../src/index.html`,
 			inject: 'body',
 			minify: {
 				collapseWhitespace: true,

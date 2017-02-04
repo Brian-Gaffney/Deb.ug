@@ -42,9 +42,6 @@ config.plugins.push(
 			warnings: false,
 			'drop_console': true,
 		},
-		mangle: {
-			except: ['$super', '$', 'exports', 'require'],
-		},
 	})
 )
 
