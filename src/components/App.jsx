@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import injectSheet from 'react-jss'
 
@@ -16,21 +16,21 @@ const styles = {
 	},
 };
 
-const App = React.createClass({
+class App extends Component {
 
-	displayName: 'App',
+	constructor () {
+		super()
 
-	getInitialState () {
-		return {
+		this.state = {
 			ThreeDemo: null
-		};
-	},
+		}
+	}
 
 	componentDidMount () {
 		if (hasWebGl()) {
 			this.loadThreeDemo();
 		}
-	},
+	}
 
 	// Load ThreeDemo from a separate bundle
 	loadThreeDemo () {
@@ -41,7 +41,7 @@ const App = React.createClass({
 				ThreeDemo
 			});
 		});
-	},
+	}
 
 	renderThreeDemo () {
 		if (!this.state.ThreeDemo) {
@@ -49,7 +49,7 @@ const App = React.createClass({
 		}
 
 		return <this.state.ThreeDemo />
-	},
+	}
 
 	render () {
 		const ThreeDemo = this.renderThreeDemo();
@@ -83,6 +83,6 @@ const App = React.createClass({
 			</div>
 		);
 	}
-});
+}
 
 export default injectSheet(styles)(App)

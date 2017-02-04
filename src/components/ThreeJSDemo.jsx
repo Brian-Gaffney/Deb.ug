@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import injectSheet from 'react-jss'
 import TWEEN from 'tween.js';
@@ -77,25 +77,25 @@ const SPHERE_MATERIAL = new THREE.MeshBasicMaterial({
 	opacity: 1
 });
 
-const ThreeDemo = React.createClass({
+class ThreeDemo extends Component {
 
-	displayName: 'ThreeDemo',
+	spheres = [];
+	line = null;
+	startingSphere = null;
+	endingSphere = null;
+	lastMousePosition = {};
+	scene = null;
+	scene = null;
+	camera = null;
+	renderer = null;
 
-	spheres: [],
-	line: null,
-	startingSphere: null,
-	endingSphere: null,
-	lastMousePosition: {},
-	scene: null,
-	scene: null,
-	camera: null,
-	renderer: null,
+	constructor () {
+		super()
 
-	getInitialState () {
-		return {
-			show: false
-		};
-	},
+		this.state = {
+			show: false,
+		}
+	}
 
 	componentDidMount () {
 		// Small delay so that Radium has time
@@ -103,7 +103,7 @@ const ThreeDemo = React.createClass({
 		window.setTimeout(() => {
 			this.init();
 		}, 50);
-	},
+	}
 
 	init () {
 		const canvas = ReactDOM.findDOMNode(this.refs.canvas);
@@ -140,7 +140,7 @@ const ThreeDemo = React.createClass({
 		this.setState({
 			show: true
 		});
-	},
+	}
 
 	// Get a random sphere (that's not notThisOne)
 	getRandomSphere (notThisOne) {
@@ -151,9 +151,9 @@ const ThreeDemo = React.createClass({
 		}
 
 		return sphere;
-	},
+	}
 
-	initLineDrawing () {
+	initLineDrawing = () => {
 
 		// Initialisation step
 		if (!this.startingSphere && !this.endingSphere) {
@@ -178,7 +178,7 @@ const ThreeDemo = React.createClass({
 		const curvePoints = this.generateCurvePoints(this.startingSphere, this.endingSphere);
 
 		this.drawLine(curvePoints);
-	},
+	}
 
 	addNoiseToPoint (point, noiseFactor = 1) {
 		const noise = MIDPOINT_NOISE / noiseFactor;
@@ -188,7 +188,7 @@ const ThreeDemo = React.createClass({
 		point.z += getRandom(-noise, noise);
 
 		return point;
-	},
+	}
 
 	// Create a nice curve from sphere one to sphere 2
 	generateCurvePoints (s1, s2) {
@@ -208,7 +208,7 @@ const ThreeDemo = React.createClass({
 			...midPoints,
 			s2.position
 		]).getPoints(CURVE_POINTS);
-	},
+	}
 
 	scaleSphere (sphere, scaleUp = true) {
 		// Scale up or return to normal scale (1)
@@ -223,7 +223,7 @@ const ThreeDemo = React.createClass({
 			}, COLOR_TRANSITION_DURATION)
 			.start()
 		;
-	},
+	}
 
 	recolorSphere (sphere, color) {
 		new TWEEN
@@ -235,7 +235,7 @@ const ThreeDemo = React.createClass({
 			}, COLOR_TRANSITION_DURATION)
 			.start()
 		;
-	},
+	}
 
 	drawLine (curvePoints) {
 		// Start making the origin sphere the secondary color
@@ -256,7 +256,7 @@ const ThreeDemo = React.createClass({
 			.delay(LINE_DRAW_DELAY * 2)
 			.finally(this.initLineDrawing)
 		;
-	},
+	}
 
 	animateLineDrawing (curvePoints, forward = true) {
 		let counter = forward ? 1 : curvePoints.length;
@@ -296,17 +296,17 @@ const ThreeDemo = React.createClass({
 
 			}, intervalPeriod);
 		});
-	},
+	}
 
 	// Camera zoom based on mouse wheel
-	handleMouseWheel (event) {
+	handleMouseWheel = (event) => {
 		const up = !!(event.wheelDelta > 0);
 		const zoom = up ? -MOVE_WHEEL_ZOOM_STEP : MOVE_WHEEL_ZOOM_STEP;
 		this.camera.fov += zoom;
 		this.camera.updateProjectionMatrix();
-	},
+	}
 
-	handleMouseMove (event) {
+	handleMouseMove = (event) => {
 		if (this.lastMousePosition.x) {
 			const deltaX = this.lastMousePosition.x - event.pageX;
 			const deltaY = this.lastMousePosition.y - event.pageY;
@@ -342,7 +342,7 @@ const ThreeDemo = React.createClass({
 			x : event.pageX,
 			y : event.pageY
 		};
-	},
+	}
 
 	initSpheres () {
 		// Add a bunch of spheres to scene
@@ -358,7 +358,7 @@ const ThreeDemo = React.createClass({
 			this.spheres.push(sphere);
 			this.scene.add(sphere);
 		}
-	},
+	}
 
 	updateCamera () {
 		const {
@@ -372,9 +372,9 @@ const ThreeDemo = React.createClass({
 		this.camera.position.z = z * Math.cos(CAMERA_ROTATION_STEP) - x * Math.sin(CAMERA_ROTATION_STEP);
 
 		this.camera.lookAt(this.scene.position);
-	},
+	}
 
-	render3D () {
+	render3D = () => {
 		requestAnimationFrame(this.render3D);
 
 		TWEEN.update();
@@ -382,7 +382,7 @@ const ThreeDemo = React.createClass({
 		this.updateCamera();
 
 		this.renderer.render(this.scene, this.camera);
-	},
+	}
 
 	render () {
 		const style = [
@@ -396,6 +396,6 @@ const ThreeDemo = React.createClass({
 			</div>
 		);
 	}
-});
+}
 
 export default injectSheet(styles)(ThreeDemo);
