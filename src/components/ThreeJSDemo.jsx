@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Radium from 'radium';
+import injectSheet from 'react-jss'
 import TWEEN from 'tween.js';
 import Promise from 'bluebird';
 import THREE from 'utils/three';
@@ -397,4 +397,4 @@ const ThreeDemo = React.createClass({
 	}
 });
 
-export default Radium(ThreeDemo);
+export default injectSheet(styles)(ThreeDemo);

@@ -1,19 +1,19 @@
 import React from 'react';
-import { StyleRoot } from 'radium';
 import Helmet from 'react-helmet';
+import injectSheet from 'react-jss'
 
+import colors from 'colors';
 import GoogleAnalytics from './GoogleAnalytics';
 import GlobalStyles from './GlobalStyles';
-import AboutMe from 'components/AboutMe';
+import AboutMe from './AboutMe.jsx';
 import Technologies from 'components/Technologies';
 import { hasWebGl } from 'utils/featureDetection';
-import colors from 'colors';
 
 const styles = {
 	contentWrapper: {
 		zIndex: 100,
-		position: 'relative'
-	}
+		position: 'relative',
+	},
 };
 
 const App = React.createClass({
@@ -52,10 +52,16 @@ const App = React.createClass({
 	},
 
 	render () {
-		let ThreeDemo = this.renderThreeDemo();
+		const ThreeDemo = this.renderThreeDemo();
+
+		const {
+			classes,
+		} = this.props
 
 		return (
-			<StyleRoot>
+			<div>
+
+				<GlobalStyles />
 
 				<Helmet
 					meta={[
@@ -66,9 +72,7 @@ const App = React.createClass({
 					]}
 				/>
 
-				<GlobalStyles />
-
-				<div style={styles.contentWrapper}>
+				<div className={classes.contentWrapper}>
 					<AboutMe />
 					<Technologies />
 				</div>
@@ -76,9 +80,9 @@ const App = React.createClass({
 				{ ThreeDemo }
 
 				<GoogleAnalytics />
-			</StyleRoot>
+			</div>
 		);
 	}
 });
 
-export default App;
+export default injectSheet(styles)(App)
