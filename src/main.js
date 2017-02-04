@@ -1,5 +1,4 @@
-import ReactDOM from 'react-dom'
-import React from 'react'
+import { h, render } from 'preact'
 import favicolor from 'favicolor'
 
 import colors from './colors'
@@ -9,7 +8,7 @@ let el = document.createElement('div')
 el.setAttribute('class', 'app-container')
 document.body.appendChild(el)
 
-ReactDOM.render(React.createElement(App), el)
+render(<App />, el)
 
 const icon = document.querySelector('[rel="shortcut icon"]')
 favicolor(icon, colors.primary.hex)

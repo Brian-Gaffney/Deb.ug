@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { h, Component } from 'preact'
 import injectSheet from 'react-jss'
 import TWEEN from 'tween.js'
 import Promise from 'bluebird'

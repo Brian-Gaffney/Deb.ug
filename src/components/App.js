@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component, h } from 'preact'
 import Helmet from 'react-helmet'
 import injectSheet from 'react-jss'
 

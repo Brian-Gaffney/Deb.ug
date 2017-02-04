@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component, h } from 'preact'
 import ga from 'react-google-analytics'
 
 let GAInitiailizer = ga.Initializer

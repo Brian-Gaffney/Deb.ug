@@ -3,8 +3,6 @@ import path from 'path'
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-console.log('###', `${__dirname  }./build`)
-
 module.exports = {
 
 	entry: [
@@ -37,6 +35,7 @@ module.exports = {
 				loader: 'babel-loader',
 				include: [
 					path.resolve(__dirname, './src'),
+					path.resolve(__dirname, './node_modules/preact-compat/src'),
 				],
 			},
 
@@ -54,6 +53,10 @@ module.exports = {
 			__dirname,
 			'node_modules',
 		],
+		alias: {
+			react: 'preact-compat',
+			'react-dom': 'preact-compat',
+		},
 	},
 
 	plugins: [
