@@ -30,7 +30,6 @@
     "bluebird": "^3.3.1",
     "favicolor": "^1.0.1",
     "file-loader": "^0.10.0",
-    "hex-rgb": "^1.0.0",
     "html-minifier": "^1.2.0",
     "html-webpack-plugin": "^2.28.0",
     "jss": "^6.2.0",
