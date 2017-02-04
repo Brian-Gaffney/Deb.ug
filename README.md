@@ -10,7 +10,6 @@ S3 bucket - http://deb.ug.s3-website-us-east-1.amazonaws.com
 
 ## Todo
 * Upgrade packages
-* Heaps of linting
 * ES6 webpack config
 * Inferno?
 * Load ThreeDemo using import() instead of require.ensure()

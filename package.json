@@ -5,11 +5,11 @@
   "main": "src/main.js",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --progress",
-    "build": "npm run deleteBuild && NODE_ENV=production webpack --config webpack.dist.config.js --colors --progress --display-chunks --display-modules",
+    "build": "npm run deleteBuild && NODE_ENV=production webpack --config webpack.dist.config.babel.js --colors --progress --display-chunks --display-modules",
     "deleteBuild": "rm -rf ./build",
     "deploy": "npm run build && ./deploy.sh && npm run deleteBuild",
-    "lint": "./node_modules/.bin/eslint --ext .js ./src",
-    "lint-fix": "./node_modules/.bin/eslint --fix --ext .js ./src"
+    "lint": "./node_modules/.bin/eslint --ext .js ./",
+    "lint-fix": "./node_modules/.bin/eslint --fix --ext .js ./"
   },
   "repository": {
     "type": "git",

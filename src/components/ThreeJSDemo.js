@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import injectSheet from 'react-jss'
 import TWEEN from 'tween.js'
 import Promise from 'bluebird'

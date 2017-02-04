@@ -1,12 +1,12 @@
-/* eslint-env node */
-var webpack = require('webpack');
-var config = require('./webpack.config');
+import webpack from 'webpack'
+
+let config = require('./webpack.config.babel')
 
 // Fingerprint filenames
-config.output.filename = '[name]-[hash].js';
+config.output.filename = '[name]-[hash].js'
 
 // Remove sourcemaps
-config.devtool = 'none';
+config.devtool = 'none'
 
 
 
@@ -16,9 +16,9 @@ config.devtool = 'none';
 // =================================
 
 // Remove HMR plugin
-config.plugins = config.plugins.filter(function (plugin) {
-	return plugin instanceof webpack.HotModuleReplacementPlugin === false;
-});
+config.plugins = config.plugins.filter(plugin => {
+	return plugin instanceof webpack.HotModuleReplacementPlugin === false
+})
 
 
 // =================================
@@ -29,10 +29,10 @@ config.plugins.push(
 	new webpack.DefinePlugin({
 		'process.env': {
 			// This has effect on the react lib size
-			'NODE_ENV': JSON.stringify('production')
-		}
+			'NODE_ENV': JSON.stringify('production'),
+		},
 	})
-);
+)
 
 // Uglify the output
 config.plugins.push(
@@ -40,15 +40,15 @@ config.plugins.push(
 		sourceMap: false,
 		compress: {
 			warnings: false,
-			drop_console: true
+			'drop_console': true,
 		},
 		mangle: {
-			except: ['$super', '$', 'exports', 'require']
-		}
+			except: ['$super', '$', 'exports', 'require'],
+		},
 	})
-);
+)
 
 // =================================
 
 
-module.exports = config;
+module.exports = config
