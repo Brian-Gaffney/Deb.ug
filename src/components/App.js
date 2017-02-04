@@ -33,13 +33,13 @@ class App extends Component {
 
 	// Load ThreeDemo from a separate bundle
 	loadThreeDemo () {
-		require.ensure([], () => {
-			let ThreeDemo = require('./ThreeJSDemo').default
-
-			this.setState({
-				ThreeDemo,
+		// Async loading using import()
+		import('./ThreeJSDemo')
+			.then(module => {
+				this.setState({
+					ThreeDemo: module.default,
+				})
 			})
-		})
 	}
 
 	renderThreeDemo () {
