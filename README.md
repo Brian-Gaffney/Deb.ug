@@ -10,10 +10,6 @@ S3 bucket - http://deb.ug.s3-website-us-east-1.amazonaws.com
 
 ## Todo
 * Upgrade packages
-* Update copy
-	* RethinkDB
-	* Fela?
-	* GraphQL
 * Heaps of linting
 * Replace React.createClass with functions
 * ES6 webpack config

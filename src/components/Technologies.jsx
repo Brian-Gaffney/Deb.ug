@@ -1,35 +1,29 @@
 import React from 'react';
 
-const TECHNOLOGIES = [
+const technologies = [
 	'React and Redux',
-	'MongoDB',
+	'Mongo and RethinkDB',
 	'Node',
 	'Express',
-	'Webpack and Gulp',
-	'PostCSS and SASS',
+	'Webpack',
+	'GraphQL and Apollo',
+	'PostCSS, SASS, Fela, JSS, CSS modules',
 	'Git',
 	'Linux'
 ];
 
-export default React.createClass({
+export default () => (
+	<div>
+		<h2>
+			Technologies I like and use
+		</h2>
 
-	displayName: 'Technologies',
-
-	renderItem (item, index) {
-		return <li key={ index }>{ item }</li>;
-	},
-
-	render () {
-		return (
-			<div>
-				<h2>
-					Technologies I like and use
-				</h2>
-
-				<ul>
-					{ TECHNOLOGIES.map(this.renderItem) }
-				</ul>
-			</div>
-		);
-	}
-});
+		<ul>
+			{ technologies.map((t, index) => (
+				<li key={index}>
+					{t}
+				</li>
+			)) }
+		</ul>
+	</div>
+)
