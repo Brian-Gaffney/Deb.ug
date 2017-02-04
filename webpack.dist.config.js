@@ -14,22 +14,8 @@ config.devtool = 'none';
 // =================================
 // Modifications to loaders
 // =================================
-config.module.loaders = config.module.loaders
-	.map(function (loaderConfig) {
-		// Find react-hot! loaders and remove them
-		if (/^react\-hot\!/.test(loaderConfig.loader)) {
-			loaderConfig.loader = loaderConfig.loader.replace(/^react\hot\!/, '');
-		}
 
-		// Disable 'friendly' CSS class names
-		if (loaderConfig.name === 'scssModuleLoader') {
-			loaderConfig.loader = loaderConfig.loader.replace('localIdentName=[local]__[hash:base64]!', '[hash:base64]');
-
-		}
-
-		return loaderConfig;
-	});
-
+// Remove HMR plugin
 config.plugins = config.plugins.filter(function (plugin) {
 	return plugin instanceof webpack.HotModuleReplacementPlugin === false;
 });
@@ -46,16 +32,6 @@ config.plugins.push(
 			'NODE_ENV': JSON.stringify('production')
 		}
 	})
-);
-
-// Dedupe modules
-config.plugins.push(
-	new webpack.optimize.DedupePlugin()
-);
-
-// Prioritise entry chunks
-config.plugins.push(
-	new webpack.optimize.OccurenceOrderPlugin(true)
 );
 
 // Uglify the output

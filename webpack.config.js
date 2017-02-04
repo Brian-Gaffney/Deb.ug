@@ -27,16 +27,11 @@ module.exports = {
 		port: 3000
 	},
 
-	eslint: {
-		formatter: require('eslint-friendly-formatter')
-	},
-
 	module: {
-
 		loaders: [
 			{
 				test: /\.(js|jsx|svg)$/,
-				loader: 'babel',
+				loader: 'babel-loader',
 				include: [
 					path.resolve(__dirname, 'src'),
 				]
@@ -45,33 +40,22 @@ module.exports = {
 			// Use the url loader for images
 			{
 				test: /\.(jpg|png)$/,
-				loader: 'url?limit=20000' + // inline as base64 if < 20kb
+				loader: 'url-loader?limit=20000' + // inline as base64 if < 20kb
 				'&name=[name]-[hash].[ext]'
 			},
-
-			// Load SVGs as react components
-			{
-				test: /\.svg$/,
-				loaders: [
-					'svg-jsx'
-				]
-			}
 		]
 	},
 
 	resolve: {
-
-		root: __dirname,
-
 		// Resolve extensionless files with the list below.
 		// Eg. require('foo') will resolve to 'foo.js', 'foo/index.jsx' etc.
-		extensions: ['', '.js', '.jsx', '.es6'],
+		extensions: ['.js', '.jsx'],
 
-		// Add the src directory as a modules location
-		modulesDirectories: [
+		modules: [
+			__dirname,
 			'src/',
 			'node_modules'
-		]
+		],
 	},
 
 	plugins: [
