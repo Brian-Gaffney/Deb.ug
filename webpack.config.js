@@ -5,7 +5,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 
 	entry: [
-		'main.js'
+		'src/main.js'
 	],
 
 	output: {
@@ -53,7 +53,6 @@ module.exports = {
 
 		modules: [
 			__dirname,
-			'src/',
 			'node_modules'
 		],
 	},

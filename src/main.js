@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import favicolor from 'favicolor';
-import colors from 'colors';
 
+import colors from './colors';
 import App from './components/App';
 
 let el = document.createElement('div');

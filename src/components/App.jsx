@@ -2,12 +2,12 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import injectSheet from 'react-jss'
 
-import colors from 'colors';
+import colors from '../colors';
 import GoogleAnalytics from './GoogleAnalytics';
 import GlobalStyles from './GlobalStyles';
 import AboutMe from './AboutMe.jsx';
-import Technologies from 'components/Technologies';
-import { hasWebGl } from 'utils/featureDetection';
+import Technologies from './Technologies';
+import { hasWebGl } from '../utils/featureDetection';
 
 const styles = {
 	contentWrapper: {
@@ -35,7 +35,7 @@ const App = React.createClass({
 	// Load ThreeDemo from a separate bundle
 	loadThreeDemo () {
 		require.ensure([], () => {
-			var ThreeDemo = require('components/ThreeJSDemo').default;
+			var ThreeDemo = require('./ThreeJSDemo').default;
 
 			this.setState({
 				ThreeDemo

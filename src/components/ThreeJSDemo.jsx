@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import injectSheet from 'react-jss'
 import TWEEN from 'tween.js';
 import Promise from 'bluebird';
-import THREE from 'utils/three';
+
+import THREE from '../utils/three';
 import {
 	getRandom,
 	getRandomPointOnSphere
-} from 'utils/maths';
-import colors from 'colors';
+} from '../utils/maths';
+import colors from '../colors';
 
 const styles = {
 	hide: {

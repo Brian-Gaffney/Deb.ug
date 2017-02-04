@@ -2,7 +2,7 @@ import React from 'react';
 import injectSheet from 'react-jss'
 
 import background from './bg.png';
-import colors from 'colors';
+import colors from '../colors';
 
 const styles = {
 	'@global': {

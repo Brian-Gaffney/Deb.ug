@@ -10,8 +10,6 @@ S3 bucket - http://deb.ug.s3-website-us-east-1.amazonaws.com
 
 ## Todo
 * Upgrade packages
-* Remove color change stuff
-* Remove src from module path in webpack config
 * Update copy
 	* RethinkDB
 	* Fela?
