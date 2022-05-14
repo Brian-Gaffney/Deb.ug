@@ -6,7 +6,7 @@ Webpack 2, preact, JSS
 
 Site - https://deb.ug
 
-S3 bucket - http://deb.ug.s3-website-us-east-1.amazonaws.com
+Deployments with netlify.com
 
 ## Todo
 * Upgrade packages
