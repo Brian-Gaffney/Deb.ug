@@ -1,15 +1,19 @@
 # Deb.ug
 
-Technology playground and personal website for Brian Gaffney
+Personal website for Brian Gaffney
 
-Webpack 2, preact, JSS
+Deployed to Netlify.
 
-Site - https://deb.ug
+`master` branch auto-deploys to https://deb.ug
 
-Deployments with netlify.com
+`dev` branch auto deploys to https://dev--deb-ug.netlify.app
 
-## Todo
-* Upgrade packages
-* Put self in favicon
-	* Remove favicolor
-* Fix mouse movement to camera bindings
+## Colours
+
+```
+Red RYB: #FF1F22
+Ultramarine blue: #3358FF
+Pressian blue: #003049
+Baby powder: #FDFFFC
+Safety yellow: #F1D302
+```
