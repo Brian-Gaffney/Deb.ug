@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Brian Gaffney - JS Developer in Melbourne, Australia">
+    <title>Brian Gaffney - JS Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, #ff8c00 0%, #ff6600 100%);
+            color: white;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(255, 140, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #ff8c00;
+        }
+
+        h2 {
+            color: #ff8c00;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .contact-links a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff8c00;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .contact-links a:hover {
+            background: #ff6600;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 140, 0, 0.3);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tech-item {
+            padding: 15px;
+            background: #fff8f0;
+            border-radius: 8px;
+            border: 1px solid #ffe5cc;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            border-color: #ff8c00;
+            box-shadow: 0 2px 8px rgba(255, 140, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .tech-item strong {
+            color: #ff8c00;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .tagline {
+                font-size: 1em;
+            }
+
+            header {
+                padding: 40px 20px 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .contact-links {
+                flex-direction: column;
+            }
+
+            .contact-links a {
+                text-align: center;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Brian Gaffney</h1>
+        <p class="tagline">JS Developer in Melbourne, Australia</p>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>About</h2>
+            <p>I'm a JavaScript developer from Melbourne, Australia.</p>
+            <p>I'm interested in creating high quality single page apps with an emphasis on user experience. I love working in small teams and building relationships with other passionate tech people. I also spend time reading blog posts and whitepapers, coding projects for fun, and going to meetups to stay current with tech trends.</p>
+
+            <div class="contact-links">
+                <a href="mailto:brian@deb.ug">Email</a>
+                <a href="https://www.linkedin.com/in/brian-gaffney-0b5b2b18/" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://github.com/Brian-Gaffney" target="_blank" rel="noopener">GitHub</a>
+                <a href="tel:+61478901495">Phone</a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Technologies</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <strong>Frontend</strong>
+                    React, Redux, Preact
+                </div>
+                <div class="tech-item">
+                    <strong>Backend</strong>
+                    Node.js, Express
+                </div>
+                <div class="tech-item">
+                    <strong>Databases</strong>
+                    MongoDB, RethinkDB
+                </div>
+                <div class="tech-item">
+                    <strong>GraphQL</strong>
+                    Apollo Client & Server
+                </div>
+                <div class="tech-item">
+                    <strong>Build Tools</strong>
+                    Webpack, Babel
+                </div>
+                <div class="tech-item">
+                    <strong>Styling</strong>
+                    CSS-in-JS, PostCSS, SASS
+                </div>
+                <div class="tech-item">
+                    <strong>Version Control</strong>
+                    Git, GitHub
+                </div>
+                <div class="tech-item">
+                    <strong>Systems</strong>
+                    Linux, DevOps
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Brian Gaffney</p>
+    </footer>
+</body>
+</html>
