@@ -14,160 +14,117 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #fafafa;
+            line-height: 1.8;
+            color: #222;
+            background: #fff;
+            padding: 40px 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 20px;
         }
 
         header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            background: linear-gradient(135deg, #ff8c00 0%, #ff6600 100%);
-            color: white;
-            border-radius: 0 0 20px 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 6px rgba(255, 140, 0, 0.1);
+            margin-bottom: 50px;
         }
 
         h1 {
-            font-size: 2.5em;
-            font-weight: 700;
-            margin-bottom: 10px;
+            font-size: 2em;
+            font-weight: 400;
+            margin-bottom: 5px;
+            color: #000;
         }
 
         .tagline {
-            font-size: 1.2em;
-            opacity: 0.95;
+            font-size: 1em;
+            color: #666;
             font-weight: 300;
         }
 
         section {
-            background: white;
-            padding: 30px;
-            margin-bottom: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #ff8c00;
+            margin-bottom: 40px;
         }
 
         h2 {
-            color: #ff8c00;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            font-weight: 600;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            font-weight: 400;
+            color: #000;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
         }
 
         p {
             margin-bottom: 15px;
-            color: #555;
+            color: #444;
         }
 
         .contact-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
             margin-top: 20px;
         }
 
         .contact-links a {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #ff8c00;
-            color: white;
+            color: #ff8c00;
             text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            margin-right: 20px;
+            border-bottom: 1px solid transparent;
         }
 
         .contact-links a:hover {
-            background: #ff6600;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255, 140, 0, 0.3);
+            border-bottom-color: #ff8c00;
         }
 
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+        .tech-list {
+            margin-top: 15px;
         }
 
         .tech-item {
-            padding: 15px;
-            background: #fff8f0;
-            border-radius: 8px;
-            border: 1px solid #ffe5cc;
-            transition: all 0.3s ease;
-        }
-
-        .tech-item:hover {
-            border-color: #ff8c00;
-            box-shadow: 0 2px 8px rgba(255, 140, 0, 0.1);
-            transform: translateY(-2px);
+            margin-bottom: 12px;
+            line-height: 1.6;
         }
 
         .tech-item strong {
-            color: #ff8c00;
-            display: block;
-            margin-bottom: 5px;
+            color: #000;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+
+        .tech-item span {
+            color: #666;
         }
 
         footer {
-            text-align: center;
-            padding: 40px 20px;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
             color: #999;
             font-size: 0.9em;
         }
 
         @media (max-width: 600px) {
+            body {
+                padding: 20px 15px;
+            }
+
             h1 {
-                font-size: 2em;
-            }
-
-            .tagline {
-                font-size: 1em;
-            }
-
-            header {
-                padding: 40px 20px 30px;
-            }
-
-            section {
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 1.5em;
-            }
-
-            .contact-links {
-                flex-direction: column;
+                font-size: 1.8em;
             }
 
             .contact-links a {
-                text-align: center;
-            }
-
-            .tech-grid {
-                grid-template-columns: 1fr;
+                display: block;
+                margin-bottom: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Brian Gaffney</h1>
-        <p class="tagline">JS Developer in Melbourne, Australia</p>
-    </header>
-
     <div class="container">
+        <header>
+            <h1>Brian Gaffney</h1>
+            <p class="tagline">JS Developer in Melbourne, Australia</p>
+        </header>
+
         <section>
             <h2>About</h2>
             <p>I'm a JavaScript developer from Melbourne, Australia.</p>
@@ -183,45 +140,37 @@
 
         <section>
             <h2>Technologies</h2>
-            <div class="tech-grid">
+            <div class="tech-list">
                 <div class="tech-item">
-                    <strong>Frontend</strong>
-                    React, Redux, Preact
+                    <strong>Frontend:</strong> <span>React, Redux, Preact</span>
                 </div>
                 <div class="tech-item">
-                    <strong>Backend</strong>
-                    Node.js, Express
+                    <strong>Backend:</strong> <span>Node.js, Express</span>
                 </div>
                 <div class="tech-item">
-                    <strong>Databases</strong>
-                    MongoDB, RethinkDB
+                    <strong>Databases:</strong> <span>MongoDB, RethinkDB</span>
                 </div>
                 <div class="tech-item">
-                    <strong>GraphQL</strong>
-                    Apollo Client & Server
+                    <strong>GraphQL:</strong> <span>Apollo Client & Server</span>
                 </div>
                 <div class="tech-item">
-                    <strong>Build Tools</strong>
-                    Webpack, Babel
+                    <strong>Build Tools:</strong> <span>Webpack, Babel</span>
                 </div>
                 <div class="tech-item">
-                    <strong>Styling</strong>
-                    CSS-in-JS, PostCSS, SASS
+                    <strong>Styling:</strong> <span>CSS-in-JS, PostCSS, SASS</span>
                 </div>
                 <div class="tech-item">
-                    <strong>Version Control</strong>
-                    Git, GitHub
+                    <strong>Version Control:</strong> <span>Git, GitHub</span>
                 </div>
                 <div class="tech-item">
-                    <strong>Systems</strong>
-                    Linux, DevOps
+                    <strong>Systems:</strong> <span>Linux, DevOps</span>
                 </div>
             </div>
         </section>
-    </div>
 
-    <footer>
-        <p>&copy; 2025 Brian Gaffney</p>
-    </footer>
+        <footer>
+            &copy; 2025 Brian Gaffney
+        </footer>
+    </div>
 </body>
 </html>
