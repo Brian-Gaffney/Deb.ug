@@ -4,7 +4,7 @@ Personal website for Brian Gaffney
 
 Deployed to Netlify.
 
-`master` branch auto-deploys to https://deb.ug
+`main` branch auto-deploys to https://deb.ug
 
 `dev` branch auto deploys to https://dev--deb-ug.netlify.app
 

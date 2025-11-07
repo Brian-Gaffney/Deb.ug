@@ -4,7 +4,7 @@ resource "netlify_site" "deb-ug" {
   custom_domain = "deb.ug"
 
   repo {
-    repo_branch = "master"
+    repo_branch = "main"
     command     = "npm run build"
     dir         = "public"
     provider    = "github"
