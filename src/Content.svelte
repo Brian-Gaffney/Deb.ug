@@ -14,27 +14,9 @@
 	<p>I'm in Melbourne, Australia.</p>
 
 	<p>I like solving real problems and delivering real value.</p>
-
-	<p>
-		I like building single page apps, good user interfaces and clearly conveying
-		information.
-	</p>
 </section>
 
 <div class="content-wrapper">
-	<section transition:fade={{ ...getFadeParams(order + 2) }}>
-		<h2>Technologies I like</h2>
-
-		<ul>
-			<li>React</li>
-			<li>GraphQL</li>
-			<li>Node.js</li>
-			<li>Git</li>
-			<li>Linux</li>
-			<li>Kubernetes</li>
-		</ul>
-	</section>
-
 	<section transition:fade={{ ...getFadeParams(order + 1) }}>
 		<h2>Contact</h2>
 		<ul>

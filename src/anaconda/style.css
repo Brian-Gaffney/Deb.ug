@@ -1,0 +1,151 @@
+:root {
+  font-family: 'Courier New', monospace;
+  line-height: 1.5;
+  font-weight: 400;
+  
+  --neon-green: #00ff00;
+  --dark-bg: #000000;
+  --border-color: #ffffff;
+  --red-food: #ff0000;
+  --cyan-accent: #00ffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: var(--neon-green);
+  font-family: 'Courier New', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#gameCanvas {
+  border: 2px solid var(--border-color);
+  background-color: var(--dark-bg);
+  display: block;
+  max-width: 95vw;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+}
+
+#controls {
+  margin-top: 20px;
+  color: var(--border-color);
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 2px;
+  opacity: 0.7;
+}
+
+#ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+#title {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--border-color);
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 0 0 8px var(--border-color);
+  letter-spacing: 4px;
+  font-family: 'Courier New', monospace;
+}
+
+#score {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  color: var(--neon-green);
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 0 0 8px var(--neon-green);
+  letter-spacing: 4px;
+  font-family: 'Courier New', monospace;
+}
+
+#pauseMenu, #gameOverMenu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+  pointer-events: all;
+}
+
+#pauseMenu.hidden, #gameOverMenu.hidden {
+  display: none;
+}
+
+.menu-content {
+  background-color: var(--dark-bg);
+  border: 2px solid var(--border-color);
+  padding: 15px 40px;
+  text-align: center;
+  color: var(--neon-green);
+}
+
+.menu-content h2 {
+  color: var(--cyan-accent);
+  font-size: 24px;
+  margin: 0;
+  text-shadow: 0 0 8px var(--cyan-accent);
+}
+
+button {
+  background-color: var(--dark-bg);
+  border: 1px solid var(--neon-green);
+  color: var(--neon-green);
+  padding: 10px 20px;
+  margin: 5px;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background-color: var(--neon-green);
+  color: var(--dark-bg);
+  box-shadow: 0 0 15px var(--neon-green);
+}
+
+button:focus {
+  outline: 2px solid var(--cyan-accent);
+  outline-offset: 2px;
+}
+
+#okText {
+  color: var(--red-food);
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 15px;
+  text-shadow: 0 0 8px var(--red-food);
+}
