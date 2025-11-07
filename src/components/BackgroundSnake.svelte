@@ -287,20 +287,59 @@
 		deathAnimationProgress = 0
 	}
 
-	function renderSnakeWithColor(color: string) {
+	function renderSnakeWithNeumorphicEffect() {
 		if (!snake) return
 
-		// Temporarily override the COLORS to render in red
-		const originalColor = COLORS.NEON_GREEN
-		// @ts-ignore - we need to modify the const temporarily
-		COLORS.NEON_GREEN = color
+		const ctx = renderer.getContext()
+		const allPositions = snake.getAllPositions()
 
-		// Use the proper snake render method which draws the full body
-		snake.render(renderer)
+		// Create neumorphic bulge effect by drawing multiple layers
+		for (let i = 0; i < allPositions.length - 1; i++) {
+			const pos = allPositions[i]
+			const nextPos = allPositions[i + 1]
 
-		// Restore original color
-		// @ts-ignore
-		COLORS.NEON_GREEN = originalColor
+			// Calculate segment properties
+			const progress = i / allPositions.length
+			const headSize = 20
+			const tailSize = 5
+			const size = headSize - (headSize - tailSize) * progress
+
+			// Draw dark shadow (bottom-right offset)
+			ctx.beginPath()
+			ctx.arc(pos.x + 3, pos.y + 3, size + 2, 0, Math.PI * 2)
+			ctx.fillStyle = 'rgba(163, 177, 198, 0.4)'
+			ctx.fill()
+
+			// Draw light highlight (top-left offset)
+			ctx.beginPath()
+			ctx.arc(pos.x - 2, pos.y - 2, size + 1, 0, Math.PI * 2)
+			ctx.fillStyle = 'rgba(255, 255, 255, 0.6)'
+			ctx.fill()
+
+			// Draw main body (raised surface)
+			const gradient = ctx.createRadialGradient(
+				pos.x - size * 0.3,
+				pos.y - size * 0.3,
+				0,
+				pos.x,
+				pos.y,
+				size
+			)
+			gradient.addColorStop(0, '#f5f7fa')
+			gradient.addColorStop(0.5, '#eceff2')
+			gradient.addColorStop(1, '#d9dde1')
+
+			ctx.beginPath()
+			ctx.arc(pos.x, pos.y, size, 0, Math.PI * 2)
+			ctx.fillStyle = gradient
+			ctx.fill()
+
+			// Add subtle inner shadow for depth
+			ctx.beginPath()
+			ctx.arc(pos.x + 1, pos.y + 1, size * 0.5, 0, Math.PI * 2)
+			ctx.fillStyle = 'rgba(163, 177, 198, 0.15)'
+			ctx.fill()
+		}
 	}
 
 	function renderSnakeWithDeathAnimation() {
@@ -320,8 +359,8 @@
 				// @ts-ignore - invalidate cache so render recalculates
 				snake.cacheValid = false
 
-				// Render with proper snake body
-				renderSnakeWithColor('#ff1f22')
+				// Render with neumorphic effect
+				renderSnakeWithNeumorphicEffect()
 
 				// Restore original trail
 				// @ts-ignore
@@ -330,8 +369,8 @@
 				snake.cacheValid = false
 			}
 		} else {
-			// Normal render with red color using proper snake body
-			renderSnakeWithColor('#ff1f22')
+			// Normal render with neumorphic bulge effect
+			renderSnakeWithNeumorphicEffect()
 		}
 	}
 
