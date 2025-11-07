@@ -41,13 +41,14 @@
 
 <style>
 	section {
-		margin-bottom: 1em;
+		margin-bottom: 3em;
 		max-width: 70ch; /* 70 chars wide */
 	}
 
 	.content-wrapper {
 		display: flex;
 		flex-wrap: wrap;
+		margin-top: 2em;
 	}
 
 	.content-wrapper section {

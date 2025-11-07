@@ -36,9 +36,36 @@
 	function spawnSnake() {
 		if (snakeState !== 'inactive') return
 
-		// Spawn in center of screen
-		const startPos = new Vector2(canvas.width / 2, canvas.height / 2)
+		// Spawn in bottom right, facing towards top-left
+		const startPos = new Vector2(canvas.width - 50, canvas.height - 50)
 		snake = new Snake(startPos)
+
+		// Set angle to face top-left (roughly -135 degrees = 5π/4 radians)
+		const targetAngle = (5 * Math.PI) / 4
+		// @ts-ignore - accessing private property to set initial direction
+		snake.currentAngle = targetAngle
+
+		// Reinitialize trail points to match the new direction
+		// @ts-ignore - accessing private properties
+		snake.trailPoints = []
+		// @ts-ignore
+		const maxTrailLength = snake.maxTrailLength
+		// @ts-ignore
+		const trailSpacing = GAME_CONFIG.TRAIL_POINT_SPACING
+
+		for (let i = 0; i <= maxTrailLength; i += trailSpacing) {
+			const trailPoint = new Vector2(
+				startPos.x - Math.cos(targetAngle) * i, // Extend backwards (opposite of facing direction)
+				startPos.y - Math.sin(targetAngle) * i
+			)
+			// @ts-ignore
+			snake.trailPoints.push(trailPoint)
+		}
+		// @ts-ignore
+		snake.lastTrailPoint = startPos.clone()
+		// @ts-ignore
+		snake.cacheValid = false
+
 		snakeState = 'alive'
 
 		// Build text nodes map
@@ -90,56 +117,90 @@
 		// Check all text nodes
 		for (const [node, data] of textNodesMap.entries()) {
 			const { element } = data
-			const range = document.createRange()
-			const text = node.textContent || ''
 
-			if (text.length === 0) continue
+			// If already converted to spans, check each span
+			if (element.classList.contains('snake-eaten-parent')) {
+				const spans = element.querySelectorAll('.snake-char')
+				for (let i = 0; i < spans.length; i++) {
+					const span = spans[i] as HTMLElement
 
-			// Check each character in this text node
-			for (let i = 0; i < text.length; i++) {
-				const char = text[i]
-				if (char.trim().length === 0) continue // Skip whitespace
+					// Skip if already eaten (invisible)
+					if (span.style.opacity === '0') continue
 
-				try {
-					range.setStart(node, i)
-					range.setEnd(node, i + 1)
-					const rect = range.getBoundingClientRect()
+					// Skip whitespace
+					if (span.textContent?.trim().length === 0) continue
 
-					// Check if snake head overlaps this character
+					const rect = span.getBoundingClientRect()
 					if (
 						headPos.x >= rect.left &&
 						headPos.x <= rect.right &&
 						headPos.y >= rect.top &&
 						headPos.y <= rect.bottom
 					) {
-						// Eat this letter!
-						eatLetter(node, i)
+						span.style.opacity = '0'
 						snake.addGrowth(1)
 						return // Only eat one letter per frame
 					}
-				} catch (e) {
-					// Range might be invalid, skip
-					continue
+				}
+			} else {
+				// Check original text node
+				const range = document.createRange()
+				const text = node.textContent || ''
+
+				if (text.length === 0) continue
+
+				// Check each character in this text node
+				for (let i = 0; i < text.length; i++) {
+					const char = text[i]
+					if (char.trim().length === 0) continue // Skip whitespace
+
+					try {
+						range.setStart(node, i)
+						range.setEnd(node, i + 1)
+						const rect = range.getBoundingClientRect()
+
+						// Check if snake head overlaps this character
+						if (
+							headPos.x >= rect.left &&
+							headPos.x <= rect.right &&
+							headPos.y >= rect.top &&
+							headPos.y <= rect.bottom
+						) {
+							// Eat this letter!
+							eatLetter(element, node, i)
+							snake.addGrowth(1)
+							return // Only eat one letter per frame
+						}
+					} catch (e) {
+						// Range might be invalid, skip
+						continue
+					}
 				}
 			}
 		}
 	}
 
-	function eatLetter(node: Node, index: number) {
-		const text = node.textContent || ''
-		if (index >= text.length) return
+	function eatLetter(element: HTMLElement, node: Node, index: number) {
+		// Convert text node to spans if not already done
+		if (!element.classList.contains('snake-eaten-parent')) {
+			const text = node.textContent || ''
+			element.classList.add('snake-eaten-parent')
 
-		// Remove the character at this index
-		const newText = text.slice(0, index) + text.slice(index + 1)
-		node.textContent = newText
-
-		// Update our map
-		const data = textNodesMap.get(node)
-		if (data) {
-			if (newText.trim().length === 0) {
-				// All text eaten, remove from map
-				textNodesMap.delete(node)
+			// Replace text node with individual character spans
+			const fragment = document.createDocumentFragment()
+			for (let i = 0; i < text.length; i++) {
+				const span = document.createElement('span')
+				span.textContent = text[i]
+				span.classList.add('snake-char')
+				fragment.appendChild(span)
 			}
+			element.replaceChild(fragment, node)
+		}
+
+		// Find and hide the character at index
+		const spans = element.querySelectorAll('.snake-char')
+		if (spans[index]) {
+			(spans[index] as HTMLElement).style.opacity = '0'
 		}
 	}
 
@@ -228,31 +289,28 @@
 		if (!snake) return
 
 		if (snakeState === 'dying') {
-			// For death animation, we can't use the full render
-			// Just draw a shrinking line
-			const ctx = renderer.getContext()
-			ctx.save()
-
+			// Tail catches up to head - temporarily truncate trail points
 			const allPositions = snake.getAllPositions()
 			const pointsToShow = Math.floor(allPositions.length * (1 - deathAnimationProgress))
 
 			if (pointsToShow > 2) {
-				const visiblePoints = allPositions.slice(0, pointsToShow)
+				// Temporarily modify the snake's trail to show only the visible portion
+				// @ts-ignore - accessing private property
+				const originalTrail = snake.trailPoints
+				// @ts-ignore - accessing private property
+				snake.trailPoints = allPositions.slice(0, pointsToShow)
+				// @ts-ignore - invalidate cache so render recalculates
+				snake.cacheValid = false
 
-				ctx.strokeStyle = '#ff1f22'
-				ctx.lineWidth = 2
-				ctx.shadowColor = '#ff1f22'
-				ctx.shadowBlur = 8
+				// Render with proper snake body
+				renderSnakeWithColor('#ff1f22')
 
-				ctx.beginPath()
-				ctx.moveTo(visiblePoints[0].x, visiblePoints[0].y)
-				for (let i = 1; i < visiblePoints.length; i++) {
-					ctx.lineTo(visiblePoints[i].x, visiblePoints[i].y)
-				}
-				ctx.stroke()
+				// Restore original trail
+				// @ts-ignore
+				snake.trailPoints = originalTrail
+				// @ts-ignore
+				snake.cacheValid = false
 			}
-
-			ctx.restore()
 		} else {
 			// Normal render with red color using proper snake body
 			renderSnakeWithColor('#ff1f22')
@@ -287,10 +345,12 @@
 			cancelAnimationFrame(animationId)
 		}
 
-		// Restore all text
+		// Restore all text by removing spans and restoring original
 		for (const [node, data] of textNodesMap.entries()) {
-			if (node.textContent !== data.originalText) {
-				node.textContent = data.originalText
+			const { element, originalText } = data
+			if (element.classList.contains('snake-eaten-parent')) {
+				element.classList.remove('snake-eaten-parent')
+				element.textContent = originalText
 			}
 		}
 	})
@@ -307,5 +367,9 @@
 		height: 100%;
 		z-index: 1;
 		pointer-events: none;
+	}
+
+	:global(.snake-char) {
+		transition: opacity 0.2s ease-out;
 	}
 </style>
