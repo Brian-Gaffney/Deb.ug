@@ -11,6 +11,7 @@
 	let renderer: Renderer
 	let animationId: number
 	let lastTime = 0
+	let lastFrameTime = 0
 	let snakeState: 'inactive' | 'alive' | 'dying' | 'dead' = 'inactive'
 	let deathAnimationProgress = 0
 	let originalTextContent = new Map<Node, string>()
@@ -70,6 +71,11 @@
 
 		// Build text nodes map
 		buildTextNodesMap()
+
+		// Restart animation loop
+		lastTime = 0
+		lastFrameTime = 0
+		animationId = requestAnimationFrame(update)
 	}
 
 	function buildTextNodesMap() {
@@ -221,9 +227,17 @@
 	}
 
 	function update(currentTime: number) {
+		// Cap at 60fps (~16.67ms per frame)
+		const targetFrameTime = 1000 / 60
+		if (currentTime - lastFrameTime < targetFrameTime) {
+			animationId = requestAnimationFrame(update)
+			return
+		}
+
 		if (!lastTime) lastTime = currentTime
 		const deltaTime = currentTime - lastTime
 		lastTime = currentTime
+		lastFrameTime = currentTime
 
 		if (snakeState === 'alive') {
 			handleInput()
@@ -246,6 +260,7 @@
 				setTimeout(() => {
 					snakeState = 'inactive'
 					deathAnimationProgress = 0
+					// Animation loop will stop naturally when inactive
 				}, 500)
 			}
 		}
@@ -261,7 +276,10 @@
 			}
 		}
 
-		animationId = requestAnimationFrame(update)
+		// Only continue animation loop if snake is active
+		if (snakeState === 'alive' || snakeState === 'dying') {
+			animationId = requestAnimationFrame(update)
+		}
 	}
 
 	function startDeathAnimation() {
@@ -328,7 +346,7 @@
 
 	onMount(() => {
 		initCanvas()
-		animationId = requestAnimationFrame(update)
+		// Animation loop now starts only when snake spawns (not on mount)
 		window.addEventListener('resize', handleResize)
 		window.addEventListener('keydown', handleKeyDown)
 		window.addEventListener('keyup', handleKeyUp)
