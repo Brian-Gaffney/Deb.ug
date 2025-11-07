@@ -68,8 +68,10 @@
 </script>
 
 <div id="app">
-	<div id="title">Anaconda</div>
-	<div id="score">00000</div>
+	<div id="header">
+		<div id="score">00000</div>
+		<div id="title">Anaconda</div>
+	</div>
 	<canvas id="gameCanvas" bind:this={canvas}></canvas>
 	<div id="controls">
 		Left/Right = move &nbsp;&nbsp; Space = boost &nbsp;&nbsp; M = mute &nbsp;&nbsp; Esc = pause
@@ -124,6 +126,36 @@
 		height: auto;
 	}
 
+	#header {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		margin-bottom: 10px;
+		width: 100%;
+		max-width: 95vw;
+	}
+
+	#title {
+		color: var(--border-color);
+		font-size: 24px;
+		font-weight: bold;
+		text-shadow: 0 0 8px var(--border-color);
+		letter-spacing: 4px;
+		font-family: 'Courier New', monospace;
+	}
+
+	#score {
+		position: absolute;
+		left: 0;
+		color: var(--neon-green);
+		font-size: 24px;
+		font-weight: bold;
+		text-shadow: 0 0 8px var(--neon-green);
+		letter-spacing: 4px;
+		font-family: 'Courier New', monospace;
+	}
+
 	#controls {
 		margin-top: 20px;
 		color: var(--border-color);
@@ -142,31 +174,6 @@
 		pointer-events: none;
 	}
 
-	#title {
-		position: absolute;
-		top: 40px;
-		left: 50%;
-		transform: translateX(-50%);
-		color: var(--border-color);
-		font-size: 24px;
-		font-weight: bold;
-		text-shadow: 0 0 8px var(--border-color);
-		letter-spacing: 4px;
-		font-family: 'Courier New', monospace;
-	}
-
-	#score {
-		position: absolute;
-		top: 40px;
-		left: 40px;
-		color: var(--neon-green);
-		font-size: 24px;
-		font-weight: bold;
-		text-shadow: 0 0 8px var(--neon-green);
-		letter-spacing: 4px;
-		font-family: 'Courier New', monospace;
-	}
-
 	#pauseMenu,
 	#gameOverMenu {
 		position: absolute;
@@ -176,8 +183,8 @@
 		bottom: 0;
 		display: flex;
 		justify-content: center;
-		align-items: flex-start;
-		padding-top: 50px;
+		align-items: center;
+		margin-top: -30vh;
 		pointer-events: all;
 	}
 
