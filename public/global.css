@@ -32,13 +32,15 @@ body {
 }
 
 a {
-	color: #3358ff;
-	text-decoration: none;
-	border-bottom: 3px solid #4769ff;
+	color: #6688ff;
+	text-decoration: underline;
+	text-decoration-color: #7799ff;
+	text-decoration-thickness: 2px;
+	text-underline-offset: 2px;
 }
 
 a:hover {
-	outline: 3px solid #4769ff;
+	outline: 2px solid #7799ff;
 	border-radius: 4px;
 	outline-offset: 3px;
 }
